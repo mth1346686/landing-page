@@ -1,0 +1,26 @@
+import type { Metadata } from 'next';
+import './globals.css';
+
+export const metadata: Metadata = {
+  title: 'SHARK GYM | Aggressive Luxury Male Athletic Facility | Cairo & Delta',
+  description: 'Egypt\'s heaviest iron compound. Designed exclusively for male strength athletes and serious bodybuilders.',
+};
+
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  return (
+    <html lang="en" className="scroll-smooth">
+      <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&family=Oswald:wght@500;700&display=swap" rel="stylesheet" />
+      </head>
+      <body className="antialiased bg-[#050505] text-[#F8FAFC]">
+        {children}
+      </body>
+    </html>
+  );
+}

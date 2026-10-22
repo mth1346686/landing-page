@@ -1,0 +1,1391 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SHARK GYM | Be Strong Build Your Dream Body (Egypt)</title>
+  <meta name="description" content="Aggressive luxury male athletic facility in Egypt. Calibrated barbell platforms, heavy hypertrophy, and 24/7 biometric compounds.">
+  <meta name="theme-color" content="#0a0a0a">
+  
+  <!-- Fonts: Montserrat & Oswald -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Oswald:wght@500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            shark: {
+              pitch: '#050505',
+              dark: '#0a0a0a',
+              card: '#121214',
+              panel: '#18181b',
+              border: '#27272a'
+            },
+            crimson: {
+              DEFAULT: '#e11d48',
+              bright: '#ff1744',
+              glow: 'rgba(225, 29, 72, 0.45)'
+            }
+          },
+          fontFamily: {
+            sans: ['Montserrat', 'sans-serif'],
+            display: ['Oswald', 'Montserrat', 'sans-serif']
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    body {
+      background-color: #050505;
+      color: #F8FAFC;
+      font-family: 'Montserrat', sans-serif;
+      overflow-x: hidden;
+    }
+
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-track { background: #050505; }
+    ::-webkit-scrollbar-thumb { background: #27272a; border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: #e11d48; }
+
+    /* Sheen Sweep Animation */
+    .btn-sheen {
+      position: relative;
+      overflow: hidden;
+    }
+    .btn-sheen::after {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -100%;
+      width: 60%;
+      height: 200%;
+      background: linear-gradient(
+        60deg,
+        rgba(255, 255, 255, 0) 20%,
+        rgba(255, 255, 255, 0.35) 50%,
+        rgba(255, 255, 255, 0) 80%
+      );
+      transform: rotate(25deg);
+      animation: sheen-sweep 3.6s infinite ease-in-out;
+    }
+    @keyframes sheen-sweep {
+      0% { left: -100%; }
+      35% { left: 180%; }
+      100% { left: 180%; }
+    }
+
+    /* Radar Pulse Animation */
+    @keyframes radarPulse {
+      0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(225, 29, 72, 0.7); }
+      70% { transform: scale(1.05); box-shadow: 0 0 0 10px rgba(225, 29, 72, 0); }
+      100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(225, 29, 72, 0); }
+    }
+    .radar-pulse-ring {
+      animation: radarPulse 2s infinite;
+    }
+
+    /* Scanning Vertical Laser Beam */
+    .laser-beam {
+      position: absolute;
+      top: 0;
+      width: 3px;
+      height: 120px;
+      background: linear-gradient(180deg, transparent, #ff1744, #ffffff, #ff1744, transparent);
+      box-shadow: 0 0 15px #ff1744, 0 0 30px #e11d48;
+      animation: laser-scan 4s cubic-bezier(0.4, 0, 0.2, 1) infinite alternate;
+      z-index: 25;
+      pointer-events: none;
+    }
+    @keyframes laser-scan {
+      0% { top: -10%; opacity: 0.2; }
+      20% { opacity: 1; }
+      80% { opacity: 1; }
+      100% { top: 90%; opacity: 0.3; }
+    }
+
+    /* Checkmark Pop Animation */
+    @keyframes checkmarkPop {
+      0% { transform: scale(0.4); opacity: 0; }
+      60% { transform: scale(1.15); opacity: 1; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+    .animate-pop {
+      animation: checkmarkPop 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+    }
+
+    .glow-crimson-text {
+      text-shadow: 0 0 12px rgba(255, 23, 68, 0.8), 0 0 28px rgba(225, 29, 72, 0.5);
+    }
+    .glow-crimson-box {
+      box-shadow: 0 0 30px rgba(225, 29, 72, 0.35);
+    }
+    .glow-emerald-box {
+      box-shadow: 0 0 35px rgba(16, 185, 129, 0.45);
+    }
+  </style>
+</head>
+<body class="bg-shark-pitch text-zinc-100 min-h-screen relative antialiased selection:bg-crimson selection:text-white">
+
+  <!-- ========================================================= -->
+  <!-- TOP ANNOUNCEMENT BANNER -->
+  <!-- ========================================================= -->
+  <div class="bg-[#0e0e11] border-b border-[#1f1f23] text-[11px] py-2 px-4 text-center tracking-wider uppercase text-zinc-400 font-bold flex items-center justify-center gap-3">
+    <span class="inline-block w-2 h-2 rounded-full bg-crimson animate-ping"></span>
+    <span>EGYPTIAN COMPOUND ACCESS: NEW CAIRO • MAADI • TANTA DELTA HUB</span>
+    <span class="text-crimson-bright font-black hidden sm:inline">24/7 BIOMETRIC ENTRY</span>
+  </div>
+
+  <!-- ========================================================= -->
+  <!-- MAIN NAVIGATION HEADER -->
+  <!-- ========================================================= -->
+  <header class="sticky top-0 z-40 bg-shark-dark/90 backdrop-blur-md border-b border-shark-border">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+      
+      <!-- Brand Logo: Geometric Shark Fin + Bold Header -->
+      <a href="#" class="flex items-center gap-3 group">
+        <div class="w-11 h-11 rounded-xl bg-gradient-to-br from-crimson to-[#9f1239] p-2 flex items-center justify-center shadow-[0_0_15px_rgba(225,29,72,0.6)] group-hover:scale-105 transition-transform duration-300">
+          <!-- Sharp Angular Shark Fin SVG -->
+          <svg viewBox="0 0 24 24" fill="currentColor" class="w-7 h-7 text-white">
+            <path d="M12 2L4 18C4 18 8 16 12 16C16 16 20 18 20 18L12 2Z" fill="none"/>
+            <path d="M3 21L12 3C12 3 14 10 21 15C17 17 14 17.5 12 17.5C8 17.5 4.5 19.5 3 21Z"/>
+          </svg>
+        </div>
+        <div class="flex flex-col">
+          <span class="font-display font-black text-2xl tracking-tighter text-white uppercase leading-none group-hover:text-crimson-bright transition-colors">
+            SHARK <span class="text-crimson-bright">GYM</span>
+          </span>
+          <span class="text-[9px] font-extrabold uppercase tracking-widest text-zinc-400 mt-1">
+            ELITE ATHLETIC COMPOUND
+          </span>
+        </div>
+      </a>
+
+      <!-- Desktop Navigation Links with Slide-Up Underline Animation -->
+      <nav class="hidden md:flex items-center space-x-8 text-xs font-bold uppercase tracking-widest">
+        <a href="#hero" class="text-zinc-300 hover:text-white transition-colors relative py-2 group">
+          Home
+          <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-crimson transition-all duration-300 group-hover:w-full"></span>
+        </a>
+        <a href="#programs" class="text-zinc-300 hover:text-white transition-colors relative py-2 group">
+          Programs
+          <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-crimson transition-all duration-300 group-hover:w-full"></span>
+        </a>
+        <a href="#pricing" class="text-zinc-300 hover:text-white transition-colors relative py-2 group">
+          Pricing
+          <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-crimson transition-all duration-300 group-hover:w-full"></span>
+        </a>
+        <a href="#hubs" class="text-zinc-300 hover:text-white transition-colors relative py-2 group">
+          Egyptian Hubs
+          <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-crimson transition-all duration-300 group-hover:w-full"></span>
+        </a>
+      </nav>
+
+      <!-- Right Header CTA -->
+      <div class="hidden sm:flex items-center gap-4">
+        <button 
+          onclick="openTrialModal('Header Nav')"
+          class="btn-sheen px-5 py-2.5 rounded-full bg-crimson hover:bg-crimson-bright text-white font-black text-xs uppercase tracking-wider transition-all duration-300 shadow-[0_0_20px_rgba(225,29,72,0.45)] hover:shadow-[0_0_28px_rgba(225,29,72,0.7)] hover:scale-105"
+        >
+          CLAIM 7-DAY PASS
+        </button>
+      </div>
+
+      <!-- Mobile Hamburger Button -->
+      <button 
+        onclick="toggleMobileMenu()" 
+        aria-label="Toggle Navigation Menu"
+        class="md:hidden p-2 text-zinc-300 hover:text-white focus:outline-none"
+      >
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"/>
+        </svg>
+      </button>
+
+    </div>
+
+    <!-- Mobile Drawer Menu -->
+    <div id="mobile-menu" class="hidden md:hidden bg-[#0c0c0e] border-b border-shark-border px-6 py-5 space-y-4">
+      <a href="#hero" onclick="toggleMobileMenu()" class="block text-sm font-bold uppercase tracking-wider text-zinc-300 hover:text-crimson">Home</a>
+      <a href="#programs" onclick="toggleMobileMenu()" class="block text-sm font-bold uppercase tracking-wider text-zinc-300 hover:text-crimson">Programs</a>
+      <a href="#pricing" onclick="toggleMobileMenu()" class="block text-sm font-bold uppercase tracking-wider text-zinc-300 hover:text-crimson">Pricing &amp; Memberships</a>
+      <a href="#hubs" onclick="toggleMobileMenu()" class="block text-sm font-bold uppercase tracking-wider text-zinc-300 hover:text-crimson">Egyptian Hubs</a>
+      <div class="pt-2">
+        <button 
+          onclick="toggleMobileMenu(); openTrialModal('Mobile Drawer')"
+          class="w-full py-3 rounded-xl bg-crimson text-white font-black text-xs uppercase tracking-wider"
+        >
+          CLAIM 7-DAY FREE TRIAL
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ========================================================= -->
+  <!-- HERO SECTION WITH PARTICLES & JAGGED LASER SLASH -->
+  <!-- ========================================================= -->
+  <section id="hero" class="relative min-h-[92vh] flex items-center overflow-hidden border-b border-shark-border">
+    
+    <!-- 60FPS Canvas for Rising Glowing Sparks & Floating Chalk Dust -->
+    <canvas id="sparks-canvas" class="absolute inset-0 w-full h-full pointer-events-none z-10"></canvas>
+
+    <!-- Concentric Background Radial Lighting & Grid Accents -->
+    <div class="absolute -top-32 -left-32 w-96 h-96 bg-crimson/15 rounded-full blur-[120px] pointer-events-none"></div>
+    <div class="absolute bottom-10 right-10 w-[500px] h-[500px] bg-crimson/10 rounded-full blur-[150px] pointer-events-none"></div>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-20 w-full relative z-20 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+      
+      <!-- LEFT COLUMN: COPY, CTAS, MATRIX, TICKER -->
+      <div class="lg:col-span-7 space-y-7">
+        
+        <!-- Live Indicator Badge with Pulsing Radar Ring -->
+        <div class="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-[#161619] border border-[#2b2b30] shadow-inner">
+          <span class="relative flex h-2.5 w-2.5">
+            <span class="radar-pulse-ring absolute inline-flex h-full w-full rounded-full bg-crimson-bright opacity-75"></span>
+            <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-crimson-bright"></span>
+          </span>
+          <span class="text-[11px] font-black uppercase tracking-widest text-zinc-200">
+            PREMIUM MALE ATHLETIC FACILITY
+          </span>
+        </div>
+
+        <!-- 2-Line Headline -->
+        <h1 class="font-display font-black text-5xl sm:text-6xl lg:text-7xl xl:text-8xl tracking-tight uppercase leading-[0.92] text-white">
+          <span class="block">BE STRONG BUILD</span>
+          <span class="block text-crimson-bright glow-crimson-text">YOUR DREAM BODY</span>
+        </h1>
+
+        <!-- Subtitle: Aggressive Value Proposition -->
+        <p class="text-sm sm:text-base text-zinc-300 max-w-xl leading-relaxed font-medium">
+          Egypt's premier male athletic compound engineered for heavy barbell mastery, calibrated hypertrophy, and elite metabolic conditioning. Leave weakness at the door and forge competition-level physical dominance.
+        </p>
+
+        <!-- Dual CTAs -->
+        <div class="flex flex-wrap items-center gap-4 pt-2">
+          <button 
+            onclick="openTrialModal('Hero Primary CTA')"
+            class="btn-sheen px-8 py-4 rounded-full bg-crimson hover:bg-crimson-bright text-white font-black text-sm uppercase tracking-wider transition-all duration-300 shadow-[0_0_30px_rgba(225,29,72,0.6)] hover:shadow-[0_0_40px_rgba(225,29,72,0.8)] hover:scale-105 flex items-center gap-3"
+          >
+            <span>START FREE TRIAL</span>
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+          </button>
+
+          <a 
+            href="#programs" 
+            class="px-8 py-4 rounded-full bg-transparent hover:bg-shark-card text-zinc-200 hover:text-white border border-[#3f3f46] hover:border-crimson font-black text-sm uppercase tracking-wider transition-all duration-300 flex items-center gap-2"
+          >
+            EXPLORE PROGRAMS
+          </a>
+        </div>
+
+        <!-- Red Dot Matrix (6x3) & Curved Concentric Accent Arcs -->
+        <div class="pt-6 flex flex-col sm:flex-row items-start sm:items-center gap-8 border-t border-[#1e1e24]">
+          
+          <!-- Animated Stats Ticker -->
+          <div class="grid grid-cols-3 gap-6 sm:gap-10">
+            <div>
+              <div class="font-display text-3xl sm:text-4xl font-black text-white" id="stat-members">0</div>
+              <div class="text-[10px] sm:text-xs font-bold uppercase tracking-wider text-zinc-400 mt-1">Active Members</div>
+            </div>
+            <div>
+              <div class="font-display text-3xl sm:text-4xl font-black text-crimson-bright" id="stat-racks">0</div>
+              <div class="text-[10px] sm:text-xs font-bold uppercase tracking-wider text-zinc-400 mt-1">Heavy Racks</div>
+            </div>
+            <div>
+              <div class="font-display text-3xl sm:text-4xl font-black text-white" id="stat-success">0%</div>
+              <div class="text-[10px] sm:text-xs font-bold uppercase tracking-wider text-zinc-400 mt-1">Success Rate</div>
+            </div>
+          </div>
+
+          <!-- 6x3 Red Dot Matrix Graphic -->
+          <div class="grid grid-cols-6 gap-1.5 opacity-60 self-start sm:self-center" title="Shark Matrix Grid">
+            <div class="w-1.5 h-1.5 rounded-full bg-crimson"></div>
+            <div class="w-1.5 h-1.5 rounded-full bg-crimson"></div>
+            <div class="w-1.5 h-1.5 rounded-full bg-crimson"></div>
+            <div class="w-1.5 h-1.5 rounded-full bg-crimson"></div>
+            <div class="w-1.5 h-1.5 rounded-full bg-crimson"></div>
+            <div class="w-1.5 h-1.5 rounded-full bg-crimson"></div>
+            <div class="w-1.5 h-1.5 rounded-full bg-crimson"></div>
+            <div class="w-1.5 h-1.5 rounded-full bg-crimson"></div>
+            <div class="w-1.5 h-1.5 rounded-full bg-crimson"></div>
+            <div class="w-1.5 h-1.5 rounded-full bg-crimson"></div>
+            <div class="w-1.5 h-1.5 rounded-full bg-crimson"></div>
+            <div class="w-1.5 h-1.5 rounded-full bg-crimson"></div>
+            <div class="w-1.5 h-1.5 rounded-full bg-crimson"></div>
+            <div class="w-1.5 h-1.5 rounded-full bg-crimson"></div>
+            <div class="w-1.5 h-1.5 rounded-full bg-crimson"></div>
+            <div class="w-1.5 h-1.5 rounded-full bg-crimson"></div>
+            <div class="w-1.5 h-1.5 rounded-full bg-crimson"></div>
+            <div class="w-1.5 h-1.5 rounded-full bg-crimson"></div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- RIGHT COLUMN: HERO BODYBUILDER WITH JAGGED TORN SLASH BORDER & SCANNING LASER -->
+      <div class="lg:col-span-5 relative h-[520px] sm:h-[620px] lg:h-[720px] flex items-center justify-center">
+        
+        <!-- Main Image Container -->
+        <div class="relative w-full h-full rounded-2xl overflow-hidden border border-[#27272a] shadow-2xl bg-shark-dark group">
+          
+          <img 
+            src="https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?auto=format&fit=crop&w=800&q=80" 
+            alt="Intense Bodybuilder Lifting Barbells at Shark Gym Egypt" 
+            class="w-full h-full object-cover object-top filter contrast-125 brightness-90 group-hover:scale-105 transition-transform duration-700"
+          />
+
+          <!-- Dark Rim-Lighting Gradients -->
+          <div class="absolute inset-0 bg-gradient-to-t from-[#050505] via-transparent to-transparent"></div>
+          <div class="absolute inset-0 bg-gradient-to-r from-[#050505]/70 via-transparent to-[#050505]/40"></div>
+
+          <!-- THE JAGGED / TORN RIPPED SLASH DIAGONAL OVERLAY -->
+          <svg class="absolute top-0 left-0 h-full w-28 sm:w-36 pointer-events-none z-20" viewBox="0 0 100 1000" preserveAspectRatio="none">
+            <defs>
+              <filter id="neon-glow" x="-50%" y="-50%" width="200%" height="200%">
+                <feGaussianBlur stdDeviation="6" result="blur"/>
+                <feMerge>
+                  <feMergeNode in="blur"/>
+                  <feMergeNode in="SourceGraphic"/>
+                </feMerge>
+              </filter>
+            </defs>
+            <!-- Torn Dark Polygon on Left -->
+            <polygon points="0,0 75,0 25,180 85,340 18,520 70,710 20,860 65,1000 0,1000" fill="#050505"/>
+            <!-- Ripped Red Neon Glowing Slash Edge -->
+            <polyline points="75,0 25,180 85,340 18,520 70,710 20,860 65,1000" stroke="#ff1744" stroke-width="4" fill="none" filter="url(#neon-glow)"/>
+          </svg>
+
+          <!-- VERTICAL SCANNING LASER BEAM ALONG SEAM -->
+          <div class="laser-beam left-16 sm:left-24"></div>
+
+          <!-- Floating Athlete Performance Badge in bottom of image -->
+          <div class="absolute bottom-6 left-6 right-6 p-4 rounded-xl bg-black/75 backdrop-blur-md border border-white/10 flex items-center justify-between z-30">
+            <div>
+              <span class="text-[9px] uppercase font-black tracking-widest text-crimson-bright block">CALIBRATED FACILITY</span>
+              <span class="font-display font-bold text-sm text-white">ELEIKO &amp; ARSENAL EQUIPMENT</span>
+            </div>
+            <span class="px-2.5 py-1 rounded bg-crimson/20 border border-crimson/50 text-crimson-bright text-xs font-black uppercase">
+              PRO GRADE
+            </span>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ========================================================= -->
+  <!-- TRAINING PROGRAMS SECTION (WITH CATEGORY FILTER TABS) -->
+  <!-- ========================================================= -->
+  <section id="programs" class="py-24 bg-shark-dark relative border-b border-shark-border">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="text-center max-w-3xl mx-auto space-y-4">
+        <span class="text-xs font-black uppercase tracking-widest text-crimson-bright">UNCOMPROMISING DISCIPLINES</span>
+        <h2 class="font-display font-black text-4xl sm:text-5xl uppercase tracking-tight text-white">
+          PRECISION <span class="text-crimson-bright">TRAINING PROTOCOLS</span>
+        </h2>
+        <p class="text-zinc-400 text-sm">
+          Select your battlefield. Every program is calibrated with scientific periodization, progressive mechanical tension, and strict biometric feedback.
+        </p>
+
+        <!-- Category Filter Tabs -->
+        <div class="flex flex-wrap justify-center gap-2 pt-6" id="prog-filter-tabs">
+          <button onclick="filterPrograms('All')" class="prog-btn active px-6 py-2.5 rounded-full text-xs font-black uppercase tracking-wider bg-crimson text-white shadow-[0_0_15px_rgba(225,29,72,0.4)]">
+            All Protocols
+          </button>
+          <button onclick="filterPrograms('Hypertrophy')" class="prog-btn px-6 py-2.5 rounded-full text-xs font-black uppercase tracking-wider bg-shark-card text-zinc-400 hover:text-white hover:bg-shark-panel border border-shark-border">
+            Hypertrophy
+          </button>
+          <button onclick="filterPrograms('Powerlifting')" class="prog-btn px-6 py-2.5 rounded-full text-xs font-black uppercase tracking-wider bg-shark-card text-zinc-400 hover:text-white hover:bg-shark-panel border border-shark-border">
+            Powerlifting
+          </button>
+          <button onclick="filterPrograms('Conditioning')" class="prog-btn px-6 py-2.5 rounded-full text-xs font-black uppercase tracking-wider bg-shark-card text-zinc-400 hover:text-white hover:bg-shark-panel border border-shark-border">
+            Conditioning
+          </button>
+          <button onclick="filterPrograms('Combat Strength')" class="prog-btn px-6 py-2.5 rounded-full text-xs font-black uppercase tracking-wider bg-shark-card text-zinc-400 hover:text-white hover:bg-shark-panel border border-shark-border">
+            Combat Strength
+          </button>
+        </div>
+      </div>
+
+      <!-- Programs Grid (Populated via JS) -->
+      <div id="programs-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 pt-14">
+        <!-- Rendered by JavaScript -->
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ========================================================= -->
+  <!-- MEMBERSHIP PRICING SECTION (MONTHLY / QUARTERLY -15%) -->
+  <!-- ========================================================= -->
+  <section id="pricing" class="py-24 bg-shark-pitch relative border-b border-shark-border">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="text-center max-w-3xl mx-auto space-y-4">
+        <span class="text-xs font-black uppercase tracking-widest text-crimson-bright">TRANSPARENT VALUE</span>
+        <h2 class="font-display font-black text-4xl sm:text-5xl uppercase tracking-tight text-white">
+          CHOOSE YOUR <span class="text-crimson-bright">STRENGTH TIER</span>
+        </h2>
+        <p class="text-zinc-400 text-sm">
+          No hidden fees or locked contracts. All plans include 24/7 keycard privileges and full access to calibrated Olympic platforms.
+        </p>
+
+        <!-- Billing Toggle (Monthly vs Quarterly -15% Discount) -->
+        <div class="inline-flex items-center p-1.5 rounded-full bg-shark-card border border-shark-border mt-6">
+          <button 
+            id="btn-billing-monthly" 
+            onclick="setBillingCycle('monthly')" 
+            class="px-5 py-2 rounded-full text-xs font-black uppercase tracking-wider bg-crimson text-white transition-all shadow"
+          >
+            Monthly
+          </button>
+          <button 
+            id="btn-billing-quarterly" 
+            onclick="setBillingCycle('quarterly')" 
+            class="px-5 py-2 rounded-full text-xs font-black uppercase tracking-wider text-zinc-400 hover:text-white transition-all flex items-center gap-1.5"
+          >
+            <span>Quarterly</span>
+            <span class="bg-red-950 text-crimson-bright text-[10px] font-black px-2 py-0.5 rounded-full border border-crimson/40">SAVE 15%</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Pricing Cards Grid -->
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-stretch pt-14">
+        
+        <!-- Plan 1: Predator Pass -->
+        <div class="bg-shark-card rounded-2xl p-8 border border-shark-border flex flex-col justify-between transition-all duration-300 hover:border-crimson">
+          <div>
+            <span class="text-xs font-bold text-zinc-400 uppercase tracking-widest">Entry Level</span>
+            <h3 class="font-display font-black text-2xl text-white mt-1 uppercase">PREDATOR PASS</h3>
+            
+            <div class="mt-6 mb-6 pb-6 border-b border-[#222226]">
+              <div class="flex items-baseline gap-2">
+                <span class="font-display font-black text-4xl sm:text-5xl text-white price-display" data-monthly="850" data-quarterly="2165">
+                  850
+                </span>
+                <span class="text-crimson-bright font-display text-xl font-black">L.E</span>
+                <span class="text-xs text-zinc-400 period-display">/ month</span>
+              </div>
+              <p class="text-[11px] text-zinc-500 mt-1 sub-billing-note">Billed monthly in Egyptian currency</p>
+            </div>
+
+            <ul class="space-y-3.5 text-xs text-zinc-300">
+              <li class="flex items-start gap-3">
+                <svg class="w-4 h-4 text-crimson-bright shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg>
+                <span>Access to 1 Selected Egyptian Hub</span>
+              </li>
+              <li class="flex items-start gap-3">
+                <svg class="w-4 h-4 text-crimson-bright shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg>
+                <span>Standard Open Gym Hours</span>
+              </li>
+              <li class="flex items-start gap-3">
+                <svg class="w-4 h-4 text-crimson-bright shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg>
+                <span>Dumbbells up to 60 KG &amp; Cable Zone</span>
+              </li>
+              <li class="flex items-start gap-3">
+                <svg class="w-4 h-4 text-crimson-bright shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg>
+                <span>Locker Rooms &amp; Steam Sauna</span>
+              </li>
+              <li class="flex items-start gap-3">
+                <svg class="w-4 h-4 text-crimson-bright shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg>
+                <span>Free Parking Access</span>
+              </li>
+            </ul>
+          </div>
+
+          <div class="pt-8 mt-6">
+            <button 
+              onclick="openTrialModal('Plan: PREDATOR PASS')"
+              class="w-full py-4 rounded-xl bg-shark-panel hover:bg-crimson hover:text-white text-zinc-200 border border-shark-border font-black text-xs uppercase tracking-wider transition-all duration-300"
+            >
+              Select Plan &rarr;
+            </button>
+          </div>
+        </div>
+
+        <!-- Plan 2: Apex Pro (Featured / Best Value) -->
+        <div class="bg-shark-card rounded-2xl p-8 border border-crimson shadow-[0_0_35px_rgba(225,29,72,0.35)] relative scale-105 z-20 flex flex-col justify-between transition-all duration-300 hover:border-crimson">
+          <div class="absolute -top-3.5 left-1/2 -translate-x-1/2 bg-crimson text-white text-[10px] font-black uppercase tracking-widest px-4 py-1 rounded-full shadow-md">
+            BEST VALUE • MOST POPULAR
+          </div>
+
+          <div>
+            <span class="text-xs font-bold text-crimson-bright uppercase tracking-widest">Competition Athlete</span>
+            <h3 class="font-display font-black text-2xl text-white mt-1 uppercase">APEX PRO</h3>
+            
+            <div class="mt-6 mb-6 pb-6 border-b border-[#222226]">
+              <div class="flex items-baseline gap-2">
+                <span class="font-display font-black text-4xl sm:text-5xl text-white price-display" data-monthly="1500" data-quarterly="3825">
+                  1,500
+                </span>
+                <span class="text-crimson-bright font-display text-xl font-black">L.E</span>
+                <span class="text-xs text-zinc-400 period-display">/ month</span>
+              </div>
+              <p class="text-[11px] text-zinc-500 mt-1 sub-billing-note">Billed monthly in Egyptian currency</p>
+            </div>
+
+            <ul class="space-y-3.5 text-xs text-zinc-200">
+              <li class="flex items-start gap-3">
+                <svg class="w-4 h-4 text-crimson-bright shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg>
+                <span class="font-bold text-white">All 3 Egyptian Hubs (New Cairo, Maadi, Tanta)</span>
+              </li>
+              <li class="flex items-start gap-3">
+                <svg class="w-4 h-4 text-crimson-bright shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg>
+                <span class="font-bold text-white">24/7 Biometric Keycard Access</span>
+              </li>
+              <li class="flex items-start gap-3">
+                <svg class="w-4 h-4 text-crimson-bright shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg>
+                <span>Calibrated Eleiko &amp; Arsenal Platforms</span>
+              </li>
+              <li class="flex items-start gap-3">
+                <svg class="w-4 h-4 text-crimson-bright shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg>
+                <span>Monthly InBody 770 Clinical Body Scan</span>
+              </li>
+              <li class="flex items-start gap-3">
+                <svg class="w-4 h-4 text-crimson-bright shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg>
+                <span>Finnish Sauna &amp; Ice Cold Plunge Recovery</span>
+              </li>
+              <li class="flex items-start gap-3">
+                <svg class="w-4 h-4 text-crimson-bright shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg>
+                <span>15% Discount on In-House Shark Supplements</span>
+              </li>
+            </ul>
+          </div>
+
+          <div class="pt-8 mt-6">
+            <button 
+              onclick="openTrialModal('Plan: APEX PRO')"
+              class="btn-sheen w-full py-4 rounded-xl bg-crimson hover:bg-crimson-bright text-white font-black text-xs uppercase tracking-wider transition-all duration-300 shadow-[0_0_25px_rgba(225,29,72,0.6)]"
+            >
+              Claim Apex Pro &rarr;
+            </button>
+          </div>
+        </div>
+
+        <!-- Plan 3: Great White VIP -->
+        <div class="bg-shark-card rounded-2xl p-8 border border-shark-border flex flex-col justify-between transition-all duration-300 hover:border-crimson">
+          <div>
+            <span class="text-xs font-bold text-zinc-400 uppercase tracking-widest">Executive Tier</span>
+            <h3 class="font-display font-black text-2xl text-white mt-1 uppercase">GREAT WHITE VIP</h3>
+            
+            <div class="mt-6 mb-6 pb-6 border-b border-[#222226]">
+              <div class="flex items-baseline gap-2">
+                <span class="font-display font-black text-4xl sm:text-5xl text-white price-display" data-monthly="2800" data-quarterly="7140">
+                  2,800
+                </span>
+                <span class="text-crimson-bright font-display text-xl font-black">L.E</span>
+                <span class="text-xs text-zinc-400 period-display">/ month</span>
+              </div>
+              <p class="text-[11px] text-zinc-500 mt-1 sub-billing-note">Billed monthly in Egyptian currency</p>
+            </div>
+
+            <ul class="space-y-3.5 text-xs text-zinc-300">
+              <li class="flex items-start gap-3">
+                <svg class="w-4 h-4 text-crimson-bright shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg>
+                <span class="font-bold text-white">Full All-Branch Unrestricted 24/7 Access</span>
+              </li>
+              <li class="flex items-start gap-3">
+                <svg class="w-4 h-4 text-crimson-bright shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg>
+                <span>8 Dedicated 1-on-1 Master Trainer Sessions/mo</span>
+              </li>
+              <li class="flex items-start gap-3">
+                <svg class="w-4 h-4 text-crimson-bright shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg>
+                <span>Private Reserved Permanent Locker + Laundry</span>
+              </li>
+              <li class="flex items-start gap-3">
+                <svg class="w-4 h-4 text-crimson-bright shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg>
+                <span>Daily Whey Isolate Protein Shake at Shark Bar</span>
+              </li>
+              <li class="flex items-start gap-3">
+                <svg class="w-4 h-4 text-crimson-bright shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg>
+                <span>VIP Guest Passes (2 per month included)</span>
+              </li>
+            </ul>
+          </div>
+
+          <div class="pt-8 mt-6">
+            <button 
+              onclick="openTrialModal('Plan: GREAT WHITE VIP')"
+              class="w-full py-4 rounded-xl bg-shark-panel hover:bg-crimson hover:text-white text-zinc-200 border border-shark-border font-black text-xs uppercase tracking-wider transition-all duration-300"
+            >
+              Select Plan &rarr;
+            </button>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ========================================================= -->
+  <!-- EGYPTIAN HUBS / FACILITIES SECTION -->
+  <!-- ========================================================= -->
+  <section id="hubs" class="py-24 bg-shark-dark relative border-b border-shark-border">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="text-center max-w-3xl mx-auto space-y-4">
+        <span class="text-xs font-black uppercase tracking-widest text-crimson-bright">STRATEGIC COMPOUNDS</span>
+        <h2 class="font-display font-black text-4xl sm:text-5xl uppercase tracking-tight text-white">
+          EGYPTIAN <span class="text-crimson-bright">STRENGTH HUBS</span>
+        </h2>
+        <p class="text-zinc-400 text-sm">
+          High-ceiling industrial sanctuaries constructed exclusively for heavy lifting, chalk-filled platforms, and optimal athlete biomechanics.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 pt-14">
+        
+        <!-- Hub 1: New Cairo -->
+        <div class="bg-shark-card rounded-2xl overflow-hidden border border-shark-border hover:border-crimson transition-all duration-300 group">
+          <div class="relative h-56 overflow-hidden">
+            <img 
+              src="https://images.unsplash.com/photo-1540497077202-7c8a3999166f?auto=format&fit=crop&w=800&q=80" 
+              alt="New Cairo Flagship Facility" 
+              class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 filter contrast-125 brightness-90"
+            />
+            <div class="absolute top-3 right-3 bg-crimson text-white text-[10px] font-black uppercase px-2.5 py-1 rounded shadow">
+              24/7 OPEN
+            </div>
+          </div>
+          <div class="p-6 space-y-4">
+            <div>
+              <span class="text-[10px] font-bold uppercase tracking-widest text-crimson-bright">FLAGSHIP FACILITY</span>
+              <h3 class="font-display font-black text-xl text-white uppercase mt-0.5">NEW CAIRO COMPOUND</h3>
+              <p class="text-xs text-zinc-400 mt-1">North 90th Street, 5th Settlement (Opposite Dusit)</p>
+            </div>
+            
+            <div class="space-y-2 text-xs text-zinc-300">
+              <div class="flex items-center gap-2">
+                <span class="text-crimson-bright font-bold">✓</span>
+                <span>2,400 m² across 3 specialized lifting floors</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <span class="text-crimson-bright font-bold">✓</span>
+                <span>16 Calibrated Olympic Squat Racks</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <span class="text-crimson-bright font-bold">✓</span>
+                <span>Finnish Sauna &amp; Ice-Water Plunge Tanks</span>
+              </div>
+            </div>
+
+            <div class="pt-3 border-t border-[#1e1e24] flex items-center justify-between">
+              <span class="text-xs text-zinc-400">Tel: +20 102 334 9901</span>
+              <button onclick="openTrialModal('Hub: New Cairo')" class="px-3.5 py-1.5 rounded-lg bg-crimson hover:bg-crimson-bright text-white text-xs font-bold uppercase transition-colors">
+                Tour Hub
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Hub 2: Maadi -->
+        <div class="bg-shark-card rounded-2xl overflow-hidden border border-shark-border hover:border-crimson transition-all duration-300 group">
+          <div class="relative h-56 overflow-hidden">
+            <img 
+              src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=800&q=80" 
+              alt="Maadi Iron Bunker" 
+              class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 filter contrast-125 brightness-90"
+            />
+            <div class="absolute top-3 right-3 bg-crimson text-white text-[10px] font-black uppercase px-2.5 py-1 rounded shadow">
+              24/7 OPEN
+            </div>
+          </div>
+          <div class="p-6 space-y-4">
+            <div>
+              <span class="text-[10px] font-bold uppercase tracking-widest text-crimson-bright">RAW POWER BASEMENT</span>
+              <h3 class="font-display font-black text-xl text-white uppercase mt-0.5">MAADI IRON BUNKER</h3>
+              <p class="text-xs text-zinc-400 mt-1">Degla Street 218, Road 9 Extended Area</p>
+            </div>
+            
+            <div class="space-y-2 text-xs text-zinc-300">
+              <div class="flex items-center gap-2">
+                <span class="text-crimson-bright font-bold">✓</span>
+                <span>1,800 m² Underground Hardcore Compound</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <span class="text-crimson-bright font-bold">✓</span>
+                <span>Chalk-Allowed Deadlift Platforms &amp; Texas Bars</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <span class="text-crimson-bright font-bold">✓</span>
+                <span>Heavy Dumbbells Up to 75 KG</span>
+              </div>
+            </div>
+
+            <div class="pt-3 border-t border-[#1e1e24] flex items-center justify-between">
+              <span class="text-xs text-zinc-400">Tel: +20 102 334 9902</span>
+              <button onclick="openTrialModal('Hub: Maadi')" class="px-3.5 py-1.5 rounded-lg bg-crimson hover:bg-crimson-bright text-white text-xs font-bold uppercase transition-colors">
+                Tour Hub
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Hub 3: Tanta Delta Hub -->
+        <div class="bg-shark-card rounded-2xl overflow-hidden border border-shark-border hover:border-crimson transition-all duration-300 group">
+          <div class="relative h-56 overflow-hidden">
+            <img 
+              src="https://images.unsplash.com/photo-1593079831268-3381b0db4a77?auto=format&fit=crop&w=800&q=80" 
+              alt="Tanta Delta Arena" 
+              class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 filter contrast-125 brightness-90"
+            />
+            <div class="absolute top-3 right-3 bg-zinc-800 text-zinc-200 text-[10px] font-black uppercase px-2.5 py-1 rounded shadow">
+              06:00 - 02:00
+            </div>
+          </div>
+          <div class="p-6 space-y-4">
+            <div>
+              <span class="text-[10px] font-bold uppercase tracking-widest text-crimson-bright">DELTA MEGA ARENA</span>
+              <h3 class="font-display font-black text-xl text-white uppercase mt-0.5">TANTA DELTA HUB</h3>
+              <p class="text-xs text-zinc-400 mt-1">Al-Geish Street, Near Stadium District</p>
+            </div>
+            
+            <div class="space-y-2 text-xs text-zinc-300">
+              <div class="flex items-center gap-2">
+                <span class="text-crimson-bright font-bold">✓</span>
+                <span>1,500 m² Calibrated Lifting Floor</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <span class="text-crimson-bright font-bold">✓</span>
+                <span>Arsenal Strength Iso-Lateral Chest &amp; Back</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <span class="text-crimson-bright font-bold">✓</span>
+                <span>Clinical InBody Assessment Station</span>
+              </div>
+            </div>
+
+            <div class="pt-3 border-t border-[#1e1e24] flex items-center justify-between">
+              <span class="text-xs text-zinc-400">Tel: +20 102 334 9903</span>
+              <button onclick="openTrialModal('Hub: Tanta')" class="px-3.5 py-1.5 rounded-lg bg-crimson hover:bg-crimson-bright text-white text-xs font-bold uppercase transition-colors">
+                Tour Hub
+              </button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ========================================================= -->
+  <!-- FOOTER -->
+  <!-- ========================================================= -->
+  <footer class="bg-shark-pitch border-t border-shark-border py-14 text-zinc-400">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-4 gap-10">
+      
+      <div class="space-y-4">
+        <div class="flex items-center gap-3">
+          <div class="w-8 h-8 rounded-lg bg-crimson flex items-center justify-center">
+            <svg viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5 text-white">
+              <path d="M3 21L12 3C12 3 14 10 21 15C17 17 14 17.5 12 17.5C8 17.5 4.5 19.5 3 21Z"/>
+            </svg>
+          </div>
+          <span class="font-display font-black text-xl text-white uppercase tracking-tight">SHARK GYM</span>
+        </div>
+        <p class="text-xs leading-relaxed text-zinc-400">
+          Egypt's premier athletic compound dedicated to raw hypertrophy, competition strength, and disciplined physical dominance.
+        </p>
+        <p class="text-[11px] text-zinc-500">&copy; 2026 SHARK GYM EGYPT. All Rights Reserved.</p>
+      </div>
+
+      <div>
+        <h5 class="text-white font-bold text-xs uppercase tracking-wider mb-4">Training Tracks</h5>
+        <ul class="space-y-2 text-xs">
+          <li><a href="#programs" class="hover:text-crimson transition-colors">Hypertrophy Protocol</a></li>
+          <li><a href="#programs" class="hover:text-crimson transition-colors">Apex Powerlifting Squad</a></li>
+          <li><a href="#programs" class="hover:text-crimson transition-colors">Metabolic Conditioning</a></li>
+          <li><a href="#programs" class="hover:text-crimson transition-colors">Gladiator Combat Power</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h5 class="text-white font-bold text-xs uppercase tracking-wider mb-4">Egyptian Compounds</h5>
+        <ul class="space-y-2 text-xs">
+          <li><a href="#hubs" class="hover:text-crimson transition-colors">New Cairo Flagship (North 90th)</a></li>
+          <li><a href="#hubs" class="hover:text-crimson transition-colors">Maadi Iron Bunker (Degla 218)</a></li>
+          <li><a href="#hubs" class="hover:text-crimson transition-colors">Tanta Delta Arena (Al-Geish St)</a></li>
+          <li><a href="#pricing" class="hover:text-crimson transition-colors">All-Access National Keycard</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h5 class="text-white font-bold text-xs uppercase tracking-wider mb-4">WhatsApp &amp; Support</h5>
+        <p class="text-xs text-zinc-400">Direct Athlete Hotline:</p>
+        <p class="text-base font-bold text-crimson-bright mt-0.5">+20 102 334 9900</p>
+        <p class="text-xs text-zinc-500 mt-2">Biometric Pass Desk: Open 24/7</p>
+      </div>
+
+    </div>
+  </footer>
+
+  <!-- ========================================================= -->
+  <!-- 7-DAY FREE TRIAL MODAL (WITH VERIFICATION SIMULATION) -->
+  <!-- ========================================================= -->
+  <div id="trial-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 hidden">
+    <!-- Backdrop Blur Overlay -->
+    <div class="absolute inset-0 bg-black/85 backdrop-blur-md transition-opacity" onclick="closeTrialModal()"></div>
+    
+    <div class="relative bg-shark-card border border-crimson rounded-2xl max-w-lg w-full p-6 sm:p-8 shadow-[0_0_50px_rgba(225,29,72,0.45)] z-10 space-y-6">
+      
+      <!-- Modal Close Button -->
+      <button onclick="closeTrialModal()" class="absolute top-4 right-4 text-zinc-400 hover:text-white p-1 text-2xl leading-none">&times;</button>
+
+      <!-- VIEW 1: REGISTRATION FORM -->
+      <div id="modal-view-form">
+        <!-- Modal Header -->
+        <div class="border-b border-shark-border pb-4 mb-5">
+          <span class="text-[10px] font-black uppercase tracking-widest text-crimson-bright">UNRESTRICTED ATHLETE PRIVILEGE</span>
+          <h3 id="modal-heading" class="font-display font-black text-2xl text-white uppercase mt-0.5">CLAIM 7-DAY SHARK PASS</h3>
+          <p class="text-xs text-zinc-400 mt-1">Experience calibrated platforms, Eleiko equipment, and recovery saunas for 7 consecutive days.</p>
+        </div>
+
+        <!-- Form Body -->
+        <form id="trial-form" onsubmit="handleTrialSubmit(event)" class="space-y-4">
+          
+          <!-- Field 1: Full Name -->
+          <div>
+            <label class="block text-xs font-bold uppercase tracking-wider text-zinc-300 mb-1">
+              Full Athlete Name <span class="text-crimson-bright">*</span>
+            </label>
+            <input 
+              type="text" 
+              id="field-name"
+              required 
+              placeholder="e.g. Captain Ahmed Hassan"
+              class="w-full px-4 py-3 rounded-xl bg-[#08080a] border border-shark-border focus:border-crimson text-white text-sm focus:outline-none transition-colors"
+            />
+          </div>
+
+          <!-- Field 2: Egyptian Mobile Number (+20 1X XXXX XXXX) -->
+          <div>
+            <div class="flex items-center justify-between mb-1">
+              <label class="block text-xs font-bold uppercase tracking-wider text-zinc-300">
+                Egyptian Mobile Number <span class="text-crimson-bright">*</span>
+              </label>
+              <span class="text-[10px] font-bold text-zinc-500">FORMAT: +20 1X XXXX XXXX</span>
+            </div>
+            <div class="relative">
+              <input 
+                type="tel" 
+                id="field-phone"
+                required 
+                placeholder="+20 10 1234 5678"
+                oninput="formatEgyptianPhone(this)"
+                class="w-full px-4 py-3 rounded-xl bg-[#08080a] border border-shark-border focus:border-crimson text-white text-sm font-mono tracking-wide focus:outline-none transition-colors"
+              />
+              <span class="absolute right-3 top-3 text-[10px] uppercase font-bold text-zinc-400 bg-zinc-800 px-2 py-0.5 rounded">
+                EGY (+20)
+              </span>
+            </div>
+            <p id="phone-hint" class="text-[10px] text-zinc-500 mt-1">Supports Vodafone (010), Orange (012), Etisalat (011), WE (015)</p>
+          </div>
+
+          <!-- Fields 3 & 4: Branch & Goal Dropdowns -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div>
+              <label class="block text-xs font-bold uppercase tracking-wider text-zinc-300 mb-1">Preferred Hub</label>
+              <select id="field-hub" class="w-full px-3 py-3 rounded-xl bg-[#08080a] border border-shark-border focus:border-crimson text-white text-xs focus:outline-none">
+                <option value="New Cairo Flagship (North 90th)">New Cairo Flagship (North 90th)</option>
+                <option value="Maadi Iron Bunker (Degla 218)">Maadi Iron Bunker (Degla 218)</option>
+                <option value="Tanta Delta Mega Arena">Tanta Delta Mega Arena</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-xs font-bold uppercase tracking-wider text-zinc-300 mb-1">Training Goal</label>
+              <select id="field-goal" class="w-full px-3 py-3 rounded-xl bg-[#08080a] border border-shark-border focus:border-crimson text-white text-xs focus:outline-none">
+                <option value="Raw Hypertrophy & Muscle Mass">Raw Hypertrophy</option>
+                <option value="Apex Heavy Powerlifting (S/B/D)">Heavy Powerlifting</option>
+                <option value="Metabolic Conditioning & Fat Shred">Metabolic Conditioning</option>
+                <option value="Combat Power & Athletic Grip">Combat Strength</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Submit Button -->
+          <div class="pt-2">
+            <button 
+              type="submit" 
+              class="btn-sheen w-full py-4 rounded-xl bg-crimson hover:bg-crimson-bright text-white font-black text-sm uppercase tracking-wider transition-all duration-300 shadow-[0_0_25px_rgba(225,29,72,0.6)] flex items-center justify-center gap-2"
+            >
+              <span>CONFIRM PASS &amp; ACTIVATE VIA WHATSAPP</span>
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+            </button>
+          </div>
+
+          <p class="text-[10px] text-center text-zinc-500">
+            🔒 By submitting, your WhatsApp will receive your encrypted QR Keycard instantly.
+          </p>
+        </form>
+      </div>
+
+      <!-- VIEW 2: ANIMATED SUBMISSION LOADING SPINNER -->
+      <div id="modal-view-loading" class="hidden py-8 text-center space-y-6">
+        <div class="relative w-16 h-16 mx-auto">
+          <div class="w-16 h-16 rounded-full border-4 border-shark-border border-t-crimson animate-spin"></div>
+          <div class="absolute inset-0 flex items-center justify-center">
+            <svg class="w-6 h-6 text-crimson-bright animate-pulse" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M3 21L12 3C12 3 14 10 21 15C17 17 14 17.5 12 17.5C8 17.5 4.5 19.5 3 21Z"/>
+            </svg>
+          </div>
+        </div>
+
+        <div class="space-y-2">
+          <h4 class="font-display font-black text-xl text-white uppercase tracking-wider">
+            AUTHENTICATING ATHLETE CREDENTIALS
+          </h4>
+          <p id="loading-status-text" class="text-xs text-crimson-bright font-mono animate-pulse">
+            Connecting to Egyptian telecom network (+20)...
+          </p>
+        </div>
+
+        <!-- Simulated Loading Progress Bar -->
+        <div class="w-full bg-zinc-800 rounded-full h-1.5 overflow-hidden">
+          <div id="loading-progress-bar" class="bg-crimson h-1.5 rounded-full transition-all duration-500" style="width: 25%"></div>
+        </div>
+      </div>
+
+      <!-- VIEW 3: GREEN VERIFIED CHECKMARK SCREEN (WHATSAPP CONFIRMATION) -->
+      <div id="modal-view-success" class="hidden text-center space-y-6 animate-pop">
+        
+        <!-- Glowing Green Checkmark Circle -->
+        <div class="w-20 h-20 mx-auto rounded-full bg-emerald-950/80 border-2 border-emerald-500 flex items-center justify-center glow-emerald-box">
+          <svg class="w-10 h-10 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3.5" d="M5 13l4 4L19 7"/>
+          </svg>
+        </div>
+
+        <div class="space-y-1">
+          <span class="text-[10px] font-black uppercase tracking-widest text-emerald-400">VERIFICATION SUCCESSFUL</span>
+          <h4 class="font-display font-black text-2xl text-white uppercase tracking-tight">
+            7-DAY PASS ACTIVATED!
+          </h4>
+          <p class="text-xs text-zinc-300 max-w-sm mx-auto">
+            Your official guest pass has been generated and queued for dispatch to your Egyptian WhatsApp number.
+          </p>
+        </div>
+
+        <!-- Athlete Dossier Card -->
+        <div class="bg-[#09090b] border border-emerald-800/40 rounded-xl p-4 text-left space-y-2.5 text-xs">
+          <div class="flex justify-between items-center border-b border-zinc-800 pb-2">
+            <span class="text-zinc-500 uppercase font-bold text-[10px]">Biometric Pass ID:</span>
+            <span id="summary-pass-id" class="font-mono font-bold text-emerald-400 tracking-wider">SHARK-EGY-9842</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-zinc-400 font-medium">Athlete:</span>
+            <span id="summary-name" class="font-bold text-white">Ahmed Hassan</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-zinc-400 font-medium">WhatsApp:</span>
+            <span id="summary-phone" class="font-mono text-zinc-200">+20 10 1234 5678</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-zinc-400 font-medium">Assigned Hub:</span>
+            <span id="summary-hub" class="font-bold text-crimson-bright">New Cairo Flagship</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-zinc-400 font-medium">Training Track:</span>
+            <span id="summary-goal" class="text-zinc-300">Raw Hypertrophy</span>
+          </div>
+          <div class="flex justify-between items-center pt-2 border-t border-zinc-800 text-[11px]">
+            <span class="text-zinc-500">Access Status:</span>
+            <span class="text-emerald-400 font-black flex items-center gap-1.5">
+              <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+              VALID FOR 7 CONSECUTIVE DAYS
+            </span>
+          </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="space-y-3 pt-1">
+          <a 
+            id="whatsapp-direct-btn"
+            href="https://wa.me/201023349900" 
+            target="_blank"
+            class="btn-sheen w-full py-4 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-black text-xs uppercase tracking-wider transition-all duration-300 shadow-[0_0_20px_rgba(16,185,129,0.5)] flex items-center justify-center gap-2"
+          >
+            <!-- WhatsApp Icon -->
+            <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24">
+              <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.007c.106.005.249-.04.39.299.144.347.491 1.2.534 1.287.043.087.072.188.014.304-.058.116-.087.188-.173.289l-.26.304c-.087.086-.177.18-.076.354.101.174.449.741.964 1.201.662.591 1.221.774 1.394.86s.275.072.376-.044c.101-.116.433-.506.549-.68.116-.174.231-.145.39-.087s1.011.477 1.184.564.289.13.332.203c.043.072.043.42-.101.824z"/>
+            </svg>
+            <span>CONFIRM ON WHATSAPP &amp; GET QR CODE</span>
+          </a>
+
+          <button 
+            onclick="closeTrialModal()"
+            class="w-full py-3 rounded-xl bg-shark-panel hover:bg-zinc-800 text-zinc-300 text-xs font-bold uppercase transition-colors"
+          >
+            Close &amp; Return to Compound
+          </button>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ========================================================= -->
+  <!-- JAVASCRIPT: PARTICLES, TICKER, FILTERING & MODAL SIMULATION -->
+  <!-- ========================================================= -->
+  <script>
+    // 1. PROGRAMS DATA
+    const PROGRAMS = [
+      {
+        id: "prog-1",
+        title: "IRON HYPERTROPHY PROTOCOL",
+        category: "Hypertrophy",
+        badge: "High Volume",
+        duration: "60-75 Min",
+        intensity: "Max Overload (RPE 9)",
+        description: "High-volume eccentric overloading targeting pure muscle fiber recruitment. Built around heavy multi-joint barbells and custom calibrated isolation cables.",
+        target: "Chest, Delts & Back Thickness",
+        image: "https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?auto=format&fit=crop&w=800&q=80"
+      },
+      {
+        id: "prog-2",
+        title: "APEX POWERLIFTING SQUAD",
+        category: "Powerlifting",
+        badge: "Sub-Max Strength",
+        duration: "90 Min",
+        intensity: "1-3 Rep Max Effort",
+        description: "Chalk-heavy platform lifting on competition Eleiko benches and calibrated Texas power bars. Structured periodization for Squat, Bench, and Deadlift PRs.",
+        target: "Posterior Chain, Grip & Absolute Force",
+        image: "https://images.unsplash.com/photo-1517838277536-f5f99be501cd?auto=format&fit=crop&w=800&q=80"
+      },
+      {
+        id: "prog-3",
+        title: "METABOLIC CONDITIONING RUSH",
+        category: "Conditioning",
+        badge: "Fat Shred",
+        duration: "45 Min",
+        intensity: "Zone 4-5 Anaerobic",
+        description: "Brutal full-body conditioning featuring heavy sled pushes, battle ropes, assault bikes, and kettlebell clean-and-press complexes.",
+        target: "Cardiovascular Stamina & Body Fat Cut",
+        image: "https://images.unsplash.com/photo-1517963879433-6ad2b056d712?auto=format&fit=crop&w=800&q=80"
+      },
+      {
+        id: "prog-4",
+        title: "GLADIATOR COMBAT STRENGTH",
+        category: "Combat Strength",
+        badge: "Striking Power",
+        duration: "60 Min",
+        intensity: "Explosive Torque",
+        description: "Rotational core development, neck bridging, sandbag carries, and explosive hip thrusts engineered for combat sports athletes and heavy hitters.",
+        target: "Rotational Kinetic Chain & Neck Stability",
+        image: "https://images.unsplash.com/photo-1545015477-a190725df01b?auto=format&fit=crop&w=800&q=80"
+      }
+    ];
+
+    let activeCategory = 'All';
+
+    function renderPrograms() {
+      const container = document.getElementById('programs-grid');
+      const filtered = activeCategory === 'All' 
+        ? PROGRAMS 
+        : PROGRAMS.filter(p => p.category === activeCategory);
+
+      container.innerHTML = filtered.map(p => `
+        <div class="bg-shark-card rounded-2xl overflow-hidden border border-shark-border hover:border-crimson transition-all duration-300 flex flex-col justify-between group hover:shadow-[0_0_30px_rgba(225,29,72,0.3)] hover:-translate-y-1">
+          <div class="relative aspect-[4/3] overflow-hidden bg-zinc-900">
+            <img src="${p.image}" alt="${p.title}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 filter contrast-125" />
+            <div class="absolute top-3 left-3 bg-crimson text-white text-[10px] font-black uppercase tracking-wider px-2.5 py-1 rounded shadow">
+              ${p.badge}
+            </div>
+            <div class="absolute bottom-3 left-3 bg-black/70 backdrop-blur-sm text-zinc-300 text-[10px] font-bold px-2 py-0.5 rounded">
+              ⏱ ${p.duration}
+            </div>
+          </div>
+          <div class="p-6 flex-1 flex flex-col justify-between space-y-4">
+            <div>
+              <span class="text-[10px] font-bold uppercase tracking-widest text-crimson-bright">${p.intensity}</span>
+              <h3 class="font-display font-black text-xl text-white uppercase group-hover:text-crimson-bright transition-colors mt-0.5">
+                ${p.title}
+              </h3>
+              <p class="text-xs text-zinc-400 mt-2 leading-relaxed">
+                ${p.description}
+              </p>
+            </div>
+            <div class="pt-3 border-t border-[#1e1e24] flex items-center justify-between">
+              <span class="text-[11px] font-bold text-zinc-300">${p.target}</span>
+              <button 
+                onclick="openTrialModal('Program: ${p.title}')"
+                class="px-3.5 py-1.5 rounded-lg bg-shark-panel hover:bg-crimson text-white text-xs font-bold uppercase transition-colors"
+              >
+                Join
+              </button>
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function filterPrograms(cat) {
+      activeCategory = cat;
+      document.querySelectorAll('#prog-filter-tabs .prog-btn').forEach(btn => {
+        const isCurrent = (cat === 'All' && btn.innerText.includes('All')) || btn.innerText.includes(cat);
+        btn.className = isCurrent 
+          ? 'prog-btn active px-6 py-2.5 rounded-full text-xs font-black uppercase tracking-wider bg-crimson text-white shadow-[0_0_15px_rgba(225,29,72,0.4)]'
+          : 'prog-btn px-6 py-2.5 rounded-full text-xs font-black uppercase tracking-wider bg-shark-card text-zinc-400 hover:text-white hover:bg-shark-panel border border-shark-border';
+      });
+      renderPrograms();
+    }
+
+    // 2. PRICING BILLING CYCLE TOGGLE (15% Discount on Quarterly)
+    let currentBilling = 'monthly';
+
+    function setBillingCycle(cycle) {
+      currentBilling = cycle;
+      const btnMonthly = document.getElementById('btn-billing-monthly');
+      const btnQuarterly = document.getElementById('btn-billing-quarterly');
+      
+      if (cycle === 'monthly') {
+        btnMonthly.className = 'px-5 py-2 rounded-full text-xs font-black uppercase tracking-wider bg-crimson text-white transition-all shadow';
+        btnQuarterly.className = 'px-5 py-2 rounded-full text-xs font-black uppercase tracking-wider text-zinc-400 hover:text-white transition-all flex items-center gap-1.5';
+      } else {
+        btnQuarterly.className = 'px-5 py-2 rounded-full text-xs font-black uppercase tracking-wider bg-crimson text-white transition-all shadow flex items-center gap-1.5';
+        btnMonthly.className = 'px-5 py-2 rounded-full text-xs font-black uppercase tracking-wider text-zinc-400 hover:text-white transition-all';
+      }
+
+      document.querySelectorAll('.price-display').forEach(el => {
+        const monthly = el.getAttribute('data-monthly');
+        const quarterly = el.getAttribute('data-quarterly');
+        el.innerText = cycle === 'monthly' ? Number(monthly).toLocaleString() : Number(quarterly).toLocaleString();
+      });
+
+      document.querySelectorAll('.period-display').forEach(el => {
+        el.innerText = cycle === 'monthly' ? '/ month' : '/ 3 months';
+      });
+
+      document.querySelectorAll('.sub-billing-note').forEach(el => {
+        el.innerText = cycle === 'monthly' ? 'Billed monthly in Egyptian currency' : 'Billed quarterly with 15% discount applied';
+      });
+    }
+
+    // 3. STATS AUTO-INCREMENTING TICKER
+    function animateCounters() {
+      const animate = (id, target, suffix, decimals = 0, duration = 1800) => {
+        const el = document.getElementById(id);
+        if (!el) return;
+        let start = 0;
+        const stepTime = 20;
+        const steps = duration / stepTime;
+        const increment = target / steps;
+
+        const timer = setInterval(() => {
+          start += increment;
+          if (start >= target) {
+            start = target;
+            clearInterval(timer);
+          }
+          el.innerText = (decimals > 0 ? start.toFixed(decimals) : Math.floor(start).toLocaleString()) + suffix;
+        }, stepTime);
+      };
+
+      animate('stat-members', 9400, '+', 0);
+      animate('stat-racks', 42, '+', 0);
+      animate('stat-success', 99.4, '%', 1);
+    }
+
+    // 4. 60FPS CANVAS PARTICLES (Red Sparks & White Chalk Dust)
+    function initCanvasParticles() {
+      const canvas = document.getElementById('sparks-canvas');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      let width, height;
+
+      function resize() {
+        width = canvas.width = canvas.parentElement.offsetWidth;
+        height = canvas.height = canvas.parentElement.offsetHeight;
+      }
+      window.addEventListener('resize', resize);
+      resize();
+
+      const particles = [];
+      const particleCount = 45;
+
+      for (let i = 0; i < particleCount; i++) {
+        particles.push({
+          x: Math.random() * width,
+          y: Math.random() * height,
+          radius: Math.random() * 2.2 + 0.6,
+          speedY: -(Math.random() * 0.9 + 0.4),
+          speedX: (Math.random() - 0.5) * 0.4,
+          opacity: Math.random() * 0.7 + 0.2,
+          isSpark: Math.random() > 0.35 // True = Crimson spark, False = Chalk dust
+        });
+      }
+
+      function loop() {
+        ctx.clearRect(0, 0, width, height);
+
+        for (let p of particles) {
+          p.y += p.speedY;
+          p.x += p.speedX;
+
+          if (p.y < -10) {
+            p.y = height + 10;
+            p.x = Math.random() * width;
+          }
+          if (p.x < -10) p.x = width + 10;
+          if (p.x > width + 10) p.x = -10;
+
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+
+          if (p.isSpark) {
+            ctx.fillStyle = `rgba(255, 23, 68, ${p.opacity})`;
+            ctx.shadowBlur = 8;
+            ctx.shadowColor = '#ff1744';
+          } else {
+            ctx.fillStyle = `rgba(240, 240, 245, ${p.opacity * 0.5})`;
+            ctx.shadowBlur = 0;
+          }
+
+          ctx.fill();
+        }
+
+        requestAnimationFrame(loop);
+      }
+
+      loop();
+    }
+
+    // 5. EGYPTIAN MOBILE NUMBER AUTO-FORMATTER (+20 1X XXXX XXXX)
+    function formatEgyptianPhone(input) {
+      let raw = input.value.replace(/\D/g, '');
+      
+      // Strip leading country code or leading zero
+      if (raw.startsWith('20')) {
+        raw = raw.substring(2);
+      } else if (raw.startsWith('0')) {
+        raw = raw.substring(1);
+      }
+
+      // Restrict to max 10 digits (Egyptian local without 0)
+      raw = raw.substring(0, 10);
+
+      let formatted = '+20';
+      if (raw.length > 0) {
+        formatted += ' ' + raw.substring(0, 2);
+      }
+      if (raw.length > 2) {
+        formatted += ' ' + raw.substring(2, 6);
+      }
+      if (raw.length > 6) {
+        formatted += ' ' + raw.substring(6, 10);
+      }
+
+      input.value = formatted;
+    }
+
+    // 6. MODAL & SIMULATION STATE HANDLERS
+    function openTrialModal(sourceTitle) {
+      const modal = document.getElementById('trial-modal');
+      const heading = document.getElementById('modal-heading');
+      if (sourceTitle && heading) {
+        heading.innerText = sourceTitle.toUpperCase().includes('PASS') || sourceTitle.toUpperCase().includes('PLAN')
+          ? sourceTitle.toUpperCase()
+          : 'CLAIM 7-DAY SHARK PASS';
+      }
+
+      document.getElementById('modal-view-form').classList.remove('hidden');
+      document.getElementById('modal-view-loading').classList.add('hidden');
+      document.getElementById('modal-view-success').classList.add('hidden');
+      
+      modal.classList.remove('hidden');
+    }
+
+    function closeTrialModal() {
+      document.getElementById('trial-modal').classList.add('hidden');
+    }
+
+    function handleTrialSubmit(e) {
+      e.preventDefault();
+
+      const name = document.getElementById('field-name').value;
+      const phone = document.getElementById('field-phone').value;
+      const hub = document.getElementById('field-hub').value;
+      const goal = document.getElementById('field-goal').value;
+
+      // Validate Phone Format (+20 1X ...)
+      const cleanDigits = phone.replace(/\D/g, '');
+      if (cleanDigits.length < 11) {
+        alert('Please enter a valid 11-digit Egyptian mobile number (+20 1X XXXX XXXX).');
+        return;
+      }
+
+      // Switch to Animated Loading Spinner View
+      document.getElementById('modal-view-form').classList.add('hidden');
+      document.getElementById('modal-view-loading').classList.remove('hidden');
+
+      const statusText = document.getElementById('loading-status-text');
+      const progressBar = document.getElementById('loading-progress-bar');
+
+      progressBar.style.width = '30%';
+      statusText.innerText = 'Connecting to Egyptian carrier network (+20)...';
+
+      setTimeout(() => {
+        progressBar.style.width = '65%';
+        statusText.innerText = 'Allocating 7-day biometric QR access key...';
+      }, 700);
+
+      setTimeout(() => {
+        progressBar.style.width = '95%';
+        statusText.innerText = 'Dispatching credentials via WhatsApp...';
+      }, 1400);
+
+      setTimeout(() => {
+        // Complete simulation and show Green Verified Checkmark View
+        document.getElementById('modal-view-loading').classList.add('hidden');
+        document.getElementById('modal-view-success').classList.remove('hidden');
+
+        // Populate Summary Card
+        const passCode = 'SHARK-EGY-' + Math.floor(1000 + Math.random() * 9000);
+        document.getElementById('summary-pass-id').innerText = passCode;
+        document.getElementById('summary-name').innerText = name;
+        document.getElementById('summary-phone').innerText = phone;
+        document.getElementById('summary-hub').innerText = hub;
+        document.getElementById('summary-goal').innerText = goal;
+
+        // WhatsApp direct link with pre-filled message
+        const waMsg = encodeURIComponent(
+          `Hello Shark Gym Egypt! I have activated my 7-Day Guest Pass.
+
+Pass Code: ${passCode}
+Athlete: ${name}
+Hub: ${hub}
+Goal: ${goal}
+
+Please send my biometric QR Code.`
+        );
+        document.getElementById('whatsapp-direct-btn').href = `https://wa.me/201023349900?text=${waMsg}`;
+
+      }, 2100);
+    }
+
+    function toggleMobileMenu() {
+      document.getElementById('mobile-menu').classList.toggle('hidden');
+    }
+
+    // Initialize Page
+    window.addEventListener('DOMContentLoaded', () => {
+      renderPrograms();
+      initCanvasParticles();
+      animateCounters();
+    });
+  </script>
+</body>
+</html>
