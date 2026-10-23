@@ -130,6 +130,15 @@
       box-shadow: 0 0 35px rgba(16, 185, 129, 0.45);
     }
   </style>
+
+  <!-- PWA Manifest & Android/iOS Standalone Meta -->
+  <link rel="manifest" href="manifest.json">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Shark Gym Cairo">
+  <link rel="apple-touch-icon" href="icon-192.png">
+
 </head>
 <body class="bg-shark-pitch text-zinc-100 min-h-screen relative antialiased selection:bg-crimson selection:text-white">
 
@@ -1387,5 +1396,17 @@ Please send my biometric QR Code.`
       animateCounters();
     });
   </script>
+
+  <!-- PWA Service Worker Registration -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('sw.js')
+          .then((reg) => console.log('✅ PWA Service Worker active:', reg.scope))
+          .catch((err) => console.log('❌ PWA Service Worker registration error:', err));
+      });
+    }
+  </script>
+
 </body>
 </html>
