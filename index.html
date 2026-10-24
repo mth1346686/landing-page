@@ -679,6 +679,91 @@
         </p>
       </div>
 
+      <!-- ================= LIVE HUB CAPACITY RADAR WIDGET ================= -->
+      <div class="mt-10 p-5 rounded-2xl bg-[#121218] border border-shark-border shadow-xl">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b border-zinc-800">
+          <div class="flex items-center gap-3">
+            <span class="flex h-3 w-3 relative">
+              <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+              <span class="relative inline-flex rounded-full h-3 w-3 bg-emerald-500"></span>
+            </span>
+            <div>
+              <div class="text-xs font-black uppercase tracking-wider text-white flex items-center gap-2">
+                <span>LIVE HUB CAPACITY RADAR</span>
+                <span class="px-2 py-0.5 rounded text-[9px] font-black bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">BIOMETRIC SYNC ACTIVE</span>
+              </div>
+              <p class="text-[11px] text-zinc-400 mt-0.5">Real-time floor occupancy &amp; coach-to-member ratios across Cairo compounds</p>
+            </div>
+          </div>
+          <a href="dashboard.html" target="_blank" class="self-start md:self-auto px-4 py-2 rounded-xl bg-purple-950/70 hover:bg-purple-900 border border-purple-700/60 text-amber-400 hover:text-amber-300 font-extrabold text-xs transition flex items-center gap-2 shadow-[0_0_15px_rgba(168,85,247,0.25)]">
+            <span>📊 Open Workforce Analytics</span>
+            <span>➔</span>
+          </a>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 pt-4">
+          <!-- Hub 1: New Cairo -->
+          <div class="p-3.5 rounded-xl bg-[#181822] border border-zinc-800/80">
+            <div class="flex justify-between items-center mb-1.5">
+              <span class="font-bold text-xs text-white">New Cairo Flagship</span>
+              <span class="text-[10px] font-black px-1.5 py-0.5 rounded bg-amber-500/20 text-amber-400">84% PEAK</span>
+            </div>
+            <div class="w-full bg-zinc-800 h-2 rounded-full overflow-hidden mb-2">
+              <div class="bg-gradient-to-r from-amber-500 to-red-500 h-full rounded-full" style="width: 84%"></div>
+            </div>
+            <div class="flex justify-between text-[10px] text-zinc-400">
+              <span>Floor: 42 Racks Active</span>
+              <span class="text-emerald-400 font-bold">1:8 Coach Ratio</span>
+            </div>
+          </div>
+
+          <!-- Hub 2: Sheikh Zayed -->
+          <div class="p-3.5 rounded-xl bg-[#181822] border border-zinc-800/80">
+            <div class="flex justify-between items-center mb-1.5">
+              <span class="font-bold text-xs text-white">Sheikh Zayed West</span>
+              <span class="text-[10px] font-black px-1.5 py-0.5 rounded bg-amber-500/20 text-amber-400">71% ACTIVE</span>
+            </div>
+            <div class="w-full bg-zinc-800 h-2 rounded-full overflow-hidden mb-2">
+              <div class="bg-gradient-to-r from-emerald-500 to-amber-500 h-full rounded-full" style="width: 71%"></div>
+            </div>
+            <div class="flex justify-between text-[10px] text-zinc-400">
+              <span>Floor: 24 Platforms</span>
+              <span class="text-emerald-400 font-bold">1:7 Coach Ratio</span>
+            </div>
+          </div>
+
+          <!-- Hub 3: Maadi Degla -->
+          <div class="p-3.5 rounded-xl bg-[#181822] border border-zinc-800/80">
+            <div class="flex justify-between items-center mb-1.5">
+              <span class="font-bold text-xs text-white">Maadi Iron Bunker</span>
+              <span class="text-[10px] font-black px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-400">68% OPTIMAL</span>
+            </div>
+            <div class="w-full bg-zinc-800 h-2 rounded-full overflow-hidden mb-2">
+              <div class="bg-emerald-500 h-full rounded-full" style="width: 68%"></div>
+            </div>
+            <div class="flex justify-between text-[10px] text-zinc-400">
+              <span>Floor: 18 Platforms</span>
+              <span class="text-emerald-400 font-bold">Physio Active</span>
+            </div>
+          </div>
+
+          <!-- Hub 4: Tanta Delta -->
+          <div class="p-3.5 rounded-xl bg-[#181822] border border-zinc-800/80">
+            <div class="flex justify-between items-center mb-1.5">
+              <span class="font-bold text-xs text-white">Tanta Delta Arena</span>
+              <span class="text-[10px] font-black px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-400">52% OPEN</span>
+            </div>
+            <div class="w-full bg-zinc-800 h-2 rounded-full overflow-hidden mb-2">
+              <div class="bg-emerald-500 h-full rounded-full" style="width: 52%"></div>
+            </div>
+            <div class="flex justify-between text-[10px] text-zinc-400">
+              <span>Floor: 12 Platforms</span>
+              <span class="text-emerald-400 font-bold">Open Platforms</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <div class="grid grid-cols-1 md:grid-cols-3 gap-8 pt-14">
         
         <!-- Hub 1: New Cairo -->
