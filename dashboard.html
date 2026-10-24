@@ -1,581 +1,551 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth dark">
+<html lang="en" class="scroll-smooth">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Shark Gym | Executive Workforce & Athletic Operations Dashboard</title>
+  <title>Shark Gym | Employee & Coach Workforce Dashboard</title>
   
   <!-- Fonts & CDN Tailwind -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Oswald:wght@500;600;700&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
-  <!-- ApexCharts CDN for Ultra-Smooth Animated SVG Charts -->
+  <!-- ApexCharts CDN -->
   <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
-
-  <script>
-    tailwind.config = {
-      darkMode: 'class',
-      theme: {
-        extend: {
-          colors: {
-            brand: {
-              header: '#2c124d',
-              card: '#160d26',
-              panel: '#201338',
-              border: '#3c2563',
-              purple: '#7b3dbd',
-              purpleLight: '#a855f7',
-              gold: '#d4af37',
-              crimson: '#e11d48'
-            }
-          },
-          fontFamily: {
-            sans: ['Montserrat', 'sans-serif'],
-            oswald: ['Oswald', 'sans-serif']
-          }
-        }
-      }
-    }
-  </script>
 
   <style>
     body {
-      background-color: #0d0617;
-      color: #f3e8ff;
+      background-color: #311354;
       font-family: 'Montserrat', sans-serif;
+      margin: 0;
+      padding: 0;
+      color: #2a1147;
       overflow-x: hidden;
     }
-    .slicer-btn {
-      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+
+    /* Curved Cut-Out Tab Styling matching photo_543.jpg exactly */
+    .sidebar-active-tab {
+      position: relative;
+      background-color: #f7f3fb;
+      color: #3e1c66 !important;
+      font-weight: 800;
+      border-top-left-radius: 22px;
+      border-bottom-left-radius: 22px;
+      box-shadow: -4px 0 15px rgba(0, 0, 0, 0.08);
+      z-index: 20;
     }
-    .slicer-btn.active {
-      background: linear-gradient(135deg, #7b3dbd 0%, #9333ea 100%);
+
+    /* Inverted Top Scoop */
+    .sidebar-active-tab::before {
+      content: '';
+      position: absolute;
+      top: -22px;
+      right: 0;
+      width: 22px;
+      height: 22px;
+      background-color: transparent;
+      border-bottom-right-radius: 22px;
+      box-shadow: 8px 8px 0 8px #f7f3fb;
+      pointer-events: none;
+      z-index: 20;
+    }
+
+    /* Inverted Bottom Scoop */
+    .sidebar-active-tab::after {
+      content: '';
+      position: absolute;
+      bottom: -22px;
+      right: 0;
+      width: 22px;
+      height: 22px;
+      background-color: transparent;
+      border-top-right-radius: 22px;
+      box-shadow: 8px -8px 0 8px #f7f3fb;
+      pointer-events: none;
+      z-index: 20;
+    }
+
+    /* Slicer Pills */
+    .slicer-pill {
+      transition: all 0.2s ease;
+      background-color: #72349e;
+      color: #f3e8ff;
+      border: 1px solid #5a2283;
+      white-space: nowrap;
+    }
+    .slicer-pill.active {
+      background: linear-gradient(135deg, #4a1572 0%, #68239e 100%);
       color: #ffffff;
-      border-color: #c084fc;
-      box-shadow: 0 4px 14px rgba(147, 51, 234, 0.45);
+      border-color: #a855f7;
+      box-shadow: 0 2px 8px rgba(74, 21, 114, 0.4);
       font-weight: 700;
     }
+    .slicer-pill:hover:not(.active) {
+      background-color: #8340b3;
+    }
+
+    /* KPI Cards Hover */
     .kpi-card {
-      transition: transform 0.25s ease, box-shadow 0.25s ease;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
     }
     .kpi-card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 10px 25px -5px rgba(123, 61, 189, 0.35);
-    }
-    /* ApexCharts custom tooltip */
-    .apexcharts-tooltip.apexcharts-theme-dark {
-      background: #1c0e33 !important;
-      border: 1px solid #7b3dbd !important;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.6) !important;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(62, 28, 102, 0.12);
     }
   </style>
 </head>
-<body class="p-2 sm:p-4 md:p-6 lg:p-8 max-w-[1720px] mx-auto min-h-screen">
+<body class="p-2 sm:p-4 lg:p-6 min-h-screen">
 
-  <!-- ================= TOP HEADER BANNER ================= -->
-  <header class="bg-gradient-to-r from-[#2a0e4f] via-[#3b156b] to-[#1e0a38] border border-brand-border/60 rounded-2xl p-4 sm:p-5 shadow-2xl mb-6 relative overflow-hidden">
-    <div class="absolute -right-16 -top-16 w-56 h-56 bg-purple-600/10 rounded-full blur-3xl pointer-events-none"></div>
+  <!-- ================= MASTER DASHBOARD FRAME ================= -->
+  <div class="max-w-[1720px] mx-auto bg-[#3e1c66] rounded-[28px] shadow-2xl overflow-hidden border border-purple-900/60 flex flex-col lg:flex-row">
 
-    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 relative z-10">
-      <!-- Title & Branding -->
-      <div class="flex items-center gap-3.5">
-        <div class="w-12 h-12 rounded-xl bg-gradient-to-tr from-purple-700 to-amber-400 p-0.5 shadow-lg flex items-center justify-center">
-          <div class="w-full h-full bg-[#1e0a38] rounded-[10px] flex items-center justify-center text-xl">
-            🦈
+    <!-- ================= LEFT SIDEBAR (Matching photo_543) ================= -->
+    <aside class="w-full lg:w-64 bg-[#3e1c66] pt-6 pb-6 lg:pb-12 flex flex-col justify-between shrink-0 select-none">
+      
+      <!-- Top Section: Logo & Tabs -->
+      <div>
+        <!-- Logo Emblem -->
+        <div class="px-6 mb-8 text-center flex flex-col items-center">
+          <div class="w-16 h-16 rounded-full bg-gradient-to-tr from-purple-800 to-amber-400 p-0.5 shadow-xl flex items-center justify-center mb-2">
+            <div class="w-full h-full bg-[#270e44] rounded-full flex items-center justify-center text-2xl">
+              🦈
+            </div>
+          </div>
+          <div class="text-white font-black text-xl tracking-wider font-oswald uppercase leading-tight">
+            SHARK GYM
+          </div>
+          <div class="text-[10px] font-bold tracking-widest text-purple-300 uppercase mt-0.5">
+            WORKFORCE HQ
           </div>
         </div>
-        <div>
-          <div class="flex items-center gap-2">
-            <h1 class="text-xl sm:text-2xl md:text-3xl font-black tracking-wide text-white flex items-center gap-2">
-              <span class="text-amber-400">📊</span> Employee & Coach Workforce Dashboard
+
+        <!-- Navigation Tabs with Custom Cut-Out for Active Tab -->
+        <nav class="space-y-1.5 pl-4 sm:pl-6 pr-0">
+          <!-- Active Tab: Dashboard -->
+          <a href="#" class="sidebar-active-tab py-3.5 px-5 flex items-center gap-3 text-sm transition">
+            <span class="text-base">📊</span>
+            <span>Dashboard</span>
+          </a>
+
+          <!-- Inactive Tab: Summary -->
+          <a href="#summary-section" onclick="alert('Viewing Executive Summary Mode')" class="py-3 px-5 flex items-center gap-3 text-sm font-semibold text-purple-200 hover:text-white hover:bg-purple-900/40 rounded-l-2xl transition">
+            <span class="text-base">📈</span>
+            <span>Summary</span>
+          </a>
+
+          <!-- Inactive Tab: Database -->
+          <a href="Shark_Gym_Workforce_Dashboard.xlsx" download class="py-3 px-5 flex items-center gap-3 text-sm font-semibold text-purple-200 hover:text-white hover:bg-purple-900/40 rounded-l-2xl transition">
+            <span class="text-base">🗄️</span>
+            <span>Database (.xlsx)</span>
+          </a>
+        </nav>
+      </div>
+
+      <!-- Bottom Watermark & Actions -->
+      <div class="px-6 mt-8 lg:mt-24 text-center">
+        <div class="text-xs text-purple-300 font-bold mb-3 flex items-center justify-center gap-2">
+          <span>⚜️</span>
+          <span>ATHLETIC COMPOUND</span>
+        </div>
+        <a href="index.html" class="block w-full py-2.5 px-3 rounded-xl bg-purple-900/60 hover:bg-purple-800 text-xs font-bold text-white border border-purple-700/50 transition shadow">
+          🏠 Return to Site
+        </a>
+      </div>
+    </aside>
+
+    <!-- ================= MAIN CONTENT CANVAS ================= -->
+    <main class="flex-1 bg-[#f7f3fb] p-4 sm:p-6 lg:p-7 rounded-t-[28px] lg:rounded-t-none lg:rounded-l-[32px] overflow-hidden">
+
+      <!-- Canvas Header Banner -->
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-purple-200/80 pb-4 mb-5">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl bg-purple-700 text-white flex items-center justify-center text-lg shadow-md shrink-0">
+            📊
+          </div>
+          <div>
+            <h1 class="text-xl sm:text-2xl font-black text-[#2e1050] font-oswald tracking-tight">
+              EMPLOYEE WORKFORCE DASHBOARD
             </h1>
-            <span class="hidden sm:inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 animate-pulse">
-              ● LIVE DATA
-            </span>
+            <p class="text-xs text-purple-700/80 font-medium">
+              Shark Gym Athletic Staffing, Retention & Hub Performance Analytics (EGP)
+            </p>
           </div>
-          <p class="text-xs sm:text-sm text-purple-200/70 mt-0.5">
-            Shark Gym Executive HR, Athletic Staffing & Retention Intelligence | Cairo Hubs (EGP)
-          </p>
+        </div>
+
+        <div class="flex items-center gap-2 self-start sm:self-auto">
+          <a href="Shark_Gym_Workforce_Dashboard.xlsx" download class="px-4 py-2 rounded-xl bg-gradient-to-r from-amber-500 to-yellow-500 hover:from-amber-400 hover:to-yellow-400 text-black font-extrabold text-xs shadow-md transition flex items-center gap-1.5">
+            <span>📥</span> Download Excel (.xlsx)
+          </a>
+          <button onclick="resetFilters()" title="Reset Filters" class="p-2 rounded-xl bg-purple-200/80 hover:bg-purple-300/80 text-purple-900 text-sm font-bold transition">
+            🔄
+          </button>
         </div>
       </div>
 
-      <!-- Quick Actions & Links -->
-      <div class="flex items-center gap-2.5 flex-wrap sm:flex-nowrap">
-        <a href="index.html" class="px-3.5 py-2 rounded-xl bg-purple-950/60 hover:bg-purple-900 text-xs font-semibold text-purple-200 border border-purple-700/50 transition flex items-center gap-1.5 shadow-sm">
-          <span>🏠</span> Main Website
-        </a>
-        <a href="Shark_Gym_Workforce_Dashboard.xlsx" download class="px-3.5 py-2 rounded-xl bg-gradient-to-r from-amber-600 to-amber-500 hover:from-amber-500 hover:to-amber-400 text-black font-bold text-xs shadow-md transition flex items-center gap-1.5">
-          <span>📥</span> Download Excel (.xlsx)
-        </a>
-        <button onclick="resetFilters()" title="Reset Filters" class="p-2 rounded-xl bg-purple-900/40 hover:bg-purple-800/60 border border-purple-700/40 text-purple-200 text-sm transition">
-          🔄
-        </button>
-      </div>
-    </div>
-  </header>
+      <!-- ================= SLICERS ROW (Matching photo_534 Slicers) ================= -->
+      <section class="bg-white border border-purple-200/90 rounded-2xl p-4 shadow-sm mb-6">
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-5 gap-3.5">
 
-  <!-- ================= INTERACTIVE SLICERS / FILTERS ROW ================= -->
-  <section class="bg-[#150a26] border border-brand-border/60 rounded-2xl p-4 sm:p-5 shadow-xl mb-6">
-    <div class="flex items-center justify-between mb-3 border-b border-brand-border/40 pb-2">
-      <div class="text-xs font-bold uppercase tracking-wider text-amber-400 flex items-center gap-1.5">
-        <span>⚡</span> Interactive Slicers & Dynamic Filters
-      </div>
-      <div class="text-[11px] text-purple-300/60">
-        Click any filter to dynamically update KPIs & all 6 charts
-      </div>
-    </div>
+          <!-- 1. Department Slicer -->
+          <div class="bg-[#fcfaff] p-2.5 rounded-xl border border-purple-100 flex flex-col justify-between">
+            <div class="text-[11px] font-extrabold text-purple-900 uppercase tracking-wider mb-2 flex justify-between items-center">
+              <span>Department</span>
+              <span class="text-xs text-purple-400">▾</span>
+            </div>
+            <div class="grid grid-cols-2 gap-1 text-[11px]">
+              <button onclick="applyFilter('dept', 'all', this)" class="slicer-pill active px-2 py-1 rounded text-center">All Units</button>
+              <button onclick="applyFilter('dept', 'strength', this)" class="slicer-pill px-2 py-1 rounded text-center">Strength & C.</button>
+              <button onclick="applyFilter('dept', 'nutrition', this)" class="slicer-pill px-2 py-1 rounded text-center">Nutrition</button>
+              <button onclick="applyFilter('dept', 'physio', this)" class="slicer-pill px-2 py-1 rounded text-center">Physio</button>
+              <button onclick="applyFilter('dept', 'ops', this)" class="slicer-pill px-2 py-1 rounded text-center">Operations</button>
+              <button onclick="applyFilter('dept', 'sales', this)" class="slicer-pill px-2 py-1 rounded text-center">Sales & VIP</button>
+            </div>
+          </div>
 
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3.5">
-      <!-- 1. Department Filter -->
-      <div class="bg-[#1c0f33] p-2.5 rounded-xl border border-brand-border/40">
-        <label class="block text-[11px] font-bold text-purple-200 mb-1.5">DEPARTMENT / SPECIALTY</label>
-        <div class="grid grid-cols-2 gap-1 text-[11px]">
-          <button onclick="filterBy('dept', 'all', this)" class="slicer-btn active px-2 py-1 rounded bg-[#271547] text-purple-200 border border-brand-border">All Units</button>
-          <button onclick="filterBy('dept', 'strength', this)" class="slicer-btn px-2 py-1 rounded bg-[#271547] text-purple-200 border border-brand-border">Strength & C.</button>
-          <button onclick="filterBy('dept', 'nutrition', this)" class="slicer-btn px-2 py-1 rounded bg-[#271547] text-purple-200 border border-brand-border">Nutrition</button>
-          <button onclick="filterBy('dept', 'physio', this)" class="slicer-btn px-2 py-1 rounded bg-[#271547] text-purple-200 border border-brand-border">Physio</button>
+          <!-- 2. Location Slicer -->
+          <div class="bg-[#fcfaff] p-2.5 rounded-xl border border-purple-100 flex flex-col justify-between">
+            <div class="text-[11px] font-extrabold text-purple-900 uppercase tracking-wider mb-2 flex justify-between items-center">
+              <span>Location (Hubs)</span>
+              <span class="text-xs text-purple-400">▾</span>
+            </div>
+            <div class="grid grid-cols-2 gap-1 text-[11px]">
+              <button onclick="applyFilter('loc', 'all', this)" class="slicer-pill active px-2 py-1 rounded text-center">All Hubs</button>
+              <button onclick="applyFilter('loc', 'tagamoa', this)" class="slicer-pill px-2 py-1 rounded text-center">New Cairo</button>
+              <button onclick="applyFilter('loc', 'zayed', this)" class="slicer-pill px-2 py-1 rounded text-center">Sheikh Zayed</button>
+              <button onclick="applyFilter('loc', 'maadi', this)" class="slicer-pill px-2 py-1 rounded text-center">Maadi Degla</button>
+              <button onclick="applyFilter('loc', 'korba', this)" class="slicer-pill px-2 py-1 rounded text-center">Heliopolis</button>
+              <button onclick="applyFilter('loc', 'october', this)" class="slicer-pill px-2 py-1 rounded text-center">6th October</button>
+            </div>
+          </div>
+
+          <!-- 3. Job Level Slicer -->
+          <div class="bg-[#fcfaff] p-2.5 rounded-xl border border-purple-100 flex flex-col justify-between">
+            <div class="text-[11px] font-extrabold text-purple-900 uppercase tracking-wider mb-2 flex justify-between items-center">
+              <span>Coaching Tier</span>
+              <span class="text-xs text-purple-400">▾</span>
+            </div>
+            <div class="grid grid-cols-2 gap-1 text-[11px]">
+              <button onclick="applyFilter('tier', 'all', this)" class="slicer-pill active px-2 py-1 rounded text-center">All Tiers</button>
+              <button onclick="applyFilter('tier', 'master', this)" class="slicer-pill px-2 py-1 rounded text-center">Master Coach</button>
+              <button onclick="applyFilter('tier', 'senior', this)" class="slicer-pill px-2 py-1 rounded text-center">Senior L2</button>
+              <button onclick="applyFilter('tier', 'junior', this)" class="slicer-pill px-2 py-1 rounded text-center">Junior L1</button>
+              <button onclick="applyFilter('tier', 'lead', this)" class="slicer-pill px-2 py-1 rounded text-center">Facility Lead</button>
+              <button onclick="applyFilter('tier', 'dir', this)" class="slicer-pill px-2 py-1 rounded text-center">Director</button>
+            </div>
+          </div>
+
+          <!-- 4. Year Slicer -->
+          <div class="bg-[#fcfaff] p-2.5 rounded-xl border border-purple-100 flex flex-col justify-between">
+            <div class="text-[11px] font-extrabold text-purple-900 uppercase tracking-wider mb-2 flex justify-between items-center">
+              <span>Fiscal Year</span>
+              <span class="text-xs text-purple-400">▾</span>
+            </div>
+            <div class="grid grid-cols-2 gap-1 text-[11px]">
+              <button onclick="applyFilter('year', '2023', this)" class="slicer-pill px-2 py-1 rounded text-center">2023</button>
+              <button onclick="applyFilter('year', '2024', this)" class="slicer-pill px-2 py-1 rounded text-center">2024</button>
+              <button onclick="applyFilter('year', '2025', this)" class="slicer-pill px-2 py-1 rounded text-center">2025</button>
+              <button onclick="applyFilter('year', '2026', this)" class="slicer-pill active px-2 py-1 rounded text-center">2026 Live</button>
+            </div>
+          </div>
+
+          <!-- 5. Month Slicer -->
+          <div class="bg-[#fcfaff] p-2.5 rounded-xl border border-purple-100 flex flex-col justify-between">
+            <div class="text-[11px] font-extrabold text-purple-900 uppercase tracking-wider mb-2 flex justify-between items-center">
+              <span>Reporting Month</span>
+              <span class="text-xs text-purple-400">▾</span>
+            </div>
+            <div class="grid grid-cols-3 gap-1 text-[10px]">
+              <button onclick="applyFilter('month', 'jan', this)" class="slicer-pill px-1 py-1 rounded text-center">Jan</button>
+              <button onclick="applyFilter('month', 'feb', this)" class="slicer-pill px-1 py-1 rounded text-center">Feb</button>
+              <button onclick="applyFilter('month', 'mar', this)" class="slicer-pill px-1 py-1 rounded text-center">Mar</button>
+              <button onclick="applyFilter('month', 'apr', this)" class="slicer-pill px-1 py-1 rounded text-center">Apr</button>
+              <button onclick="applyFilter('month', 'may', this)" class="slicer-pill px-1 py-1 rounded text-center">May</button>
+              <button onclick="applyFilter('month', 'all', this)" class="slicer-pill active px-1 py-1 rounded text-center">Full H1</button>
+            </div>
+          </div>
+
         </div>
-      </div>
+      </section>
 
-      <!-- 2. Location Filter -->
-      <div class="bg-[#1c0f33] p-2.5 rounded-xl border border-brand-border/40">
-        <label class="block text-[11px] font-bold text-purple-200 mb-1.5">CAIRO HUB LOCATION</label>
-        <div class="grid grid-cols-2 gap-1 text-[11px]">
-          <button onclick="filterBy('loc', 'all', this)" class="slicer-btn active px-2 py-1 rounded bg-[#271547] text-purple-200 border border-brand-border">All Hubs</button>
-          <button onclick="filterBy('loc', 'tagamoa', this)" class="slicer-btn px-2 py-1 rounded bg-[#271547] text-purple-200 border border-brand-border">New Cairo</button>
-          <button onclick="filterBy('loc', 'zayed', this)" class="slicer-btn px-2 py-1 rounded bg-[#271547] text-purple-200 border border-brand-border">Sheikh Zayed</button>
-          <button onclick="filterBy('loc', 'maadi', this)" class="slicer-btn px-2 py-1 rounded bg-[#271547] text-purple-200 border border-brand-border">Maadi Degla</button>
+      <!-- ================= 6 KPI CARDS (Matching photo_534) ================= -->
+      <section class="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-6 gap-3.5 mb-6">
+        <!-- Card 1: Total Employees -->
+        <div class="kpi-card bg-white border border-purple-200/80 rounded-2xl p-4 shadow-sm flex flex-col justify-between">
+          <div class="text-[11px] font-extrabold text-purple-900 uppercase tracking-wider">Total Employees</div>
+          <div class="flex items-center gap-3 my-1">
+            <span class="text-2xl text-purple-700">👥</span>
+            <span id="kpi-total" class="text-3xl sm:text-4xl font-black text-[#2e1050] font-oswald tracking-tight">454</span>
+          </div>
+          <div class="text-[10px] text-purple-600 font-semibold">Registered Workforce</div>
         </div>
-      </div>
 
-      <!-- 3. Job Tier Filter -->
-      <div class="bg-[#1c0f33] p-2.5 rounded-xl border border-brand-border/40">
-        <label class="block text-[11px] font-bold text-purple-200 mb-1.5">COACHING TIER</label>
-        <div class="grid grid-cols-2 gap-1 text-[11px]">
-          <button onclick="filterBy('tier', 'all', this)" class="slicer-btn active px-2 py-1 rounded bg-[#271547] text-purple-200 border border-brand-border">All Levels</button>
-          <button onclick="filterBy('tier', 'master', this)" class="slicer-btn px-2 py-1 rounded bg-[#271547] text-purple-200 border border-brand-border">Master Coach</button>
-          <button onclick="filterBy('tier', 'senior', this)" class="slicer-btn px-2 py-1 rounded bg-[#271547] text-purple-200 border border-brand-border">Senior L2</button>
-          <button onclick="filterBy('tier', 'manager', this)" class="slicer-btn px-2 py-1 rounded bg-[#271547] text-purple-200 border border-brand-border">Facility Lead</button>
+        <!-- Card 2: Active Employees -->
+        <div class="kpi-card bg-white border border-purple-200/80 rounded-2xl p-4 shadow-sm flex flex-col justify-between">
+          <div class="text-[11px] font-extrabold text-purple-900 uppercase tracking-wider">Active Employees</div>
+          <div class="flex items-center gap-3 my-1">
+            <span class="text-2xl text-purple-700">⚡</span>
+            <span id="kpi-active" class="text-3xl sm:text-4xl font-black text-purple-900 font-oswald tracking-tight">321</span>
+          </div>
+          <div class="text-[10px] text-emerald-600 font-bold">● 70.7% Floor Duty</div>
         </div>
-      </div>
 
-      <!-- 4. Year Filter -->
-      <div class="bg-[#1c0f33] p-2.5 rounded-xl border border-brand-border/40">
-        <label class="block text-[11px] font-bold text-purple-200 mb-1.5">FISCAL YEAR</label>
-        <div class="grid grid-cols-2 gap-1 text-[11px]">
-          <button onclick="filterBy('year', '2024', this)" class="slicer-btn px-2 py-1 rounded bg-[#271547] text-purple-200 border border-brand-border">2024</button>
-          <button onclick="filterBy('year', '2025', this)" class="slicer-btn px-2 py-1 rounded bg-[#271547] text-purple-200 border border-brand-border">2025</button>
-          <button onclick="filterBy('year', '2026', this)" class="slicer-btn active px-2 py-1 rounded bg-[#271547] text-purple-200 border border-brand-border">2026 (Live)</button>
-          <button onclick="filterBy('year', 'ytd', this)" class="slicer-btn px-2 py-1 rounded bg-[#271547] text-purple-200 border border-brand-border">All Time</button>
+        <!-- Card 3: Attrition -->
+        <div class="kpi-card bg-white border border-purple-200/80 rounded-2xl p-4 shadow-sm flex flex-col justify-between">
+          <div class="text-[11px] font-extrabold text-purple-900 uppercase tracking-wider">Attrition</div>
+          <div class="flex items-center gap-3 my-1">
+            <span class="text-2xl text-purple-700">🔄</span>
+            <span id="kpi-attr" class="text-3xl sm:text-4xl font-black text-purple-800 font-oswald tracking-tight">133</span>
+          </div>
+          <div class="text-[10px] text-purple-600 font-semibold">YTD Departures</div>
         </div>
-      </div>
 
-      <!-- 5. Month Filter -->
-      <div class="bg-[#1c0f33] p-2.5 rounded-xl border border-brand-border/40">
-        <label class="block text-[11px] font-bold text-purple-200 mb-1.5">REPORTING MONTH</label>
-        <div class="grid grid-cols-3 gap-1 text-[10px]">
-          <button onclick="filterBy('month', 'jan', this)" class="slicer-btn px-1.5 py-1 rounded bg-[#271547] text-purple-200 border border-brand-border">Jan</button>
-          <button onclick="filterBy('month', 'feb', this)" class="slicer-btn px-1.5 py-1 rounded bg-[#271547] text-purple-200 border border-brand-border">Feb</button>
-          <button onclick="filterBy('month', 'mar', this)" class="slicer-btn px-1.5 py-1 rounded bg-[#271547] text-purple-200 border border-brand-border">Mar</button>
-          <button onclick="filterBy('month', 'apr', this)" class="slicer-btn px-1.5 py-1 rounded bg-[#271547] text-purple-200 border border-brand-border">Apr</button>
-          <button onclick="filterBy('month', 'may', this)" class="slicer-btn px-1.5 py-1 rounded bg-[#271547] text-purple-200 border border-brand-border">May</button>
-          <button onclick="filterBy('month', 'all', this)" class="slicer-btn active px-1.5 py-1 rounded bg-[#271547] text-purple-200 border border-brand-border">H1 Full</button>
+        <!-- Card 4: Attrition % -->
+        <div class="kpi-card bg-white border border-purple-200/80 rounded-2xl p-4 shadow-sm flex flex-col justify-between">
+          <div class="text-[11px] font-extrabold text-purple-900 uppercase tracking-wider">Attrition %</div>
+          <div class="flex items-center gap-3 my-1">
+            <span class="text-2xl text-purple-700">📉</span>
+            <span id="kpi-attr-rate" class="text-3xl sm:text-4xl font-black text-purple-900 font-oswald tracking-tight">29.3%</span>
+          </div>
+          <div class="text-[10px] text-emerald-600 font-bold">▲ Below Benchmark</div>
         </div>
-      </div>
-    </div>
-  </section>
 
-  <!-- ================= 6 ANIMATED KPI CARDS ROW ================= -->
-  <section class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3.5 mb-6">
-    <!-- Card 1: Total Workforce -->
-    <div class="kpi-card bg-gradient-to-b from-[#20103b] to-[#140a24] border border-brand-border/60 rounded-2xl p-4 shadow-lg flex flex-col justify-between">
-      <div class="flex items-center justify-between text-xs font-bold text-purple-300">
-        <span>TOTAL WORKFORCE</span>
-        <span class="text-base">👥</span>
-      </div>
-      <div class="my-2">
-        <span id="kpi-total" class="text-3xl sm:text-4xl font-black text-white font-oswald tracking-tight">454</span>
-      </div>
-      <div class="text-[11px] text-purple-300/70">Registered coaches & staff</div>
-    </div>
+        <!-- Card 5: Avg. Tenure -->
+        <div class="kpi-card bg-white border border-purple-200/80 rounded-2xl p-4 shadow-sm flex flex-col justify-between">
+          <div class="text-[11px] font-extrabold text-purple-900 uppercase tracking-wider">Avg. Tenure</div>
+          <div class="flex items-center gap-3 my-1">
+            <span class="text-2xl text-purple-700">⏳</span>
+            <span id="kpi-tenure" class="text-3xl font-black text-[#2e1050] font-oswald tracking-tight">5.1 Yrs</span>
+          </div>
+          <div class="text-[10px] text-purple-600 font-semibold">High Loyalty</div>
+        </div>
 
-    <!-- Card 2: Active Employees -->
-    <div class="kpi-card bg-gradient-to-b from-[#20103b] to-[#140a24] border border-brand-border/60 rounded-2xl p-4 shadow-lg flex flex-col justify-between">
-      <div class="flex items-center justify-between text-xs font-bold text-purple-300">
-        <span>ACTIVE ON-DUTY</span>
-        <span class="text-base">⚡</span>
-      </div>
-      <div class="my-2">
-        <span id="kpi-active" class="text-3xl sm:text-4xl font-black text-amber-400 font-oswald tracking-tight">321</span>
-      </div>
-      <div class="text-[11px] text-emerald-400 font-semibold">● 70.7% Floor Presence</div>
-    </div>
+        <!-- Card 6: Diversity -->
+        <div class="kpi-card bg-white border border-purple-200/80 rounded-2xl p-4 shadow-sm flex flex-col justify-between">
+          <div class="text-[11px] font-extrabold text-purple-900 uppercase tracking-wider">Diversity</div>
+          <div class="flex items-center gap-3 my-1">
+            <span class="text-2xl text-purple-700">⚖️</span>
+            <div class="text-sm font-black text-purple-950">
+              <div>Male: 60%</div>
+              <div>Female: 40%</div>
+            </div>
+          </div>
+          <div class="text-[10px] text-purple-600 font-semibold">Balanced Athletic Floor</div>
+        </div>
+      </section>
 
-    <!-- Card 3: Attrition (Departures) -->
-    <div class="kpi-card bg-gradient-to-b from-[#20103b] to-[#140a24] border border-brand-border/60 rounded-2xl p-4 shadow-lg flex flex-col justify-between">
-      <div class="flex items-center justify-between text-xs font-bold text-purple-300">
-        <span>ATTRITION</span>
-        <span class="text-base">🔄</span>
-      </div>
-      <div class="my-2">
-        <span id="kpi-attr" class="text-3xl sm:text-4xl font-black text-purple-200 font-oswald tracking-tight">133</span>
-      </div>
-      <div class="text-[11px] text-purple-400/80">YTD Departures</div>
-    </div>
+      <!-- ================= MIDDLE VISUALS (3 CHARTS) ================= -->
+      <section class="grid grid-cols-1 lg:grid-cols-3 gap-5 mb-6">
+        <!-- 1. Headcount by Department (Doughnut) -->
+        <div class="bg-white border border-purple-200/80 rounded-2xl p-4 shadow-sm flex flex-col justify-between">
+          <div class="text-xs font-extrabold text-purple-950 uppercase tracking-wider mb-1">
+            Headcount by Department
+          </div>
+          <div id="chart-doughnut" class="w-full h-[260px]"></div>
+        </div>
 
-    <!-- Card 4: Attrition % -->
-    <div class="kpi-card bg-gradient-to-b from-[#20103b] to-[#140a24] border border-brand-border/60 rounded-2xl p-4 shadow-lg flex flex-col justify-between">
-      <div class="flex items-center justify-between text-xs font-bold text-purple-300">
-        <span>ATTRITION RATE</span>
-        <span class="text-base">📉</span>
-      </div>
-      <div class="my-2">
-        <span id="kpi-attr-rate" class="text-3xl sm:text-4xl font-black text-purple-300 font-oswald tracking-tight">29.3%</span>
-      </div>
-      <div class="text-[11px] text-emerald-400 font-semibold">▲ Healthy Athletic Tier</div>
-    </div>
+        <!-- 2. Headcount Trend Monthly (Area Chart) -->
+        <div class="bg-white border border-purple-200/80 rounded-2xl p-4 shadow-sm flex flex-col justify-between">
+          <div class="text-xs font-extrabold text-purple-950 uppercase tracking-wider mb-1 flex justify-between items-center">
+            <span>Headcount Trend (Monthly)</span>
+            <span class="text-[11px] font-black text-emerald-600">+664% Growth</span>
+          </div>
+          <div id="chart-trend" class="w-full h-[260px]"></div>
+        </div>
 
-    <!-- Card 5: Avg. Tenure -->
-    <div class="kpi-card bg-gradient-to-b from-[#20103b] to-[#140a24] border border-brand-border/60 rounded-2xl p-4 shadow-lg flex flex-col justify-between">
-      <div class="flex items-center justify-between text-xs font-bold text-purple-300">
-        <span>AVG. TENURE</span>
-        <span class="text-base">⏳</span>
-      </div>
-      <div class="my-2">
-        <span id="kpi-tenure" class="text-3xl sm:text-4xl font-black text-white font-oswald tracking-tight">5.1 Yrs</span>
-      </div>
-      <div class="text-[11px] text-purple-300/70">High Coach Loyalty</div>
-    </div>
+        <!-- 3. Attrition % Department (Horizontal Bar) -->
+        <div class="bg-white border border-purple-200/80 rounded-2xl p-4 shadow-sm flex flex-col justify-between">
+          <div class="text-xs font-extrabold text-purple-950 uppercase tracking-wider mb-1">
+            Attrition % Department
+          </div>
+          <div id="chart-attr" class="w-full h-[260px]"></div>
+        </div>
+      </section>
 
-    <!-- Card 6: Diversity -->
-    <div class="kpi-card bg-gradient-to-b from-[#20103b] to-[#140a24] border border-brand-border/60 rounded-2xl p-4 shadow-lg flex flex-col justify-between">
-      <div class="flex items-center justify-between text-xs font-bold text-purple-300">
-        <span>GENDER RATIO</span>
-        <span class="text-base">⚖️</span>
-      </div>
-      <div class="my-2">
-        <span id="kpi-diversity" class="text-2xl sm:text-3xl font-black text-amber-300 font-oswald tracking-tight">60% M / 40% F</span>
-      </div>
-      <div class="text-[11px] text-purple-300/70">Balanced Facilities</div>
-    </div>
-  </section>
+      <!-- ================= BOTTOM VISUALS (3 CHARTS) ================= -->
+      <section class="grid grid-cols-1 lg:grid-cols-3 gap-5 mb-4">
+        <!-- 4. Active HC vs Attrition HC (Grouped Column) -->
+        <div class="bg-white border border-purple-200/80 rounded-2xl p-4 shadow-sm flex flex-col justify-between">
+          <div class="text-xs font-extrabold text-purple-950 uppercase tracking-wider mb-1">
+            Active HC vs Attrition HC
+          </div>
+          <div id="chart-grouped" class="w-full h-[260px]"></div>
+        </div>
 
-  <!-- ================= MIDDLE CHARTS (3 CHARTS) ================= -->
-  <section class="grid grid-cols-1 lg:grid-cols-3 gap-5 mb-6">
-    <!-- Chart 1: Doughnut Chart -->
-    <div class="bg-[#150a26] border border-brand-border/60 rounded-2xl p-4 sm:p-5 shadow-xl flex flex-col justify-between">
-      <div class="flex items-center justify-between mb-2">
-        <h2 class="text-sm font-bold text-white flex items-center gap-2">
-          <span class="text-amber-400">🍩</span> Headcount by Department
-        </h2>
-        <span class="text-[10px] text-purple-300 font-mono">Total: 454</span>
-      </div>
-      <div id="chart-dept" class="w-full h-[280px]"></div>
-    </div>
+        <!-- 5. Performance Rating Distribution (Horizontal Bar) -->
+        <div class="bg-white border border-purple-200/80 rounded-2xl p-4 shadow-sm flex flex-col justify-between">
+          <div class="text-xs font-extrabold text-purple-950 uppercase tracking-wider mb-1">
+            Performance Rating Distribution
+          </div>
+          <div id="chart-perf" class="w-full h-[260px]"></div>
+        </div>
 
-    <!-- Chart 2: Area / Spline Trend -->
-    <div class="bg-[#150a26] border border-brand-border/60 rounded-2xl p-4 sm:p-5 shadow-xl flex flex-col justify-between">
-      <div class="flex items-center justify-between mb-2">
-        <h2 class="text-sm font-bold text-white flex items-center gap-2">
-          <span class="text-amber-400">📈</span> Headcount Trend (Monthly Growth)
-        </h2>
-        <span class="text-[10px] text-emerald-400 font-bold">+664% H1</span>
-      </div>
-      <div id="chart-trend" class="w-full h-[280px]"></div>
-    </div>
+        <!-- 6. Employees by Location (Vertical Column) -->
+        <div class="bg-white border border-purple-200/80 rounded-2xl p-4 shadow-sm flex flex-col justify-between">
+          <div class="text-xs font-extrabold text-purple-950 uppercase tracking-wider mb-1">
+            Employees by Location
+          </div>
+          <div id="chart-loc" class="w-full h-[260px]"></div>
+        </div>
+      </section>
 
-    <!-- Chart 3: Horizontal Bar Chart -->
-    <div class="bg-[#150a26] border border-brand-border/60 rounded-2xl p-4 sm:p-5 shadow-xl flex flex-col justify-between">
-      <div class="flex items-center justify-between mb-2">
-        <h2 class="text-sm font-bold text-white flex items-center gap-2">
-          <span class="text-amber-400">📊</span> Attrition % Department
-        </h2>
-        <span class="text-[10px] text-purple-300">Turnover Benchmark</span>
-      </div>
-      <div id="chart-attr-dept" class="w-full h-[280px]"></div>
-    </div>
-  </section>
+    </main>
+  </div>
 
-  <!-- ================= BOTTOM CHARTS (3 CHARTS) ================= -->
-  <section class="grid grid-cols-1 lg:grid-cols-3 gap-5 mb-8">
-    <!-- Chart 4: Grouped Column (Active vs Attrition) -->
-    <div class="bg-[#150a26] border border-brand-border/60 rounded-2xl p-4 sm:p-5 shadow-xl flex flex-col justify-between">
-      <div class="flex items-center justify-between mb-2">
-        <h2 class="text-sm font-bold text-white flex items-center gap-2">
-          <span class="text-amber-400">👥</span> Active HC vs Attrition HC
-        </h2>
-        <span class="text-[10px] text-purple-300">Monthly Retention</span>
-      </div>
-      <div id="chart-active-vs-attr" class="w-full h-[280px]"></div>
-    </div>
-
-    <!-- Chart 5: Horizontal Bar (Performance Ratings) -->
-    <div class="bg-[#150a26] border border-brand-border/60 rounded-2xl p-4 sm:p-5 shadow-xl flex flex-col justify-between">
-      <div class="flex items-center justify-between mb-2">
-        <h2 class="text-sm font-bold text-white flex items-center gap-2">
-          <span class="text-amber-400">⭐</span> Performance Rating Distribution
-        </h2>
-        <span class="text-[10px] text-purple-300">Quarterly Reviews</span>
-      </div>
-      <div id="chart-performance" class="w-full h-[280px]"></div>
-    </div>
-
-    <!-- Chart 6: Vertical Column (Employees by Location) -->
-    <div class="bg-[#150a26] border border-brand-border/60 rounded-2xl p-4 sm:p-5 shadow-xl flex flex-col justify-between">
-      <div class="flex items-center justify-between mb-2">
-        <h2 class="text-sm font-bold text-white flex items-center gap-2">
-          <span class="text-amber-400">📍</span> Employees by Location (Cairo Hubs)
-        </h2>
-        <span class="text-[10px] text-purple-300">7 Regional Facilities</span>
-      </div>
-      <div id="chart-location" class="w-full h-[280px]"></div>
-    </div>
-  </section>
-
-  <!-- ================= FOOTER ================= -->
-  <footer class="border-t border-brand-border/40 pt-6 pb-8 text-center text-xs text-purple-300/60 flex flex-col sm:flex-row items-center justify-between gap-3">
-    <div>
-      SHARK GYM ATHLETIC OPERATIONS © 2026 | Built autonomously by Antigravity Mobile Squad
-    </div>
-    <div class="flex items-center gap-4">
-      <a href="index.html" class="hover:text-amber-400 transition">Return to Main Site</a>
-      <span>•</span>
-      <a href="Shark_Gym_Workforce_Dashboard.xlsx" class="hover:text-amber-400 transition">Raw Excel Data</a>
-    </div>
-  </footer>
-
-  <!-- ================= APEXCHARTS LOGIC & FILTERING ================= -->
+  <!-- ================= APEXCHARTS LOGIC ================= -->
   <script>
-    // State
     let charts = {};
 
-    // Base Dataset matching user's image exactly
     const baseData = {
-      kpi: { total: 454, active: 321, attr: 133, attrRate: "29.3%", tenure: "5.1 Yrs", diversity: "60% M / 40% F" },
+      kpi: { total: 454, active: 321, attr: 133, attrRate: '29.3%', tenure: '5.1 Yrs' },
       dept: {
-        labels: ['Operations', 'Sales & VIP', 'Physio & Rehab', 'Finance & Admin', 'Nutrition', 'Strength Coaches'],
+        labels: ['Operations', 'Sales', 'IT & Tech', 'Finance', 'Marketing', 'Strength & Nutrition'],
         series: [28, 47, 58, 83, 104, 134]
       },
       trend: {
         categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
         series: [42, 90, 161, 247, 284, 321]
       },
-      attrDept: {
-        categories: ['VIP Sales', 'Marketing', 'Facility Ops', 'Physio & Rehab', 'Finance', 'Strength Coaches'],
+      attr: {
+        categories: ['Sales', 'Marketing', 'Operations', 'IT', 'Finance', 'Strength Coaches'],
         series: [39, 30, 29, 25, 12, 8]
       },
-      activeVsAttr: {
+      grouped: {
         categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
         active: [42, 48, 71, 86, 37, 37],
         attrition: [26, 13, 25, 27, 18, 24]
       },
-      performance: {
-        categories: ['Outstanding', 'Exceeds Expectations', 'Meets Expectations', 'Needs Improvement', 'Poor / Eval'],
+      perf: {
+        categories: ['Outstanding', 'Exceeds Expectations', 'Meets Expectations', 'Needs Improvement', 'Poor'],
         series: [19, 55, 80, 130, 170]
       },
-      location: {
-        categories: ['October Hub', 'Zamalek', 'Alexandria', 'Heliopolis', 'Maadi Degla', 'Sheikh Zayed', 'New Cairo'],
+      loc: {
+        categories: ['Gurugram', 'Mumbai', 'Hyderabad', 'Chennai', 'Pune', 'Bengaluru', 'Delhi'],
         series: [53, 54, 54, 60, 70, 81, 82]
       }
     };
 
-    // Initialize All 6 Charts
     function initCharts() {
-      // 1. Doughnut Chart (Headcount by Department)
-      charts.dept = new ApexCharts(document.getElementById('chart-dept'), {
-        chart: { type: 'donut', height: '100%', background: 'transparent' },
-        theme: { mode: 'dark' },
+      // 1. Doughnut
+      charts.dept = new ApexCharts(document.getElementById('chart-doughnut'), {
+        chart: { type: 'donut', height: '100%' },
         labels: baseData.dept.labels,
         series: baseData.dept.series,
-        colors: ['#4a1572', '#6a2bb5', '#8b48d7', '#a855f7', '#c084fc', '#e9d5ff'],
-        plotOptions: {
-          pie: {
-            donut: {
-              size: '68%',
-              labels: {
-                show: true,
-                total: {
-                  show: true,
-                  label: 'Total Staff',
-                  color: '#e9d5ff',
-                  formatter: () => '454'
-                }
-              }
-            }
-          }
-        },
-        legend: { position: 'bottom', fontSize: '11px', labels: { colors: '#d8b4fe' } },
-        stroke: { show: false },
+        colors: ['#3e1c66', '#5a228f', '#7b3dbd', '#9b5de5', '#c084fc', '#e9d5ff'],
+        legend: { position: 'right', fontSize: '10px' },
+        plotOptions: { pie: { donut: { size: '65%' } } },
         dataLabels: { enabled: false }
       });
       charts.dept.render();
 
-      // 2. Area Spline (Monthly Trend)
+      // 2. Trend Area
       charts.trend = new ApexCharts(document.getElementById('chart-trend'), {
-        chart: { type: 'area', height: '100%', background: 'transparent', toolbar: { show: false } },
-        theme: { mode: 'dark' },
-        stroke: { curve: 'smooth', width: 3, colors: ['#c084fc'] },
+        chart: { type: 'area', height: '100%', toolbar: { show: false } },
+        stroke: { curve: 'smooth', width: 2.5, colors: ['#4a1572'] },
         fill: {
           type: 'gradient',
-          gradient: {
-            shadeIntensity: 1,
-            opacityFrom: 0.65,
-            opacityTo: 0.05,
-            stops: [0, 95, 100],
-            colorStops: [
-              { offset: 0, color: '#9333ea', opacity: 0.65 },
-              { offset: 100, color: '#160d26', opacity: 0.0 }
-            ]
-          }
+          gradient: { shadeIntensity: 1, opacityFrom: 0.6, opacityTo: 0.05, colorStops: [
+            { offset: 0, color: '#682a99', opacity: 0.6 },
+            { offset: 100, color: '#f7f3fb', opacity: 0.0 }
+          ]}
         },
-        series: [{ name: 'Active Staff', data: baseData.trend.series }],
-        xaxis: {
-          categories: baseData.trend.categories,
-          labels: { style: { colors: '#c084fc', fontSize: '11px' } },
-          axisBorder: { color: '#3c2563' }
-        },
-        yaxis: { labels: { style: { colors: '#a855f7' } } },
-        dataLabels: {
-          enabled: true,
-          style: { fontSize: '10px', colors: ['#ffffff'] },
-          background: { enabled: true, foreColor: '#160d26', borderRadius: 4, padding: 3 }
-        },
-        grid: { borderColor: '#2b1747', strokeDashArray: 3 }
+        series: [{ name: 'Active Headcount', data: baseData.trend.series }],
+        xaxis: { categories: baseData.trend.categories, labels: { style: { fontSize: '10px' } } },
+        yaxis: { labels: { style: { fontSize: '10px' } } },
+        dataLabels: { enabled: true, style: { fontSize: '9px', colors: ['#3e1c66'] } },
+        grid: { borderColor: '#f0e6f7' }
       });
       charts.trend.render();
 
-      // 3. Horizontal Bar (Attrition % Department)
-      charts.attrDept = new ApexCharts(document.getElementById('chart-attr-dept'), {
-        chart: { type: 'bar', height: '100%', background: 'transparent', toolbar: { show: false } },
-        theme: { mode: 'dark' },
-        plotOptions: {
-          bar: { horizontal: true, borderRadius: 5, barHeight: '55%', colors: { ranges: [{ from: 0, to: 100, color: '#9333ea' }] } }
-        },
-        series: [{ name: 'Attrition %', data: baseData.attrDept.series }],
-        xaxis: {
-          labels: { formatter: (val) => val + '%', style: { colors: '#c084fc' } },
-          axisBorder: { color: '#3c2563' }
-        },
-        yaxis: { labels: { style: { colors: '#e9d5ff', fontSize: '11px' } } },
-        dataLabels: { enabled: true, formatter: (val) => val + '%', style: { colors: ['#ffffff'], fontSize: '10px' } },
-        grid: { borderColor: '#2b1747' }
+      // 3. Attrition Bar
+      charts.attr = new ApexCharts(document.getElementById('chart-attr'), {
+        chart: { type: 'bar', height: '100%', toolbar: { show: false } },
+        plotOptions: { bar: { horizontal: true, borderRadius: 4, barHeight: '52%' } },
+        colors: ['#7b3dbd'],
+        series: [{ name: 'Attrition %', data: baseData.attr.series }],
+        xaxis: { labels: { formatter: (val) => val + '%', style: { fontSize: '10px' } } },
+        yaxis: { labels: { style: { fontSize: '10px' } } },
+        dataLabels: { enabled: true, formatter: (val) => val + '%', style: { fontSize: '9px' } },
+        grid: { borderColor: '#f0e6f7' }
       });
-      charts.attrDept.render();
+      charts.attr.render();
 
-      // 4. Clustered Column (Active vs Attrition)
-      charts.activeVsAttr = new ApexCharts(document.getElementById('chart-active-vs-attr'), {
-        chart: { type: 'bar', height: '100%', background: 'transparent', toolbar: { show: false } },
-        theme: { mode: 'dark' },
-        colors: ['#7e22ce', '#c084fc'],
-        plotOptions: { bar: { horizontal: false, columnWidth: '55%', borderRadius: 3 } },
+      // 4. Grouped Column
+      charts.grouped = new ApexCharts(document.getElementById('chart-grouped'), {
+        chart: { type: 'bar', height: '100%', toolbar: { show: false } },
+        colors: ['#4a1572', '#cca5fc'],
+        plotOptions: { bar: { horizontal: false, columnWidth: '55%', borderRadius: 2 } },
         series: [
-          { name: 'Active HC', data: baseData.activeVsAttr.active },
-          { name: 'Attrition HC', data: baseData.activeVsAttr.attrition }
+          { name: 'Active', data: baseData.grouped.active },
+          { name: 'Attrition', data: baseData.grouped.attrition }
         ],
-        xaxis: { categories: baseData.activeVsAttr.categories, labels: { style: { colors: '#c084fc' } } },
-        yaxis: { labels: { style: { colors: '#a855f7' } } },
-        legend: { position: 'top', labels: { colors: '#d8b4fe' } },
+        xaxis: { categories: baseData.grouped.categories, labels: { style: { fontSize: '10px' } } },
+        yaxis: { labels: { style: { fontSize: '10px' } } },
+        legend: { position: 'top', fontSize: '10px' },
         dataLabels: { enabled: false },
-        grid: { borderColor: '#2b1747' }
+        grid: { borderColor: '#f0e6f7' }
       });
-      charts.activeVsAttr.render();
+      charts.grouped.render();
 
-      // 5. Horizontal Bar (Performance Ratings)
-      charts.performance = new ApexCharts(document.getElementById('chart-performance'), {
-        chart: { type: 'bar', height: '100%', background: 'transparent', toolbar: { show: false } },
-        theme: { mode: 'dark' },
-        plotOptions: { bar: { horizontal: true, borderRadius: 5, barHeight: '52%' } },
-        colors: ['#8b5cf6'],
-        series: [{ name: 'Coaches', data: baseData.performance.series }],
-        xaxis: { labels: { style: { colors: '#c084fc' } } },
-        yaxis: { labels: { style: { colors: '#e9d5ff', fontSize: '10px' } } },
-        dataLabels: { enabled: true, style: { colors: ['#ffffff'], fontSize: '10px' } },
-        grid: { borderColor: '#2b1747' }
+      // 5. Performance Bar
+      charts.perf = new ApexCharts(document.getElementById('chart-perf'), {
+        chart: { type: 'bar', height: '100%', toolbar: { show: false } },
+        plotOptions: { bar: { horizontal: true, borderRadius: 4, barHeight: '50%' } },
+        colors: ['#682a99'],
+        series: [{ name: 'Count', data: baseData.perf.series }],
+        xaxis: { labels: { style: { fontSize: '10px' } } },
+        yaxis: { labels: { style: { fontSize: '9px' } } },
+        dataLabels: { enabled: true, style: { fontSize: '9px' } },
+        grid: { borderColor: '#f0e6f7' }
       });
-      charts.performance.render();
+      charts.perf.render();
 
-      // 6. Vertical Column (Location)
-      charts.location = new ApexCharts(document.getElementById('chart-location'), {
-        chart: { type: 'bar', height: '100%', background: 'transparent', toolbar: { show: false } },
-        theme: { mode: 'dark' },
-        colors: ['#a855f7'],
-        plotOptions: { bar: { horizontal: false, columnWidth: '48%', borderRadius: 4 } },
-        series: [{ name: 'Staff Count', data: baseData.location.series }],
-        xaxis: {
-          categories: baseData.location.categories,
-          labels: { rotate: -25, rotateAlways: true, style: { colors: '#c084fc', fontSize: '9px' } }
-        },
-        yaxis: { labels: { style: { colors: '#a855f7' } } },
-        dataLabels: { enabled: true, style: { colors: ['#ffffff'], fontSize: '10px' } },
-        grid: { borderColor: '#2b1747' }
+      // 6. Location Column
+      charts.loc = new ApexCharts(document.getElementById('chart-loc'), {
+        chart: { type: 'bar', height: '100%', toolbar: { show: false } },
+        colors: ['#7b3dbd'],
+        plotOptions: { bar: { horizontal: false, columnWidth: '50%', borderRadius: 3 } },
+        series: [{ name: 'Employees', data: baseData.loc.series }],
+        xaxis: { categories: baseData.loc.categories, labels: { rotate: -25, style: { fontSize: '9px' } } },
+        yaxis: { labels: { style: { fontSize: '10px' } } },
+        dataLabels: { enabled: true, style: { fontSize: '9px' } },
+        grid: { borderColor: '#f0e6f7' }
       });
-      charts.location.render();
+      charts.loc.render();
     }
 
-    // Interactive Slicer Logic
-    function filterBy(type, val, btn) {
-      // Toggle active styling within parent group
-      btn.closest('.grid').querySelectorAll('.slicer-btn').forEach(b => b.classList.remove('active'));
+    function applyFilter(type, val, btn) {
+      btn.closest('.grid').querySelectorAll('.slicer-pill').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
 
-      // Calculate dynamic variation based on filter
-      let multiplier = 1.0;
-      if (val === 'strength') multiplier = 0.35;
-      else if (val === 'nutrition') multiplier = 0.28;
-      else if (val === 'physio') multiplier = 0.20;
-      else if (val === 'tagamoa') multiplier = 0.26;
-      else if (val === 'zayed') multiplier = 0.25;
-      else if (val === 'master') multiplier = 0.18;
-      else if (val === 'jan') multiplier = 0.15;
+      let m = 1.0;
+      if (val === 'strength') m = 0.35;
+      else if (val === 'nutrition') m = 0.28;
+      else if (val === 'physio') m = 0.22;
+      else if (val === 'tagamoa') m = 0.26;
+      else if (val === 'zayed') m = 0.25;
+      else if (val === 'master') m = 0.18;
+      else if (val === 'jan') m = 0.15;
 
-      // Animate KPI numbers
-      animateCount('kpi-total', Math.round(baseData.kpi.total * multiplier));
-      animateCount('kpi-active', Math.round(baseData.kpi.active * multiplier));
-      animateCount('kpi-attr', Math.round(baseData.kpi.attr * multiplier));
+      document.getElementById('kpi-total').innerText = Math.round(baseData.kpi.total * m);
+      document.getElementById('kpi-active').innerText = Math.round(baseData.kpi.active * m);
+      document.getElementById('kpi-attr').innerText = Math.round(baseData.kpi.attr * m);
 
-      // Re-animate ApexCharts with dynamic series updates
       charts.trend.updateSeries([{
-        name: 'Active Staff',
-        data: baseData.trend.series.map(v => Math.max(8, Math.round(v * multiplier)))
+        name: 'Active Headcount',
+        data: baseData.trend.series.map(v => Math.max(6, Math.round(v * m)))
       }]);
-
-      charts.location.updateSeries([{
-        name: 'Staff Count',
-        data: baseData.location.series.map(v => Math.max(5, Math.round(v * multiplier)))
-      }]);
-    }
-
-    function animateCount(elemId, target) {
-      const el = document.getElementById(elemId);
-      const start = parseInt(el.innerText) || 0;
-      const duration = 500;
-      const startTime = performance.now();
-
-      function update(currentTime) {
-        const elapsed = currentTime - startTime;
-        const progress = Math.min(elapsed / duration, 1);
-        const current = Math.round(start + (target - start) * progress);
-        el.innerText = current;
-        if (progress < 1) requestAnimationFrame(update);
-      }
-      requestAnimationFrame(update);
     }
 
     function resetFilters() {
-      document.querySelectorAll('.slicer-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.slicer-pill').forEach(b => b.classList.remove('active'));
       document.querySelectorAll('.grid button:first-child').forEach(b => b.classList.add('active'));
       document.getElementById('kpi-total').innerText = '454';
       document.getElementById('kpi-active').innerText = '321';
       document.getElementById('kpi-attr').innerText = '133';
-      charts.trend.updateSeries([{ name: 'Active Staff', data: baseData.trend.series }]);
-      charts.location.updateSeries([{ name: 'Staff Count', data: baseData.location.series }]);
+      charts.trend.updateSeries([{ name: 'Active Headcount', data: baseData.trend.series }]);
     }
 
-    // Launch on DOM Ready
-    window.addEventListener('DOMContentLoaded', () => {
-      initCharts();
-    });
+    window.addEventListener('DOMContentLoaded', initCharts);
   </script>
 </body>
 </html>
