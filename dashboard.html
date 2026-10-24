@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Shark Gym | Executive Workforce & Analytics Dashboard</title>
+  <title>Shark Gym | Executive Workforce & Analytics Dashboard Pro</title>
   
   <!-- Fonts & CDN Tailwind -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -73,6 +73,24 @@
       transition: background-color 0.3s ease, color 0.3s ease;
     }
 
+    /* TV Wallboard Mode */
+    body.tv-mode {
+      padding: 0 !important;
+    }
+    body.tv-mode aside, body.tv-mode #export-center, body.tv-mode .theme-toggle-btn {
+      display: none !important;
+    }
+    body.tv-mode .dashboard-container {
+      max-width: 100% !important;
+      border-radius: 0 !important;
+      border: none !important;
+      min-height: 100vh !important;
+    }
+    body.tv-mode .canvas-container {
+      border-radius: 0 !important;
+      padding: 1.5rem !important;
+    }
+
     /* Curved Cut-Out Tab Styling matching photo_543.jpg exactly */
     .sidebar-active-tab {
       position: relative;
@@ -120,7 +138,7 @@
 
     /* Slicer Pills */
     .slicer-pill {
-      transition: all 0.2s ease;
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
       background-color: var(--slicer-bg);
       color: var(--slicer-text);
       border: 1px solid var(--slicer-border);
@@ -130,15 +148,17 @@
       background: linear-gradient(135deg, var(--slicer-active-start) 0%, var(--slicer-active-end) 100%);
       color: #ffffff;
       border-color: #a855f7;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
       font-weight: 700;
+      transform: scale(1.02);
     }
     body.theme-black .slicer-pill.active {
       border-color: #f59e0b;
-      box-shadow: 0 2px 8px rgba(220, 38, 38, 0.4);
+      box-shadow: 0 4px 12px rgba(220, 38, 38, 0.4);
     }
     .slicer-pill:hover:not(.active) {
       filter: brightness(1.15);
+      transform: translateY(-1px);
     }
 
     /* Dynamic UI Theme Containers */
@@ -152,11 +172,11 @@
     .custom-card {
       background-color: var(--bg-card);
       border-color: var(--border-card);
-      transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.3s ease;
+      transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s ease, background-color 0.3s ease;
     }
     .custom-card:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+      transform: translateY(-3px);
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.15);
     }
     .custom-subcard {
       background-color: var(--bg-card-subtle);
@@ -249,27 +269,33 @@
           </a>
 
           <!-- Summary Tab: Triggers Executive Modal / Drawer -->
-          <a href="#summary" onclick="openExecutiveDrawer(); return false;" class="py-3 px-5 flex items-center gap-3 text-sm font-semibold text-purple-200 hover:text-white hover:bg-purple-900/40 rounded-l-2xl transition">
+          <a href="#summary" onclick="playAudioTick(); openExecutiveDrawer(); return false;" class="py-3 px-5 flex items-center gap-3 text-sm font-semibold text-purple-200 hover:text-white hover:bg-purple-900/40 rounded-l-2xl transition">
             <span class="text-base">📈</span>
             <span>Executive Summary</span>
           </a>
 
-          <!-- Database Download (.xlsx) -->
-          <a href="Shark_Gym_Workforce_Dashboard.xlsx" download class="py-3 px-5 flex items-center gap-3 text-sm font-semibold text-purple-200 hover:text-white hover:bg-purple-900/40 rounded-l-2xl transition">
-            <span class="text-base">🗄️</span>
-            <span>Database (.xlsx)</span>
+          <!-- Payroll Simulator Tab: Interactive Calculator -->
+          <a href="#payroll" onclick="playAudioTick(); openPayrollModal(); return false;" class="py-3 px-5 flex items-center gap-3 text-sm font-semibold text-purple-200 hover:text-white hover:bg-purple-900/40 rounded-l-2xl transition">
+            <span class="text-base">💰</span>
+            <span>Payroll Simulator</span>
           </a>
 
           <!-- Live Biometric Drawer Link -->
-          <a href="#biometrics" onclick="openRosterDrawer(); return false;" class="py-3 px-5 flex items-center gap-3 text-sm font-semibold text-purple-200 hover:text-white hover:bg-purple-900/40 rounded-l-2xl transition">
+          <a href="#biometrics" onclick="playAudioTick(); openRosterDrawer(); return false;" class="py-3 px-5 flex items-center gap-3 text-sm font-semibold text-purple-200 hover:text-white hover:bg-purple-900/40 rounded-l-2xl transition">
             <span class="text-base">⚡</span>
             <span>Coach Roster (Live)</span>
+          </a>
+
+          <!-- Database Download (.xlsx) -->
+          <a href="Shark_Gym_Workforce_Dashboard.xlsx" download onclick="playAudioTick();" class="py-3 px-5 flex items-center gap-3 text-sm font-semibold text-purple-200 hover:text-white hover:bg-purple-900/40 rounded-l-2xl transition">
+            <span class="text-base">🗄️</span>
+            <span>Database (.xlsx)</span>
           </a>
         </nav>
       </div>
 
       <!-- Bottom Watermark & Actions -->
-      <div class="px-6 mt-8 lg:mt-16 text-center space-y-3">
+      <div class="px-6 mt-8 lg:mt-12 text-center space-y-3">
         <!-- Dual Theme Toggle Button -->
         <button onclick="toggleTheme()" class="theme-toggle-btn w-full py-2.5 px-3 rounded-xl bg-purple-900/70 hover:bg-purple-800 text-xs font-bold text-amber-300 border border-purple-700/60 transition flex items-center justify-center gap-2 shadow">
           <span id="theme-icon">🌙</span>
@@ -294,7 +320,7 @@
             </div>
             <div>
               <h1 class="text-xl sm:text-2xl font-black font-oswald tracking-tight" style="color: var(--text-main);">
-                EMPLOYEE WORKFORCE & PERFORMANCE DASHBOARD
+                EMPLOYEE WORKFORCE & PERFORMANCE DASHBOARD PRO
               </h1>
               <p class="text-xs font-medium" style="color: var(--text-muted);">
                 Shark Gym Athletic Staffing, Retention & Hub Biometrics Analytics (All Figures in EGP)
@@ -302,18 +328,26 @@
             </div>
           </div>
 
-          <!-- Multi-Format Export Center -->
+          <!-- Multi-Format Export Center & Pro Controls -->
           <div id="export-center" class="flex flex-wrap items-center gap-2 self-start sm:self-auto">
-            <a href="Shark_Gym_Workforce_Dashboard.xlsx" download class="px-3.5 py-2 rounded-xl bg-gradient-to-r from-amber-500 to-yellow-500 hover:from-amber-400 hover:to-yellow-400 text-black font-extrabold text-xs shadow-md transition flex items-center gap-1.5">
+            <!-- TV Wallboard Mode Button -->
+            <button onclick="toggleTVMode()" title="Toggle Boardroom TV Presentation Mode" class="px-3 py-2 rounded-xl bg-purple-900/80 hover:bg-purple-800 text-amber-300 font-bold text-xs border border-purple-600/60 shadow transition flex items-center gap-1.5">
+              <span>📺</span> <span id="tv-btn-label">TV Mode</span>
+            </button>
+            <!-- Audio Toggle Button -->
+            <button onclick="toggleAudio()" id="audio-toggle-btn" title="Toggle Sound Feedback" class="p-2 rounded-xl bg-purple-900/80 hover:bg-purple-800 text-white text-xs border border-purple-600/60 shadow transition">
+              🔊
+            </button>
+            <a href="Shark_Gym_Workforce_Dashboard.xlsx" download onclick="playAudioTick();" class="px-3.5 py-2 rounded-xl bg-gradient-to-r from-amber-500 to-yellow-500 hover:from-amber-400 hover:to-yellow-400 text-black font-extrabold text-xs shadow-md transition flex items-center gap-1.5">
               <span>📥</span> Excel (.xlsx)
             </a>
-            <button onclick="exportCSV()" class="px-3 py-2 rounded-xl bg-purple-900/80 hover:bg-purple-800 text-white font-bold text-xs border border-purple-600/60 shadow transition flex items-center gap-1">
+            <button onclick="playAudioTick(); exportCSV();" class="px-3 py-2 rounded-xl bg-purple-900/80 hover:bg-purple-800 text-white font-bold text-xs border border-purple-600/60 shadow transition flex items-center gap-1">
               <span>📊</span> CSV
             </button>
-            <button onclick="window.print()" class="px-3 py-2 rounded-xl bg-purple-900/80 hover:bg-purple-800 text-white font-bold text-xs border border-purple-600/60 shadow transition flex items-center gap-1">
+            <button onclick="playAudioTick(); window.print();" class="px-3 py-2 rounded-xl bg-purple-900/80 hover:bg-purple-800 text-white font-bold text-xs border border-purple-600/60 shadow transition flex items-center gap-1">
               <span>🖨️</span> Print / PDF
             </button>
-            <button onclick="resetFilters()" title="Reset Filters" class="p-2 rounded-xl bg-purple-200/80 hover:bg-purple-300 text-purple-900 text-sm font-bold transition">
+            <button onclick="playAudioTick(); resetFilters();" title="Reset Filters" class="p-2 rounded-xl bg-purple-200/80 hover:bg-purple-300 text-purple-900 text-sm font-bold transition">
               🔄
             </button>
           </div>
@@ -334,18 +368,21 @@
                     Live Biometric Sync
                   </span>
                 </div>
-                <p id="ai-insight-text" class="text-xs font-semibold mt-1" style="color: var(--text-main);">
+                <p id="ai-insight-text" class="text-xs font-semibold mt-1 transition-opacity duration-300" style="color: var(--text-main);">
                   ⚡ New Cairo & Zayed Hubs operating at 91% PT capacity with zero payroll anomalies. Retention reached +14.2% YoY following performance bonus rollout.
                 </p>
               </div>
             </div>
 
             <div class="flex items-center gap-2 shrink-0 w-full md:w-auto justify-end">
-              <button onclick="openExecutiveDrawer()" class="px-3 py-1.5 rounded-lg bg-amber-500/10 hover:bg-amber-500/20 text-amber-400 border border-amber-500/30 text-xs font-bold transition flex items-center gap-1.5">
+              <button onclick="playAudioTick(); openPayrollModal();" class="px-3 py-1.5 rounded-lg bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 text-xs font-bold transition flex items-center gap-1.5">
+                <span>💰</span> Payroll Simulator
+              </button>
+              <button onclick="playAudioTick(); openExecutiveDrawer();" class="px-3 py-1.5 rounded-lg bg-amber-500/10 hover:bg-amber-500/20 text-amber-400 border border-amber-500/30 text-xs font-bold transition flex items-center gap-1.5">
                 <span>📑</span> Boardroom Memo
               </button>
-              <button onclick="cycleInsights()" class="p-1.5 rounded-lg bg-purple-500/10 hover:bg-purple-500/20 text-purple-300 border border-purple-500/20 text-xs transition">
-                Next Insight ➔
+              <button onclick="playAudioTick(); cycleInsights();" class="p-1.5 rounded-lg bg-purple-500/10 hover:bg-purple-500/20 text-purple-300 border border-purple-500/20 text-xs transition">
+                Next ➔
               </button>
             </div>
           </div>
@@ -436,69 +473,112 @@
           </div>
         </section>
 
-        <!-- ================= 6 KPI CARDS (Matching photo_534) ================= -->
+        <!-- ================= 6 KPI CARDS WITH MINI SPARKLINE SVGS ================= -->
         <section class="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-6 gap-3.5 mb-6">
           <!-- Card 1: Total Employees -->
-          <div onclick="openRosterDrawer('all')" class="custom-card border rounded-2xl p-4 shadow-sm flex flex-col justify-between cursor-pointer">
-            <div class="text-[11px] font-extrabold uppercase tracking-wider" style="color: var(--text-muted);">Total Employees</div>
-            <div class="flex items-center gap-3 my-1">
+          <div onclick="playAudioTick(); openRosterDrawer('all');" class="custom-card border rounded-2xl p-4 shadow-sm flex flex-col justify-between cursor-pointer">
+            <div class="flex justify-between items-center">
+              <div class="text-[11px] font-extrabold uppercase tracking-wider" style="color: var(--text-muted);">Total Employees</div>
+              <span class="text-[9px] font-black px-1.5 py-0.5 rounded bg-purple-500/20 text-purple-400">+12 MTD</span>
+            </div>
+            <div class="flex items-center gap-2 my-1">
               <span class="text-2xl">👥</span>
               <span id="kpi-total" class="text-3xl sm:text-4xl font-black font-oswald tracking-tight" style="color: var(--text-main);">454</span>
             </div>
-            <div class="text-[10px] font-semibold" style="color: var(--text-sub);">Registered Workforce ➔</div>
+            <!-- Mini SVG Sparkline -->
+            <div class="flex items-center justify-between pt-1 border-t border-purple-200/40">
+              <span class="text-[10px] font-semibold" style="color: var(--text-sub);">Workforce HQ ➔</span>
+              <svg class="w-12 h-4 text-emerald-500" viewBox="0 0 48 16" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M0 12 L10 10 L20 13 L30 6 L40 8 L48 2" />
+              </svg>
+            </div>
           </div>
 
           <!-- Card 2: Active Employees -->
-          <div onclick="openRosterDrawer('active')" class="custom-card border rounded-2xl p-4 shadow-sm flex flex-col justify-between cursor-pointer">
-            <div class="text-[11px] font-extrabold uppercase tracking-wider" style="color: var(--text-muted);">Active Employees</div>
-            <div class="flex items-center gap-3 my-1">
+          <div onclick="playAudioTick(); openRosterDrawer('active');" class="custom-card border rounded-2xl p-4 shadow-sm flex flex-col justify-between cursor-pointer">
+            <div class="flex justify-between items-center">
+              <div class="text-[11px] font-extrabold uppercase tracking-wider" style="color: var(--text-muted);">Active Employees</div>
+              <span class="text-[9px] font-black px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-400">● 70.7%</span>
+            </div>
+            <div class="flex items-center gap-2 my-1">
               <span class="text-2xl">⚡</span>
               <span id="kpi-active" class="text-3xl sm:text-4xl font-black font-oswald tracking-tight" style="color: var(--text-main);">321</span>
             </div>
-            <div class="text-[10px] text-emerald-500 font-bold">● 70.7% Floor Duty</div>
+            <div class="flex items-center justify-between pt-1 border-t border-purple-200/40">
+              <span class="text-[10px] text-emerald-500 font-bold">Floor Duty ➔</span>
+              <svg class="w-12 h-4 text-emerald-500" viewBox="0 0 48 16" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M0 14 L12 11 L24 8 L36 5 L48 1" />
+              </svg>
+            </div>
           </div>
 
           <!-- Card 3: Attrition -->
-          <div onclick="openRosterDrawer('attrition')" class="custom-card border rounded-2xl p-4 shadow-sm flex flex-col justify-between cursor-pointer">
-            <div class="text-[11px] font-extrabold uppercase tracking-wider" style="color: var(--text-muted);">Attrition</div>
-            <div class="flex items-center gap-3 my-1">
+          <div onclick="playAudioTick(); openRosterDrawer('attrition');" class="custom-card border rounded-2xl p-4 shadow-sm flex flex-col justify-between cursor-pointer">
+            <div class="flex justify-between items-center">
+              <div class="text-[11px] font-extrabold uppercase tracking-wider" style="color: var(--text-muted);">Attrition</div>
+              <span class="text-[9px] font-black px-1.5 py-0.5 rounded bg-red-500/20 text-red-400">YTD</span>
+            </div>
+            <div class="flex items-center gap-2 my-1">
               <span class="text-2xl">🔄</span>
               <span id="kpi-attr" class="text-3xl sm:text-4xl font-black font-oswald tracking-tight text-red-500">133</span>
             </div>
-            <div class="text-[10px] font-semibold" style="color: var(--text-sub);">YTD Departures</div>
+            <div class="flex items-center justify-between pt-1 border-t border-purple-200/40">
+              <span class="text-[10px] font-semibold" style="color: var(--text-sub);">Departures ➔</span>
+              <svg class="w-12 h-4 text-red-400" viewBox="0 0 48 16" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M0 4 L14 8 L28 12 L48 15" />
+              </svg>
+            </div>
           </div>
 
           <!-- Card 4: Attrition % -->
           <div class="custom-card border rounded-2xl p-4 shadow-sm flex flex-col justify-between">
-            <div class="text-[11px] font-extrabold uppercase tracking-wider" style="color: var(--text-muted);">Attrition %</div>
-            <div class="flex items-center gap-3 my-1">
+            <div class="flex justify-between items-center">
+              <div class="text-[11px] font-extrabold uppercase tracking-wider" style="color: var(--text-muted);">Attrition %</div>
+              <span class="text-[9px] font-black px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-400">Low</span>
+            </div>
+            <div class="flex items-center gap-2 my-1">
               <span class="text-2xl">📉</span>
               <span id="kpi-attr-rate" class="text-3xl sm:text-4xl font-black font-oswald tracking-tight" style="color: var(--text-main);">29.3%</span>
             </div>
-            <div class="text-[10px] text-emerald-500 font-bold">▲ Below Benchmark</div>
+            <div class="flex items-center justify-between pt-1 border-t border-purple-200/40">
+              <span class="text-[10px] text-emerald-500 font-bold">▲ Below 35% Goal</span>
+              <span class="text-[9px] text-zinc-400">Top Tier</span>
+            </div>
           </div>
 
           <!-- Card 5: Avg. Tenure -->
           <div class="custom-card border rounded-2xl p-4 shadow-sm flex flex-col justify-between">
-            <div class="text-[11px] font-extrabold uppercase tracking-wider" style="color: var(--text-muted);">Avg. Tenure</div>
-            <div class="flex items-center gap-3 my-1">
+            <div class="flex justify-between items-center">
+              <div class="text-[11px] font-extrabold uppercase tracking-wider" style="color: var(--text-muted);">Avg. Tenure</div>
+              <span class="text-[9px] font-black px-1.5 py-0.5 rounded bg-amber-500/20 text-amber-400">Loyalty</span>
+            </div>
+            <div class="flex items-center gap-2 my-1">
               <span class="text-2xl">⏳</span>
               <span id="kpi-tenure" class="text-3xl font-black font-oswald tracking-tight" style="color: var(--text-main);">5.1 Yrs</span>
             </div>
-            <div class="text-[10px] text-amber-500 font-semibold">High Loyalty Index</div>
+            <div class="flex items-center justify-between pt-1 border-t border-purple-200/40">
+              <span class="text-[10px] text-amber-500 font-semibold">High Stability</span>
+              <span class="text-[9px] text-zinc-400">L3 Masters</span>
+            </div>
           </div>
 
           <!-- Card 6: Diversity -->
           <div class="custom-card border rounded-2xl p-4 shadow-sm flex flex-col justify-between">
-            <div class="text-[11px] font-extrabold uppercase tracking-wider" style="color: var(--text-muted);">Diversity</div>
-            <div class="flex items-center gap-3 my-1">
+            <div class="flex justify-between items-center">
+              <div class="text-[11px] font-extrabold uppercase tracking-wider" style="color: var(--text-muted);">Diversity</div>
+              <span class="text-[9px] font-black px-1.5 py-0.5 rounded bg-purple-500/20 text-purple-400">Balanced</span>
+            </div>
+            <div class="flex items-center gap-2 my-1">
               <span class="text-2xl">⚖️</span>
-              <div class="text-sm font-black" style="color: var(--text-main);">
+              <div class="text-xs font-black" style="color: var(--text-main);">
                 <div>Male: 60%</div>
                 <div>Female: 40%</div>
               </div>
             </div>
-            <div class="text-[10px] font-semibold" style="color: var(--text-sub);">Balanced Floor</div>
+            <div class="flex items-center justify-between pt-1 border-t border-purple-200/40">
+              <span class="text-[10px] font-semibold" style="color: var(--text-sub);">Compound Floor</span>
+              <span class="text-[9px] text-emerald-400 font-bold">Optimal</span>
+            </div>
           </div>
         </section>
 
@@ -506,8 +586,9 @@
         <section class="grid grid-cols-1 lg:grid-cols-3 gap-5 mb-6">
           <!-- 1. Headcount by Department (Doughnut) -->
           <div class="custom-card border rounded-2xl p-4 shadow-sm flex flex-col justify-between">
-            <div class="text-xs font-extrabold uppercase tracking-wider mb-1" style="color: var(--text-main);">
-              Headcount by Department
+            <div class="text-xs font-extrabold uppercase tracking-wider mb-1 flex justify-between items-center" style="color: var(--text-main);">
+              <span>Headcount by Department</span>
+              <span class="text-[10px] text-purple-400 font-normal">Click segment to drill-down</span>
             </div>
             <div id="chart-doughnut" class="w-full h-[260px]"></div>
           </div>
@@ -523,8 +604,9 @@
 
           <!-- 3. Attrition % Department (Horizontal Bar) -->
           <div class="custom-card border rounded-2xl p-4 shadow-sm flex flex-col justify-between">
-            <div class="text-xs font-extrabold uppercase tracking-wider mb-1" style="color: var(--text-main);">
-              Attrition % Department
+            <div class="text-xs font-extrabold uppercase tracking-wider mb-1 flex justify-between items-center" style="color: var(--text-main);">
+              <span>Attrition % Department</span>
+              <span class="text-[10px] text-emerald-400 font-bold">Strength lowest at 8%</span>
             </div>
             <div id="chart-attr" class="w-full h-[260px]"></div>
           </div>
@@ -550,8 +632,9 @@
 
           <!-- 6. Employees by Location (Vertical Column - Egyptian Hubs) -->
           <div class="custom-card border rounded-2xl p-4 shadow-sm flex flex-col justify-between">
-            <div class="text-xs font-extrabold uppercase tracking-wider mb-1" style="color: var(--text-main);">
-              Employees by Egyptian Compound
+            <div class="text-xs font-extrabold uppercase tracking-wider mb-1 flex justify-between items-center" style="color: var(--text-main);">
+              <span>Employees by Egyptian Compound</span>
+              <span class="text-[10px] text-amber-400 font-bold">New Cairo Leads</span>
             </div>
             <div id="chart-loc" class="w-full h-[260px]"></div>
           </div>
@@ -572,7 +655,7 @@
               <span>🟢 Master Coach Tamer Hosny running Olympic Deadlift Masterclass (Sheikh Zayed Hub - 42 Athletes)</span>
               <span>🟢 Coach Ahmed Zaki initiated VIP Strength assessment in Heliopolis</span>
               <span>🟡 6th October Hub shift turnover scheduled at 14:00 • 100% Biometric punch-in compliance</span>
-              <!-- Repeat for seamless scroll -->
+              <!-- Seamless Scroll Duplicate -->
               <span>🟢 Coach Sherif El-Bendary clocked into New Cairo Flagship (08:00 AM) • Biometric ID #SK-1088</span>
               <span>🟢 Dr. Nourhan Tarek active in Physio Lab Maadi Compound • Floor capacity at 68%</span>
               <span>🟢 Master Coach Tamer Hosny running Olympic Deadlift Masterclass (Sheikh Zayed Hub - 42 Athletes)</span>
@@ -586,37 +669,183 @@
     </main>
   </div>
 
-  <!-- ================= INTERACTIVE DRILL-DOWN SLIDE-OVER DRAWER ================= -->
+  <!-- ================= INTERACTIVE DRILL-DOWN SLIDE-OVER DRAWER WITH LIVE SEARCH ================= -->
   <div id="drawer-backdrop" onclick="closeDrawer()" class="fixed inset-0 bg-black/60 z-40 hidden opacity-0 transition-opacity"></div>
   
-  <div id="drilldown-drawer" class="fixed top-0 right-0 bottom-0 w-full sm:w-[500px] z-50 transform translate-x-full overflow-y-auto p-6 shadow-2xl border-l" style="background-color: var(--drawer-bg); border-color: var(--border-card);">
-    <div class="flex items-center justify-between pb-4 border-b" style="border-color: var(--border-card);">
-      <div class="flex items-center gap-2.5">
-        <span class="text-2xl" id="drawer-icon">📋</span>
-        <div>
-          <h2 id="drawer-title" class="font-oswald font-black text-xl uppercase tracking-wide" style="color: var(--text-main);">
-            Coach & Employee Detail
-          </h2>
-          <p id="drawer-subtitle" class="text-xs" style="color: var(--text-muted);">
-            Interactive Drill-Down & Verification Roster
-          </p>
+  <div id="drilldown-drawer" class="fixed top-0 right-0 bottom-0 w-full sm:w-[520px] z-50 transform translate-x-full overflow-y-auto p-6 shadow-2xl border-l flex flex-col justify-between" style="background-color: var(--drawer-bg); border-color: var(--border-card);">
+    <div>
+      <div class="flex items-center justify-between pb-4 border-b" style="border-color: var(--border-card);">
+        <div class="flex items-center gap-2.5">
+          <span class="text-2xl" id="drawer-icon">📋</span>
+          <div>
+            <h2 id="drawer-title" class="font-oswald font-black text-xl uppercase tracking-wide" style="color: var(--text-main);">
+              Coach & Employee Detail
+            </h2>
+            <p id="drawer-subtitle" class="text-xs" style="color: var(--text-muted);">
+              Interactive Drill-Down & Verification Roster
+            </p>
+          </div>
         </div>
+        <button onclick="closeDrawer()" class="p-2 rounded-xl hover:bg-purple-500/20 text-gray-400 hover:text-white transition">
+          ✕
+        </button>
       </div>
-      <button onclick="closeDrawer()" class="p-2 rounded-xl hover:bg-purple-500/20 text-gray-400 hover:text-white transition">
-        ✕
-      </button>
+
+      <!-- Instant Live Search Bar -->
+      <div class="pt-4 pb-2">
+        <input 
+          type="text" 
+          id="roster-search-input" 
+          oninput="handleRosterSearch(this.value)"
+          placeholder="🔍 Search coach name, hub, role, or cert..." 
+          class="w-full px-3.5 py-2.5 rounded-xl border text-xs outline-none transition focus:border-amber-400"
+          style="background-color: var(--bg-card-subtle); border-color: var(--border-card); color: var(--text-main);"
+        />
+      </div>
+
+      <!-- Drawer Content Container -->
+      <div id="drawer-body" class="py-3 space-y-3.5 text-xs">
+        <!-- Dynamic cards injected via JS -->
+      </div>
     </div>
 
-    <!-- Drawer Content Container -->
-    <div id="drawer-body" class="py-5 space-y-4 text-xs">
-      <!-- Dynamic cards injected via JS -->
+    <!-- Drawer Footer Actions -->
+    <div class="pt-4 border-t mt-4" style="border-color: var(--border-card);">
+      <button onclick="playAudioTick(); exportCSV();" class="w-full py-2.5 rounded-xl bg-purple-900/60 hover:bg-purple-800 text-amber-300 font-bold text-xs border border-purple-700/50 transition flex items-center justify-center gap-2 shadow">
+        <span>📊</span> Export Current View to CSV
+      </button>
     </div>
   </div>
 
-  <!-- ================= APEXCHARTS LOGIC & INTERACTION ================= -->
+  <!-- ================= INTERACTIVE PAYROLL & COMMISSION SIMULATOR MODAL ================= -->
+  <div id="payroll-modal-backdrop" onclick="closePayrollModal()" class="fixed inset-0 bg-black/70 z-50 hidden opacity-0 transition-opacity"></div>
+  <div id="payroll-modal" class="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-11/12 max-w-2xl z-50 hidden p-6 rounded-3xl border shadow-2xl transition-all" style="background-color: var(--bg-card); border-color: var(--border-card);">
+    <div class="flex items-center justify-between pb-4 border-b" style="border-color: var(--border-card);">
+      <div class="flex items-center gap-3">
+        <span class="text-3xl">💰</span>
+        <div>
+          <h3 class="font-oswald font-black text-xl uppercase tracking-wide" style="color: var(--text-main);">
+            Coach Compensation & Revenue Simulator
+          </h3>
+          <p class="text-xs" style="color: var(--text-muted);">
+            Calculate PT Session Commission, Gym Facility Margin & Net Coach Payout in EGP
+          </p>
+        </div>
+      </div>
+      <button onclick="closePayrollModal()" class="p-2 rounded-xl text-gray-400 hover:text-white transition">✕</button>
+    </div>
+
+    <div class="py-5 space-y-4 text-xs">
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+        <div class="p-3 rounded-xl border" style="background-color: var(--bg-card-subtle); border-color: var(--border-card);">
+          <label class="block font-bold text-gray-400 mb-1">Base Salary (EGP)</label>
+          <input type="number" id="sim-base" value="38000" oninput="runPayrollSimulation()" class="w-full p-2 rounded-lg bg-black/20 border border-gray-600 font-mono font-bold text-amber-400 text-sm outline-none">
+        </div>
+        <div class="p-3 rounded-xl border" style="background-color: var(--bg-card-subtle); border-color: var(--border-card);">
+          <label class="block font-bold text-gray-400 mb-1">Monthly PT Sessions</label>
+          <input type="number" id="sim-sessions" value="80" oninput="runPayrollSimulation()" class="w-full p-2 rounded-lg bg-black/20 border border-gray-600 font-mono font-bold text-emerald-400 text-sm outline-none">
+        </div>
+        <div class="p-3 rounded-xl border" style="background-color: var(--bg-card-subtle); border-color: var(--border-card);">
+          <label class="block font-bold text-gray-400 mb-1">Rate per Session (EGP)</label>
+          <input type="number" id="sim-rate" value="700" oninput="runPayrollSimulation()" class="w-full p-2 rounded-lg bg-black/20 border border-gray-600 font-mono font-bold text-blue-400 text-sm outline-none">
+        </div>
+      </div>
+
+      <div class="p-4 rounded-2xl border space-y-2.5" style="background-color: var(--bg-card-subtle); border-color: var(--border-card);">
+        <div class="flex justify-between items-center text-xs">
+          <span class="text-gray-400">Total PT Revenue Generated:</span>
+          <span id="sim-total-rev" class="font-bold font-mono text-sm text-white">EGP 56,000</span>
+        </div>
+        <div class="flex justify-between items-center text-xs">
+          <span class="text-gray-400">Facility Margin (40% Retention):</span>
+          <span id="sim-gym-margin" class="font-bold font-mono text-sm text-emerald-400">EGP 22,400</span>
+        </div>
+        <div class="flex justify-between items-center text-xs">
+          <span class="text-gray-400">Coach Commission (60% Share):</span>
+          <span id="sim-coach-comm" class="font-bold font-mono text-sm text-amber-400">EGP 33,600</span>
+        </div>
+        <div class="pt-2 border-t border-gray-700/60 flex justify-between items-center text-sm">
+          <span class="font-black text-amber-400 uppercase">Estimated Net Coach Payout:</span>
+          <span id="sim-net-payout" class="font-black font-mono text-xl text-emerald-400">EGP 71,600</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="pt-3 border-t flex justify-end gap-2" style="border-color: var(--border-card);">
+      <button onclick="closePayrollModal()" class="px-4 py-2 rounded-xl bg-gray-700 hover:bg-gray-600 text-white font-bold text-xs">Close</button>
+      <a href="Shark_Gym_Workforce_Dashboard.xlsx" download class="px-4 py-2 rounded-xl bg-gradient-to-r from-amber-500 to-yellow-500 text-black font-bold text-xs flex items-center gap-1.5">
+        <span>📥</span> Open Full Excel Model
+      </a>
+    </div>
+  </div>
+
+  <!-- ================= APEXCHARTS LOGIC & AUDIO SYNTHESIZER ================= -->
   <script>
     let charts = {};
     let isBlackTheme = false;
+    let isTVMode = false;
+    let audioEnabled = true;
+    let audioCtx = null;
+
+    /* Web Audio API Micro-Synthesizer */
+    function initAudio() {
+      if (!audioCtx && (window.AudioContext || window.webkitAudioContext)) {
+        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      }
+    }
+
+    function playAudioTick() {
+      if (!audioEnabled) return;
+      try {
+        initAudio();
+        if (audioCtx && audioCtx.state === 'suspended') {
+          audioCtx.resume();
+        }
+        if (!audioCtx) return;
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(980, audioCtx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(400, audioCtx.currentTime + 0.04);
+        gain.gain.setValueAtTime(0.08, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.04);
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start();
+        osc.stop(audioCtx.currentTime + 0.04);
+      } catch (e) {}
+    }
+
+    function toggleAudio() {
+      audioEnabled = !audioEnabled;
+      const btn = document.getElementById('audio-toggle-btn');
+      btn.innerText = audioEnabled ? '🔊' : '🔇';
+      if (audioEnabled) playAudioTick();
+    }
+
+    /* Number Counter Animation */
+    function animateValue(id, start, end, duration = 500) {
+      const obj = document.getElementById(id);
+      if (!obj) return;
+      let startTimestamp = null;
+      const step = (timestamp) => {
+        if (!startTimestamp) startTimestamp = timestamp;
+        const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+        obj.innerHTML = Math.floor(progress * (end - start) + start);
+        if (progress < 1) {
+          window.requestAnimationFrame(step);
+        }
+      };
+      window.requestAnimationFrame(step);
+    }
+
+    /* TV Presentation Mode */
+    function toggleTVMode() {
+      isTVMode = !isTVMode;
+      document.body.classList.toggle('tv-mode', isTVMode);
+      document.getElementById('tv-btn-label').innerText = isTVMode ? 'Exit TV' : 'TV Mode';
+      playAudioTick();
+    }
 
     const baseData = {
       kpi: { total: 454, active: 321, attr: 133, attrRate: '29.3%', tenure: '5.1 Yrs' },
@@ -656,6 +885,8 @@
       { id: "SK-1450", name: "Karim Hegazy", role: "Facility Operations Lead", dept: "Facility Ops", hub: "6th October", salary: "EGP 26,000", rating: "Meets (4.5/5)", certs: "Facility Safety, CPR", status: "Inspection" }
     ];
 
+    let currentFilterContext = '';
+
     const aiInsights = [
       "⚡ New Cairo & Zayed Hubs operating at 91% PT capacity with zero payroll anomalies. Retention reached +14.2% YoY following performance bonus rollout.",
       "💡 Strength & Conditioning unit achieved lowest attrition (8.0%) across Egyptian fitness chains, driving EGP 1.42M in PT revenues.",
@@ -666,8 +897,16 @@
 
     function cycleInsights() {
       currentInsightIdx = (currentInsightIdx + 1) % aiInsights.length;
-      document.getElementById('ai-insight-text').innerText = aiInsights[currentInsightIdx];
+      const el = document.getElementById('ai-insight-text');
+      el.style.opacity = '0';
+      setTimeout(() => {
+        el.innerText = aiInsights[currentInsightIdx];
+        el.style.opacity = '1';
+      }, 200);
     }
+
+    // Auto-cycle insights every 7 seconds
+    setInterval(cycleInsights, 7000);
 
     function initCharts() {
       // 1. Doughnut
@@ -677,6 +916,7 @@
           height: '100%',
           events: {
             dataPointSelection: (event, chartContext, config) => {
+              playAudioTick();
               const label = baseData.dept.labels[config.dataPointIndex];
               openRosterDrawer(label);
             }
@@ -766,6 +1006,7 @@
           toolbar: { show: false },
           events: {
             dataPointSelection: (event, chartContext, config) => {
+              playAudioTick();
               const loc = baseData.loc.categories[config.dataPointIndex];
               openRosterDrawer('Hub: ' + loc);
             }
@@ -783,6 +1024,7 @@
     }
 
     function applyFilter(type, val, btn) {
+      playAudioTick();
       btn.closest('.grid').querySelectorAll('.slicer-pill').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
 
@@ -795,9 +1037,17 @@
       else if (val === 'master') m = 0.18;
       else if (val === 'jan') m = 0.15;
 
-      document.getElementById('kpi-total').innerText = Math.round(baseData.kpi.total * m);
-      document.getElementById('kpi-active').innerText = Math.round(baseData.kpi.active * m);
-      document.getElementById('kpi-attr').innerText = Math.round(baseData.kpi.attr * m);
+      const currentTotal = parseInt(document.getElementById('kpi-total').innerText) || 454;
+      const targetTotal = Math.round(baseData.kpi.total * m);
+      animateValue('kpi-total', currentTotal, targetTotal, 400);
+
+      const currentActive = parseInt(document.getElementById('kpi-active').innerText) || 321;
+      const targetActive = Math.round(baseData.kpi.active * m);
+      animateValue('kpi-active', currentActive, targetActive, 400);
+
+      const currentAttr = parseInt(document.getElementById('kpi-attr').innerText) || 133;
+      const targetAttr = Math.round(baseData.kpi.attr * m);
+      animateValue('kpi-attr', currentAttr, targetAttr, 400);
 
       charts.trend.updateSeries([{
         name: 'Active Headcount',
@@ -808,14 +1058,15 @@
     function resetFilters() {
       document.querySelectorAll('.slicer-pill').forEach(b => b.classList.remove('active'));
       document.querySelectorAll('.grid button:first-child').forEach(b => b.classList.add('active'));
-      document.getElementById('kpi-total').innerText = '454';
-      document.getElementById('kpi-active').innerText = '321';
-      document.getElementById('kpi-attr').innerText = '133';
+      animateValue('kpi-total', parseInt(document.getElementById('kpi-total').innerText) || 0, 454, 400);
+      animateValue('kpi-active', parseInt(document.getElementById('kpi-active').innerText) || 0, 321, 400);
+      animateValue('kpi-attr', parseInt(document.getElementById('kpi-attr').innerText) || 0, 133, 400);
       charts.trend.updateSeries([{ name: 'Active Headcount', data: baseData.trend.series }]);
     }
 
     /* Theme Toggle */
     function toggleTheme() {
+      playAudioTick();
       isBlackTheme = !isBlackTheme;
       document.body.classList.toggle('theme-black', isBlackTheme);
       localStorage.setItem('shark_theme', isBlackTheme ? 'black' : 'purple');
@@ -835,17 +1086,50 @@
       initCharts();
     }
 
-    /* Drill-down Drawer Functions */
+    /* Drill-down Drawer Functions with Live Search */
     function openRosterDrawer(filterQuery = '') {
+      currentFilterContext = filterQuery;
+      document.getElementById('roster-search-input').value = '';
       document.getElementById('drawer-title').innerText = filterQuery ? `Coaches: ${filterQuery}` : 'Shark Gym Elite Workforce Roster';
       document.getElementById('drawer-subtitle').innerText = 'Live Biometric Check-In & Payroll Roster';
       document.getElementById('drawer-icon').innerText = '🏋️‍♂️';
 
-      const filtered = filterQuery && filterQuery !== 'all' && filterQuery !== 'active'
-        ? rosterData.filter(r => r.dept.toLowerCase().includes(filterQuery.toLowerCase()) || r.hub.toLowerCase().includes(filterQuery.toLowerCase()))
-        : rosterData;
+      renderRosterList(filterQuery);
+      showDrawer();
+    }
+
+    function handleRosterSearch(val) {
+      renderRosterList(currentFilterContext, val);
+    }
+
+    function renderRosterList(filterQuery = '', searchKeyword = '') {
+      let filtered = rosterData;
+      if (filterQuery && filterQuery !== 'all' && filterQuery !== 'active') {
+        const q = filterQuery.toLowerCase();
+        filtered = filtered.filter(r => r.dept.toLowerCase().includes(q) || r.hub.toLowerCase().includes(q));
+      }
+      if (searchKeyword.trim()) {
+        const k = searchKeyword.toLowerCase();
+        filtered = filtered.filter(r => 
+          r.name.toLowerCase().includes(k) || 
+          r.role.toLowerCase().includes(k) || 
+          r.hub.toLowerCase().includes(k) || 
+          r.certs.toLowerCase().includes(k) ||
+          r.id.toLowerCase().includes(k)
+        );
+      }
 
       const body = document.getElementById('drawer-body');
+      if (filtered.length === 0) {
+        body.innerHTML = `
+          <div class="text-center py-10 text-gray-400">
+            <span class="text-3xl block mb-2">🔍</span>
+            <p>No coaches match your search criteria.</p>
+          </div>
+        `;
+        return;
+      }
+
       body.innerHTML = filtered.map(c => `
         <div class="custom-subcard border rounded-xl p-3.5 space-y-2 shadow-sm">
           <div class="flex items-center justify-between">
@@ -863,13 +1147,11 @@
             <div><span class="text-gray-400">Certs:</span> ${c.certs}</div>
           </div>
           <div class="pt-2 border-t border-gray-700/50 flex justify-between items-center text-[10px]">
-            <span class="text-gray-400">Last Biometric Check: 08:00 AM Today</span>
-            <button onclick="alert('Viewing biometric punch log for ${c.name}')" class="text-amber-400 hover:underline font-bold">Punch Log ➔</button>
+            <span class="text-gray-400">Biometric Check-in: 08:00 AM Today</span>
+            <button onclick="playAudioTick(); alert('Biometric punch log verified for ${c.name} (Shift: North 90th)');" class="text-amber-400 hover:underline font-bold">Punch Log ➔</button>
           </div>
         </div>
       `).join('');
-
-      showDrawer();
     }
 
     function openExecutiveDrawer() {
@@ -907,7 +1189,7 @@
             </p>
           </div>
 
-          <a href="Shark_Gym_Workforce_Dashboard.xlsx" download class="block w-full py-2.5 rounded-xl bg-gradient-to-r from-amber-500 to-yellow-500 text-black text-center font-bold text-xs shadow transition">
+          <a href="Shark_Gym_Workforce_Dashboard.xlsx" download onclick="playAudioTick();" class="block w-full py-2.5 rounded-xl bg-gradient-to-r from-amber-500 to-yellow-500 text-black text-center font-bold text-xs shadow transition">
             📥 Download Complete Multi-Tab Excel Workbook
           </a>
         </div>
@@ -930,6 +1212,44 @@
       drawer.classList.remove('open');
       backdrop.classList.add('opacity-0');
       setTimeout(() => backdrop.classList.add('hidden'), 300);
+    }
+
+    /* Payroll Simulator Modal Functions */
+    function openPayrollModal() {
+      const modal = document.getElementById('payroll-modal');
+      const backdrop = document.getElementById('payroll-modal-backdrop');
+      backdrop.classList.remove('hidden');
+      modal.classList.remove('hidden');
+      setTimeout(() => {
+        backdrop.classList.remove('opacity-0');
+      }, 10);
+      runPayrollSimulation();
+    }
+
+    function closePayrollModal() {
+      const modal = document.getElementById('payroll-modal');
+      const backdrop = document.getElementById('payroll-modal-backdrop');
+      backdrop.classList.add('opacity-0');
+      setTimeout(() => {
+        backdrop.classList.add('hidden');
+        modal.classList.add('hidden');
+      }, 250);
+    }
+
+    function runPayrollSimulation() {
+      const base = parseFloat(document.getElementById('sim-base').value) || 0;
+      const sess = parseFloat(document.getElementById('sim-sessions').value) || 0;
+      const rate = parseFloat(document.getElementById('sim-rate').value) || 0;
+
+      const totalRev = sess * rate;
+      const gymMargin = totalRev * 0.40;
+      const coachComm = totalRev * 0.60;
+      const netPayout = base + coachComm;
+
+      document.getElementById('sim-total-rev').innerText = `EGP ${totalRev.toLocaleString()}`;
+      document.getElementById('sim-gym-margin').innerText = `EGP ${gymMargin.toLocaleString()}`;
+      document.getElementById('sim-coach-comm').innerText = `EGP ${coachComm.toLocaleString()}`;
+      document.getElementById('sim-net-payout').innerText = `EGP ${netPayout.toLocaleString()}`;
     }
 
     /* CSV Export */
@@ -956,6 +1276,10 @@
         document.getElementById('theme-icon').innerText = '🟣';
       }
       initCharts();
+      // Animate KPI numbers on initial load
+      animateValue('kpi-total', 0, 454, 700);
+      animateValue('kpi-active', 0, 321, 700);
+      animateValue('kpi-attr', 0, 133, 700);
     });
   </script>
 </body>
