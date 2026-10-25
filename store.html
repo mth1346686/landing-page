@@ -3,35 +3,37 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AURA & SHARK ATELIER | Luxury Egyptian E-Commerce Platform</title>
+  <title>AURA & SHARK ATELIER | Haute Luxury E-Commerce</title>
   
   <!-- Fonts & CDN Tailwind -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800;900&family=Montserrat:wght@300;400;500;600;700;800&family=Oswald:wght@500;600;700&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Three.js CDN for 3D Interactive AR / Product Viewer -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 
   <style>
     /* Luxury Dual-Theme CSS Variables */
     :root {
-      --bg-main: #09090c;
-      --bg-card: #121218;
-      --bg-card-sub: #181822;
-      --border-card: #262633;
+      --bg-main: #070709;
+      --bg-card: #101015;
+      --bg-card-sub: #16161e;
+      --border-card: #23232f;
       --border-accent: #d4af37;
       --text-main: #f4f4f5;
       --text-muted: #a1a1aa;
       --text-accent: #f59e0b;
       --badge-bg: rgba(212, 175, 55, 0.15);
       --badge-text: #fcd34d;
-      --cart-drawer-bg: #101015;
+      --cart-drawer-bg: #0d0d12;
     }
 
     body.theme-light {
-      --bg-main: #fbfaf8;
+      --bg-main: #faf9f6;
       --bg-card: #ffffff;
-      --bg-card-sub: #f5f4f0;
-      --border-card: #e5e2da;
+      --bg-card-sub: #f4f3ee;
+      --border-card: #e4e1d7;
       --border-accent: #b48a28;
       --text-main: #18181b;
       --text-muted: #52525b;
@@ -57,57 +59,60 @@
     .product-card {
       background-color: var(--bg-card);
       border-color: var(--border-card);
-      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease, border-color 0.3s ease;
+      transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s ease, border-color 0.35s ease;
     }
     .product-card:hover {
-      transform: translateY(-6px);
-      box-shadow: 0 16px 36px rgba(0, 0, 0, 0.25);
+      transform: translateY(-8px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.35);
       border-color: var(--border-accent);
     }
 
     .pill-btn {
-      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
     }
     .pill-btn.active {
       background: linear-gradient(135deg, #d4af37 0%, #f59e0b 100%);
       color: #000000;
-      font-weight: 700;
+      font-weight: 800;
       box-shadow: 0 4px 14px rgba(212, 175, 55, 0.35);
-      transform: scale(1.02);
+      transform: scale(1.03);
     }
 
-    /* Slide-over Drawer */
-    #cart-drawer {
+    /* Smooth Slide-over Drawers */
+    .drawer-panel {
       transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
     }
-    #cart-drawer.open {
+    .drawer-panel.open {
       transform: translateX(0);
     }
-    #drawer-backdrop {
+    .drawer-backdrop {
       transition: opacity 0.3s ease;
     }
 
     /* Subtle Glassmorphism */
     .glass-nav {
-      background-color: rgba(15, 15, 20, 0.85);
-      backdrop-filter: blur(12px);
+      background-color: rgba(10, 10, 14, 0.88);
+      backdrop-filter: blur(14px);
       border-bottom: 1px solid var(--border-card);
     }
     body.theme-light .glass-nav {
-      background-color: rgba(255, 255, 255, 0.88);
+      background-color: rgba(255, 255, 255, 0.9);
       border-bottom: 1px solid var(--border-card);
     }
 
-    /* Custom Scrollbar */
-    ::-webkit-scrollbar {
-      width: 6px;
+    /* Pulse Stock Depletion Animation */
+    @keyframes pulse-subtle {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.55; }
     }
-    ::-webkit-scrollbar-track {
-      background: var(--bg-main);
+    .stock-depletion-pulse {
+      animation: pulse-subtle 2s infinite ease-in-out;
     }
-    ::-webkit-scrollbar-thumb {
-      background: #3f3f46;
-      border-radius: 3px;
+
+    /* 3D Canvas Box */
+    #three-canvas-container canvas {
+      border-radius: 1.25rem;
+      outline: none;
     }
   </style>
 </head>
@@ -115,7 +120,7 @@
 
   <!-- ================= TOP LUXURY ANNOUNCEMENT TICKER ================= -->
   <div class="bg-gradient-to-r from-amber-600 via-yellow-500 to-amber-600 text-black py-1.5 px-4 text-center text-xs font-black tracking-widest uppercase">
-    <span>✨ Cairo Luxury Showcase — Free Express Delivery across Egypt on orders over 1,500 EGP • 100% Authentic Guarantee</span>
+    <span>✨ Cairo Luxury Showcase — Free Express Delivery across Egypt on orders over 150 EGP • Cash on Delivery upon Inspection</span>
   </div>
 
   <!-- ================= NAVIGATION HEADER ================= -->
@@ -124,8 +129,8 @@
       
       <!-- Brand Logo -->
       <a href="#" class="flex items-center gap-3">
-        <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-amber-600 to-yellow-400 p-0.5 flex items-center justify-center shadow-lg">
-          <div class="w-full h-full bg-[#121218] rounded-full flex items-center justify-center text-xl">
+        <div class="w-11 h-11 rounded-full bg-gradient-to-tr from-amber-600 to-yellow-400 p-0.5 flex items-center justify-center shadow-lg">
+          <div class="w-full h-full bg-[#0d0d12] rounded-full flex items-center justify-center text-xl">
             ⚜️
           </div>
         </div>
@@ -151,10 +156,16 @@
       </div>
 
       <!-- Action Buttons -->
-      <div class="flex items-center gap-3">
-        <!-- Interactive Tour Button -->
-        <button onclick="startStoreTour()" title="Start Guided Onboarding Tour" class="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-xl border text-xs font-bold transition hover:border-amber-400" style="border-color: var(--border-card); color: var(--text-main);">
-          <span>🎯</span> <span class="hidden lg:inline">Tour</span>
+      <div class="flex items-center gap-2.5">
+        <!-- 3D AR Experience Trigger -->
+        <button onclick="open3DViewer(1)" title="Experience 3D Interactive Model" class="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-xl border text-xs font-bold transition hover:border-amber-400 text-amber-400" style="border-color: var(--border-card);">
+          <span>💎</span> <span>3D AR View</span>
+        </button>
+
+        <!-- Wishlist Button -->
+        <button onclick="openWishlist()" class="relative p-2 rounded-xl border text-xs transition hover:border-amber-400" style="border-color: var(--border-card);" title="View Saved Wishlist">
+          <span>❤️</span>
+          <span id="wishlist-badge" class="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-red-600 text-white text-[9px] font-black flex items-center justify-center">0</span>
         </button>
 
         <!-- Sound FX Button -->
@@ -166,11 +177,6 @@
         <button onclick="toggleTheme()" id="theme-btn" title="Toggle Light / Dark Luxury" class="p-2 rounded-xl border text-xs transition hover:border-amber-400" style="border-color: var(--border-card);">
           🌙
         </button>
-
-        <!-- Links to Other Sites -->
-        <a href="dashboard.html" class="hidden sm:flex items-center gap-1 px-3 py-1.5 rounded-xl bg-purple-950/60 border border-purple-700/60 text-amber-300 text-xs font-bold hover:bg-purple-900 transition">
-          <span>📊</span> Dashboard
-        </a>
 
         <!-- Shopping Cart Bag Button -->
         <button onclick="openCart()" class="relative px-3.5 py-2 rounded-xl bg-gradient-to-r from-amber-500 to-yellow-500 hover:from-amber-400 text-black font-black text-xs shadow-md transition flex items-center gap-2">
@@ -184,9 +190,9 @@
   </header>
 
   <!-- ================= HERO SHOWCASE ================= -->
-  <section class="relative overflow-hidden py-16 sm:py-24 border-b" style="border-color: var(--border-card);">
+  <section class="relative overflow-hidden py-16 sm:py-20 border-b" style="border-color: var(--border-card);">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-      <div class="max-w-2xl space-y-5">
+      <div class="max-w-2xl space-y-4">
         <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold tracking-wider uppercase" style="background-color: var(--badge-bg); color: var(--badge-text);">
           <span class="w-2 h-2 rounded-full bg-amber-400 animate-pulse"></span>
           2026 EGYPTIAN HAUTE COLLECTION
@@ -195,19 +201,19 @@
           ELEVATE YOUR <br><span class="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 via-yellow-300 to-amber-500">PRESENCE</span>
         </h1>
         <p class="text-sm sm:text-base leading-relaxed" style="color: var(--text-muted);">
-          Handcrafted in Cairo with Swiss-calibrated precision, full-grain Italian leather, and rare botanical oud essences. Curated for leaders and connoisseurs.
+          Master-crafted in Cairo with Swiss-calibrated precision chronographs, Tuscan full-grain leather, and rare botanical oud extraits.
         </p>
-        <div class="flex flex-wrap gap-3 pt-2">
+        <div class="flex flex-wrap items-center gap-3 pt-2">
           <a href="#catalog" class="px-6 py-3 rounded-xl bg-gradient-to-r from-amber-500 to-yellow-500 hover:from-amber-400 text-black font-black text-xs tracking-wider uppercase shadow-xl transition transform hover:-translate-y-0.5">
-            Explore Collection ➔
+            Explore Vault Collection ➔
           </a>
-          <button onclick="filterCategory('timepieces')" class="px-5 py-3 rounded-xl border text-xs font-bold tracking-wider uppercase transition hover:border-amber-400" style="border-color: var(--border-card); color: var(--text-main);">
-            View Chronographs ⏱️
+          <button onclick="open3DViewer(1)" class="px-5 py-3 rounded-xl border text-xs font-bold tracking-wider uppercase transition hover:border-amber-400 text-amber-400 flex items-center gap-2" style="border-color: var(--border-card);">
+            <span>💎 Launch 3D AR Experience</span>
           </button>
         </div>
       </div>
     </div>
-    <!-- Ambient Background Glow -->
+    <!-- Ambient Glow -->
     <div class="absolute right-0 top-1/2 -translate-y-1/2 w-96 h-96 bg-amber-500/10 rounded-full blur-3xl pointer-events-none"></div>
   </section>
 
@@ -217,7 +223,7 @@
       
       <!-- Category Pills -->
       <div class="flex flex-wrap gap-2 text-xs">
-        <button onclick="filterCategory('all', this)" class="pill-btn active px-4 py-2 rounded-xl border" style="border-color: var(--border-card);">All Creations</button>
+        <button onclick="filterCategory('all', this)" class="pill-btn active px-4 py-2 rounded-xl border" style="border-color: var(--border-card);">All Vault Pieces</button>
         <button onclick="filterCategory('timepieces', this)" class="pill-btn px-4 py-2 rounded-xl border" style="border-color: var(--border-card);">⏱️ Timepieces</button>
         <button onclick="filterCategory('leather', this)" class="pill-btn px-4 py-2 rounded-xl border" style="border-color: var(--border-card);">👜 Full-Grain Leather</button>
         <button onclick="filterCategory('fragrance', this)" class="pill-btn px-4 py-2 rounded-xl border" style="border-color: var(--border-card);">✨ Haute Oud &amp; Parfum</button>
@@ -226,7 +232,7 @@
 
       <!-- Sorting Selector -->
       <div class="flex items-center gap-2 self-start md:self-auto text-xs">
-        <span style="color: var(--text-muted);">Sort by:</span>
+        <span style="color: var(--text-muted);">Sort:</span>
         <select id="sort-select" onchange="handleSort(this.value)" class="px-3 py-2 rounded-xl border outline-none font-bold" style="background-color: var(--bg-card); border-color: var(--border-card); color: var(--text-main);">
           <option value="featured">Featured Curations</option>
           <option value="price-asc">Price: Low to High</option>
@@ -241,9 +247,39 @@
   <!-- ================= PRODUCTS GRID ================= -->
   <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-20 w-full">
     <div id="products-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-      <!-- Products dynamically injected via JavaScript -->
+      <!-- Dynamic Products -->
     </div>
   </main>
+
+  <!-- ================= 3D AUGMENTED REALITY / PRODUCT VIEWER MODAL ================= -->
+  <div id="three-modal-backdrop" onclick="close3DViewer()" class="fixed inset-0 bg-black/85 z-50 hidden opacity-0 transition-opacity"></div>
+  <div id="three-modal" class="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-11/12 max-w-2xl z-50 hidden rounded-3xl border shadow-2xl p-6 transition-all" style="background-color: var(--bg-card); border-color: var(--border-card);">
+    <div class="flex items-center justify-between pb-3 border-b" style="border-color: var(--border-card);">
+      <div class="flex items-center gap-2.5">
+        <span class="text-2xl">💎</span>
+        <div>
+          <h3 class="font-luxury font-black text-base uppercase text-amber-400">3D Interactive AR Studio</h3>
+          <p class="text-[10px]" style="color: var(--text-muted);">Click and drag to rotate 360° • WebGL Luxury Metal Shader</p>
+        </div>
+      </div>
+      <button onclick="close3DViewer()" class="p-1.5 text-gray-400 hover:text-white">✕</button>
+    </div>
+
+    <!-- 3D WebGL Canvas Container -->
+    <div id="three-canvas-container" class="w-full h-72 sm:h-80 my-4 bg-gradient-to-b from-black to-[#12121c] rounded-2xl border border-gray-800 relative flex items-center justify-center overflow-hidden">
+      <!-- Three.js injected here -->
+      <div class="absolute bottom-3 left-3 bg-black/60 px-3 py-1 rounded-full text-[10px] text-amber-300 font-mono">
+        🖱️ Drag to rotate 360° | Scroll to Zoom
+      </div>
+    </div>
+
+    <div class="flex justify-between items-center pt-2 border-t" style="border-color: var(--border-card);">
+      <span class="text-xs font-bold text-gray-300" id="three-item-title">Shark Chrono-Black Tourbillon</span>
+      <button onclick="addCurrent3DToCart()" class="px-4 py-2 rounded-xl bg-gradient-to-r from-amber-500 to-yellow-500 text-black font-black text-xs uppercase shadow">
+        Add Piece to Bag ➔
+      </button>
+    </div>
+  </div>
 
   <!-- ================= PRODUCT QUICK VIEW MODAL ================= -->
   <div id="quickview-backdrop" onclick="closeQuickView()" class="fixed inset-0 bg-black/80 z-50 hidden opacity-0 transition-opacity"></div>
@@ -253,26 +289,53 @@
     </div>
   </div>
 
-  <!-- ================= SLIDE-OVER SHOPPING BAG DRAWER ================= -->
-  <div id="drawer-backdrop" onclick="closeCart()" class="fixed inset-0 bg-black/60 z-50 hidden opacity-0 transition-opacity"></div>
-  <div id="cart-drawer" class="fixed top-0 right-0 bottom-0 w-full sm:w-[460px] z-50 transform translate-x-full overflow-y-auto p-6 shadow-2xl border-l flex flex-col justify-between" style="background-color: var(--cart-drawer-bg); border-color: var(--border-card);">
+  <!-- ================= WISHLIST SLIDE-OVER DRAWER ================= -->
+  <div id="wishlist-backdrop" onclick="closeWishlist()" class="drawer-backdrop fixed inset-0 bg-black/60 z-50 hidden opacity-0"></div>
+  <div id="wishlist-drawer" class="drawer-panel fixed top-0 right-0 bottom-0 w-full sm:w-[460px] z-50 transform translate-x-full overflow-y-auto p-6 shadow-2xl border-l flex flex-col justify-between" style="background-color: var(--cart-drawer-bg); border-color: var(--border-card);">
+    <div>
+      <div class="flex items-center justify-between pb-4 border-b" style="border-color: var(--border-card);">
+        <div class="flex items-center gap-2.5">
+          <span class="text-2xl text-red-500">❤️</span>
+          <div>
+            <h3 class="font-luxury font-black text-lg uppercase tracking-wide">Saved Wishlist</h3>
+            <p class="text-[11px]" style="color: var(--text-muted);">Your Curated High-End Selection</p>
+          </div>
+        </div>
+        <button onclick="closeWishlist()" class="p-2 rounded-xl hover:bg-white/10 text-gray-400 hover:text-white transition">✕</button>
+      </div>
+
+      <div id="wishlist-items" class="space-y-3.5 my-4 max-h-[70vh] overflow-y-auto pr-1">
+        <!-- Injected via JS -->
+      </div>
+    </div>
+
+    <div class="pt-4 border-t" style="border-color: var(--border-card);">
+      <button onclick="addAllWishlistToCart()" class="w-full py-3 rounded-xl bg-gradient-to-r from-amber-500 to-yellow-500 text-black font-black text-xs uppercase tracking-wider shadow transition">
+        Move All Items to Bag 🛍️
+      </button>
+    </div>
+  </div>
+
+  <!-- ================= SMOOTH SLIDE-OVER SHOPPING BAG DRAWER ================= -->
+  <div id="drawer-backdrop" onclick="closeCart()" class="drawer-backdrop fixed inset-0 bg-black/60 z-50 hidden opacity-0"></div>
+  <div id="cart-drawer" class="drawer-panel fixed top-0 right-0 bottom-0 w-full sm:w-[460px] z-50 transform translate-x-full overflow-y-auto p-6 shadow-2xl border-l flex flex-col justify-between" style="background-color: var(--cart-drawer-bg); border-color: var(--border-card);">
     
     <div>
       <div class="flex items-center justify-between pb-4 border-b" style="border-color: var(--border-card);">
         <div class="flex items-center gap-2.5">
           <span class="text-2xl">🛍️</span>
           <div>
-            <h3 class="font-luxury font-black text-lg uppercase tracking-wide">Your Shopping Bag</h3>
+            <h3 class="font-luxury font-black text-lg uppercase tracking-wide">Shopping Bag</h3>
             <p class="text-[11px]" style="color: var(--text-muted);">Verified Cairo Vault Inventory</p>
           </div>
         </div>
         <button onclick="closeCart()" class="p-2 rounded-xl hover:bg-white/10 text-gray-400 hover:text-white transition">✕</button>
       </div>
 
-      <!-- Free Shipping Tracker -->
+      <!-- Free Shipping Tracker (> 150 EGP threshold) -->
       <div class="p-3 my-4 rounded-xl border" style="background-color: var(--bg-card-sub); border-color: var(--border-card);">
         <div class="flex justify-between text-xs font-bold mb-1.5">
-          <span id="shipping-progress-text">Spend 1,500 EGP for Free VIP Delivery</span>
+          <span id="shipping-progress-text">Spend 150 EGP for Free VIP Delivery</span>
           <span class="text-amber-400" id="shipping-status">🚚</span>
         </div>
         <div class="w-full bg-zinc-800 h-2 rounded-full overflow-hidden">
@@ -282,23 +345,23 @@
 
       <!-- Cart Items Container -->
       <div id="cart-items" class="space-y-3.5 max-h-[45vh] overflow-y-auto pr-1">
-        <!-- Injected via JS -->
+        <!-- Dynamic cart items with smooth +/- and delete -->
       </div>
     </div>
 
     <!-- Cart Footer & Checkout -->
     <div class="pt-4 border-t space-y-3 mt-4" style="border-color: var(--border-card);">
       
-      <!-- Promo Voucher Input -->
+      <!-- Promo Voucher Input (NO codes mentioned on site!) -->
       <div class="flex gap-2">
         <input 
           type="text" 
           id="promo-input" 
-          placeholder="Promo code (e.g. SHARK10)" 
-          class="flex-1 px-3 py-2 rounded-xl text-xs outline-none border font-mono uppercase"
+          placeholder="Enter Promo Code" 
+          class="flex-1 px-3.5 py-2.5 rounded-xl text-xs outline-none border font-mono uppercase"
           style="background-color: var(--bg-card); border-color: var(--border-card); color: var(--text-main);"
         />
-        <button onclick="applyPromo()" class="px-4 py-2 rounded-xl border text-xs font-bold hover:border-amber-400 transition" style="border-color: var(--border-card);">
+        <button onclick="applyPromo()" class="px-4 py-2.5 rounded-xl border text-xs font-bold hover:border-amber-400 transition" style="border-color: var(--border-card);">
           Apply
         </button>
       </div>
@@ -311,11 +374,11 @@
           <span id="cart-subtotal" class="font-bold font-mono">0 EGP</span>
         </div>
         <div class="flex justify-between" style="color: var(--text-muted);">
-          <span>VIP Express Shipping:</span>
+          <span>VIP Express Delivery:</span>
           <span id="cart-shipping" class="font-bold font-mono">0 EGP</span>
         </div>
         <div id="discount-row" class="flex justify-between text-emerald-400 hidden">
-          <span>Voucher Discount (10%):</span>
+          <span>Promo Code Discount:</span>
           <span id="cart-discount" class="font-bold font-mono">-0 EGP</span>
         </div>
         <div class="flex justify-between pt-2 border-t text-sm font-black" style="border-color: var(--border-card);">
@@ -325,76 +388,66 @@
       </div>
 
       <!-- Checkout Button -->
-      <button onclick="openCheckoutModal()" class="w-full py-3 rounded-xl bg-gradient-to-r from-amber-500 to-yellow-500 hover:from-amber-400 text-black font-black text-xs uppercase tracking-wider shadow-lg transition">
-        Proceed to Secure Checkout 🔒
+      <button onclick="openCheckoutModal()" class="w-full py-3.5 rounded-xl bg-gradient-to-r from-amber-500 to-yellow-500 hover:from-amber-400 text-black font-black text-xs uppercase tracking-wider shadow-lg transition">
+        Confirm Order (Cash on Delivery) ➔
       </button>
 
     </div>
   </div>
 
-  <!-- ================= CHECKOUT MODAL ================= -->
+  <!-- ================= CHECKOUT MODAL (STRICTLY CASH ON DELIVERY ONLY) ================= -->
   <div id="checkout-backdrop" onclick="closeCheckoutModal()" class="fixed inset-0 bg-black/80 z-50 hidden opacity-0 transition-opacity"></div>
   <div id="checkout-modal" class="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-11/12 max-w-lg z-50 hidden p-6 rounded-3xl border shadow-2xl transition-all" style="background-color: var(--bg-card); border-color: var(--border-card);">
     <div class="flex items-center justify-between pb-3 border-b" style="border-color: var(--border-card);">
-      <h3 class="font-luxury font-black text-lg text-amber-400 uppercase tracking-wide">Secure Checkout</h3>
+      <div>
+        <h3 class="font-luxury font-black text-lg text-amber-400 uppercase tracking-wide">Order Dispatch</h3>
+        <p class="text-[10px]" style="color: var(--text-muted);">Payment: Cash on Delivery upon inspection</p>
+      </div>
       <button onclick="closeCheckoutModal()" class="p-1.5 text-gray-400 hover:text-white">✕</button>
     </div>
 
     <form id="checkout-form" onsubmit="handlePlaceOrder(event)" class="py-4 space-y-3.5 text-xs">
       <div>
-        <label class="block font-bold mb-1" style="color: var(--text-muted);">Full Name</label>
+        <label class="block font-bold mb-1" style="color: var(--text-muted);">Full Name (الاسم بالكامل)</label>
         <input required type="text" id="cust-name" placeholder="Karim El-Shennawy" class="w-full p-2.5 rounded-xl border outline-none text-xs" style="background-color: var(--bg-card-sub); border-color: var(--border-card); color: var(--text-main);">
       </div>
 
       <div class="grid grid-cols-2 gap-3">
         <div>
-          <label class="block font-bold mb-1" style="color: var(--text-muted);">Egyptian Mobile</label>
+          <label class="block font-bold mb-1" style="color: var(--text-muted);">Mobile Number (رقم الهاتف)</label>
           <input required type="tel" id="cust-phone" placeholder="01023349901" pattern="^01[0125][0-9]{8}$" class="w-full p-2.5 rounded-xl border outline-none text-xs" style="background-color: var(--bg-card-sub); border-color: var(--border-card); color: var(--text-main);">
         </div>
         <div>
-          <label class="block font-bold mb-1" style="color: var(--text-muted);">Compound / Area</label>
+          <label class="block font-bold mb-1" style="color: var(--text-muted);">Area / Compound</label>
           <select required id="cust-area" class="w-full p-2.5 rounded-xl border outline-none text-xs" style="background-color: var(--bg-card-sub); border-color: var(--border-card); color: var(--text-main);">
             <option value="New Cairo (Tagamoa)">New Cairo (5th Settlement)</option>
-            <option value="Sheikh Zayed (Arkan)">Sheikh Zayed (West Cairo)</option>
+            <option value="Sheikh Zayed (Arkan)">Sheikh Zayed (Arkan Hub)</option>
             <option value="Maadi (Degla)">Maadi Degla</option>
             <option value="Heliopolis (Korba)">Heliopolis (Korba)</option>
             <option value="6th of October">6th of October City</option>
-            <option value="Alexandria">Alexandria (Gleem / Smouha)</option>
+            <option value="Alexandria">Alexandria</option>
           </select>
         </div>
       </div>
 
       <div>
-        <label class="block font-bold mb-1" style="color: var(--text-muted);">Delivery Address</label>
-        <input required type="text" id="cust-address" placeholder="Villa 14, North 90th St." class="w-full p-2.5 rounded-xl border outline-none text-xs" style="background-color: var(--bg-card-sub); border-color: var(--border-card); color: var(--text-main);">
+        <label class="block font-bold mb-1" style="color: var(--text-muted);">Detailed Delivery Address (العنوان بالتفصيل)</label>
+        <input required type="text" id="cust-address" placeholder="Villa 14, North 90th Street" class="w-full p-2.5 rounded-xl border outline-none text-xs" style="background-color: var(--bg-card-sub); border-color: var(--border-card); color: var(--text-main);">
       </div>
 
-      <div>
-        <label class="block font-bold mb-1" style="color: var(--text-muted);">Payment Method</label>
-        <div class="grid grid-cols-2 gap-2 text-xs">
-          <label class="p-2.5 rounded-xl border flex items-center gap-2 cursor-pointer" style="background-color: var(--bg-card-sub); border-color: var(--border-card);">
-            <input type="radio" name="payment-method" value="COD" checked class="accent-amber-400">
-            <span>💵 Cash on Delivery</span>
-          </label>
-          <label class="p-2.5 rounded-xl border flex items-center gap-2 cursor-pointer" style="background-color: var(--bg-card-sub); border-color: var(--border-card);">
-            <input type="radio" name="payment-method" value="InstaPay" class="accent-amber-400">
-            <span>⚡ InstaPay</span>
-          </label>
-          <label class="p-2.5 rounded-xl border flex items-center gap-2 cursor-pointer" style="background-color: var(--bg-card-sub); border-color: var(--border-card);">
-            <input type="radio" name="payment-method" value="Vodafone Cash" class="accent-amber-400">
-            <span>📱 Vodafone Cash</span>
-          </label>
-          <label class="p-2.5 rounded-xl border flex items-center gap-2 cursor-pointer" style="background-color: var(--bg-card-sub); border-color: var(--border-card);">
-            <input type="radio" name="payment-method" value="Card" class="accent-amber-400">
-            <span>💳 Credit Card</span>
-          </label>
+      <!-- STRICTLY Cash on Delivery Notice -->
+      <div class="p-3.5 rounded-2xl border flex items-center gap-3" style="background-color: rgba(245, 158, 11, 0.08); border-color: var(--border-accent);">
+        <span class="text-2xl">💵</span>
+        <div>
+          <span class="font-bold text-amber-400 block text-xs">الدفع عند الاستلام والمعاينة (Cash on Delivery)</span>
+          <p class="text-[10px] text-gray-400 mt-0.5">افحص القطعة بدقة عند وصول مندوبنا الفاخر، وادفع نقداً بعد التأكد التام من الجودة.</p>
         </div>
       </div>
 
       <div class="pt-3 border-t flex justify-between items-center" style="border-color: var(--border-card);">
-        <span class="font-bold text-xs">Total: <span id="checkout-total-val" class="font-mono text-amber-400 font-black">0 EGP</span></span>
+        <span class="font-bold text-xs">Total to Pay on Delivery: <span id="checkout-total-val" class="font-mono text-amber-400 font-black">0 EGP</span></span>
         <button type="submit" class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-amber-500 to-yellow-500 hover:from-amber-400 text-black font-black text-xs uppercase tracking-wider shadow">
-          Confirm Order ✓
+          Confirm Dispatch ✓
         </button>
       </div>
     </form>
@@ -405,43 +458,20 @@
     <div class="w-16 h-16 rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/40 flex items-center justify-center text-3xl mx-auto animate-bounce">
       ✓
     </div>
-    <h3 class="font-luxury font-black text-xl text-amber-400 uppercase">Order Confirmed!</h3>
+    <h3 class="font-luxury font-black text-xl text-amber-400 uppercase">Order Dispatched!</h3>
     <p class="text-xs leading-relaxed" style="color: var(--text-muted);">
-      Thank you for acquiring from Aura &amp; Shark Atelier. Your piece is being packed in our Cairo vault and dispatched via VIP courier.
+      Your piece has been secured from our Cairo vault. Our private courier will deliver it for inspection within 24-48 hours.
     </p>
     <div class="p-3 rounded-xl border font-mono text-xs font-bold" style="background-color: var(--bg-card-sub); border-color: var(--border-card);">
-      Tracking Number: <span id="confirmed-tracking" class="text-amber-400">#AURA-98214</span>
+      Tracking Number: <span id="confirmed-tracking" class="text-amber-400">#AURA-88219</span>
     </div>
     <div class="pt-2 flex gap-2">
       <button onclick="closeSuccessModal()" class="flex-1 py-2.5 rounded-xl bg-gray-700 hover:bg-gray-600 text-white font-bold text-xs">
-        Continue Shopping
+        Explore More Pieces
       </button>
       <a id="whatsapp-order-link" href="#" target="_blank" class="flex-1 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs flex items-center justify-center gap-1.5 shadow">
-        <span>💬</span> WhatsApp Receipt
+        <span>💬</span> WhatsApp Tracking
       </a>
-    </div>
-  </div>
-
-  <!-- ================= GUIDED ONBOARDING TOUR MODAL ================= -->
-  <div id="tour-backdrop" class="fixed inset-0 bg-black/75 z-50 hidden opacity-0 transition-opacity"></div>
-  <div id="tour-modal" class="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-11/12 max-w-md z-50 hidden p-6 rounded-3xl border shadow-2xl transition-all" style="background-color: var(--bg-card); border-color: var(--border-card);">
-    <div class="flex items-center justify-between pb-3 border-b" style="border-color: var(--border-card);">
-      <div class="flex items-center gap-2">
-        <span class="text-2xl" id="tour-icon">🎯</span>
-        <div>
-          <span class="text-[10px] font-black uppercase text-amber-500 tracking-wider" id="tour-counter">STEP 1 OF 4</span>
-          <h4 class="font-luxury font-black text-base" id="tour-title">Welcome to Haute Atelier</h4>
-        </div>
-      </div>
-      <button onclick="endStoreTour()" class="p-1.5 text-gray-400 hover:text-white text-sm">✕</button>
-    </div>
-    <div class="py-4 text-xs leading-relaxed" id="tour-desc" style="color: var(--text-muted);">
-      Experience luxury Egyptian craftsmanship engineered with Swiss horology standards and Italian full-grain leather.
-    </div>
-    <div class="pt-3 border-t flex justify-between items-center" style="border-color: var(--border-card);">
-      <button onclick="prevStoreTour()" id="tour-prev" class="px-3 py-1.5 rounded-lg bg-gray-800 hover:bg-gray-700 text-gray-300 text-xs font-bold transition disabled:opacity-30">Previous</button>
-      <div class="flex gap-1" id="tour-dots"></div>
-      <button onclick="nextStoreTour()" id="tour-next" class="px-4 py-1.5 rounded-lg bg-gradient-to-r from-amber-500 to-yellow-500 text-black text-xs font-black transition">Next ➔</button>
     </div>
   </div>
 
@@ -457,18 +487,18 @@
       </div>
       <div class="flex items-center gap-4 font-bold" style="color: var(--text-muted);">
         <a href="index.html" class="hover:text-amber-400 transition">Gym Compound</a>
-        <a href="dashboard.html" class="hover:text-amber-400 transition">Executive Dashboard</a>
-        <a href="#catalog" class="hover:text-amber-400 transition">Vault Catalog</a>
+        <a href="dashboard.html" class="hover:text-amber-400 transition">Workforce Dashboard</a>
+        <a href="#catalog" class="hover:text-amber-400 transition">Vault Pieces</a>
       </div>
       <div class="text-[10px] text-gray-500">
-        © 2026 Aura &amp; Shark. Handcrafted in Cairo, Egypt. All figures in EGP.
+        © 2026 Aura &amp; Shark. Handcrafted in Cairo, Egypt. Cash on Delivery across all governorates.
       </div>
     </div>
   </footer>
 
   <!-- ================= JAVASCRIPT ENGINE ================= -->
   <script>
-    // Product Database (Zero dummy data, authentic Egyptian luxury context)
+    // Authentic Egyptian Luxury Products Database
     const products = [
       {
         id: 1,
@@ -478,7 +508,7 @@
         origPrice: 11500,
         rating: 4.9,
         reviews: 42,
-        stock: 3,
+        stock: 2, // Live stock depletion
         tag: "Swiss Automatic",
         image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=700&q=80",
         desc: "Precision skeletonized chronograph with matte obsidian DLC coating, sapphire crystal, and 72-hour power reserve. Tested at 200m depth."
@@ -491,10 +521,10 @@
         origPrice: 5800,
         rating: 5.0,
         reviews: 68,
-        stock: 5,
+        stock: 3,
         tag: "Full-Grain Italian",
         image: "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=crop&w=700&q=80",
-        desc: "Hand-stitched in Cairo from imported Tuscan vegetable-tanned leather. Features brass hardware and dedicated compartment for athletic gear."
+        desc: "Hand-stitched in Cairo from imported Tuscan vegetable-tanned leather. Features solid brass hardware and dedicated compartment for athletic gear."
       },
       {
         id: 3,
@@ -504,7 +534,7 @@
         origPrice: 4000,
         rating: 4.8,
         reviews: 95,
-        stock: 8,
+        stock: 4,
         tag: "Rare Botanical Oud",
         image: "https://images.unsplash.com/photo-1592945403244-b3fbafd7f539?auto=format&fit=crop&w=700&q=80",
         desc: "Distilled Cambodian agarwood fused with Taif rose, ambergris, and smoky birch. Matured in French oak barrels for 18 months."
@@ -517,7 +547,7 @@
         origPrice: 3100,
         rating: 4.7,
         reviews: 31,
-        stock: 4,
+        stock: 3,
         tag: "Aerospace Titanium",
         image: "https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=700&q=80",
         desc: "Ultra-lightweight Japanese aerospace titanium frames with polarized amber lenses offering 100% UV400 protection."
@@ -530,7 +560,7 @@
         origPrice: 9200,
         rating: 4.9,
         reviews: 54,
-        stock: 2,
+        stock: 1,
         tag: "Limited Batch",
         image: "https://images.unsplash.com/photo-1524805444758-089113d48a6d?auto=format&fit=crop&w=700&q=80",
         desc: "Brushed stainless steel case with textured carbon-weave dial and vulcanized FKM rubber athletic deployment strap."
@@ -543,7 +573,7 @@
         origPrice: 6500,
         rating: 4.9,
         reviews: 37,
-        stock: 6,
+        stock: 2,
         tag: "Artisan Crafted",
         image: "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?auto=format&fit=crop&w=700&q=80",
         desc: "Structured boardroom briefcase with dual padded compartments for 16-inch laptops, document sleeves, and engraved lock."
@@ -556,7 +586,7 @@
         origPrice: 3500,
         rating: 5.0,
         reviews: 79,
-        stock: 12,
+        stock: 5,
         tag: "Best Seller",
         image: "https://images.unsplash.com/photo-1547887537-6158d64c35b3?auto=format&fit=crop&w=700&q=80",
         desc: "Warm resinous amber infused with Madagascan vanilla bourbon, tonka bean, and spicy cardamom."
@@ -569,22 +599,33 @@
         origPrice: 2100,
         rating: 4.8,
         reviews: 88,
-        stock: 15,
+        stock: 6,
         tag: "RFID Shielded",
         image: "https://images.unsplash.com/photo-1627123424574-724758594e93?auto=format&fit=crop&w=700&q=80",
         desc: "Slim credit card sleeve with aerospace aluminum pop-up card ejector and full RFID electromagnetic blocking."
       }
     ];
 
-    // State
+    // State Variables
     let cart = [];
+    let wishlist = [];
     let activeCategory = 'all';
     let activeSort = 'featured';
     let searchQuery = '';
     let promoDiscount = 0;
+    let promoCodeApplied = '';
     let isLight = false;
     let audioEnabled = true;
     let audioCtx = null;
+    let current3DProductId = 1;
+
+    // Secret Promo Codes (NOT mentioned on website UI!)
+    const SECRET_PROMO_CODES = {
+      'VIP50': 0.50,
+      'LUXE20': 0.20,
+      'ATELIER15': 0.15,
+      'SHARK10': 0.10
+    };
 
     // Web Audio Synthesizer
     function initAudio() {
@@ -627,7 +668,7 @@
       playChime(1100, 0.06);
     }
 
-    // Render Products Grid
+    // Render Products Grid with Stock Depletion & Wishlist Hearts
     function renderProducts() {
       let filtered = products.filter(p => {
         const matchesCategory = activeCategory === 'all' || p.category === activeCategory;
@@ -653,8 +694,21 @@
         return;
       }
 
-      grid.innerHTML = filtered.map(p => `
-        <div class="product-card rounded-2xl overflow-hidden border flex flex-col justify-between group">
+      grid.innerHTML = filtered.map(p => {
+        const isWishlisted = wishlist.includes(p.id);
+        const stockBadge = p.stock <= 2 
+          ? `<span class="stock-depletion-pulse px-2 py-0.5 rounded text-[10px] font-black bg-red-500/20 text-red-400 border border-red-500/30">⚡ Only ${p.stock} left in Cairo</span>`
+          : `<span class="px-2 py-0.5 rounded text-[10px] font-bold text-emerald-400 bg-emerald-500/10">● ${p.stock} Available in Vault</span>`;
+
+        return `
+        <div class="product-card rounded-2xl overflow-hidden border flex flex-col justify-between group relative">
+          
+          <!-- Wishlist Heart Toggle Button -->
+          <button onclick="toggleWishlistItem(${p.id}, event)" class="absolute top-3 right-3 z-20 w-8 h-8 rounded-full bg-black/60 hover:bg-black text-xs flex items-center justify-center transition transform hover:scale-110 shadow">
+            <span class="${isWishlisted ? 'text-red-500' : 'text-gray-400'}">${isWishlisted ? '❤️' : '🤍'}</span>
+          </button>
+
+          <!-- Product Image & Quick View Trigger -->
           <div class="relative overflow-hidden h-64 bg-black/40 cursor-pointer" onclick="openQuickView(${p.id})">
             <img 
               src="${p.image}" 
@@ -664,21 +718,32 @@
             <div class="absolute top-3 left-3 px-2.5 py-1 rounded-full text-[10px] font-black uppercase tracking-wider" style="background-color: var(--badge-bg); color: var(--badge-text);">
               ${p.tag}
             </div>
-            <div class="absolute top-3 right-3 text-[11px] font-black px-2 py-0.5 rounded bg-black/60 text-amber-400">
-              ⭐ ${p.rating} (${p.reviews})
-            </div>
-            <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-              <span class="px-4 py-2 rounded-xl bg-white/90 text-black font-black text-xs uppercase tracking-wider shadow">Quick View 👁️</span>
+            <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
+              <span class="px-3.5 py-2 rounded-xl bg-white/90 text-black font-black text-xs uppercase tracking-wider shadow">Quick View 👁️</span>
+              <button onclick="open3DViewer(${p.id}); event.stopPropagation();" class="p-2 rounded-xl bg-amber-500 text-black font-black text-xs shadow hover:bg-amber-400 transition" title="View in 3D">
+                💎 3D
+              </button>
             </div>
           </div>
 
+          <!-- Product Details -->
           <div class="p-5 flex-1 flex flex-col justify-between space-y-3">
             <div>
-              <div class="text-[10px] font-bold uppercase tracking-widest text-amber-500 mb-1">${p.category}</div>
+              <div class="flex items-center justify-between text-[10px] uppercase tracking-wider mb-1">
+                <span class="font-bold text-amber-500">${p.category}</span>
+                <span class="font-bold text-gray-400">⭐ ${p.rating} (${p.reviews})</span>
+              </div>
               <h3 class="font-luxury font-bold text-sm leading-snug group-hover:text-amber-400 transition-colors">${p.title}</h3>
               <p class="text-[11px] line-clamp-2 mt-1.5" style="color: var(--text-muted);">${p.desc}</p>
             </div>
 
+            <!-- Real-Time Stock Depletion Indicator -->
+            <div class="pt-1 flex items-center justify-between">
+              ${stockBadge}
+              <span class="text-[9px] text-gray-500">COD Available</span>
+            </div>
+
+            <!-- Price & Add to Bag -->
             <div class="pt-3 border-t flex items-center justify-between" style="border-color: var(--border-card);">
               <div>
                 <span class="font-mono font-black text-base text-amber-400">${p.price.toLocaleString()} EGP</span>
@@ -690,7 +755,7 @@
             </div>
           </div>
         </div>
-      `).join('');
+      `}).join('');
     }
 
     function filterCategory(cat, btn = null) {
@@ -722,7 +787,88 @@
       renderProducts();
     }
 
-    // Cart Operations
+    // Wishlist Functions
+    function toggleWishlistItem(id, event) {
+      if (event) event.stopPropagation();
+      playChime(1150, 0.06);
+      if (wishlist.includes(id)) {
+        wishlist = wishlist.filter(item => item !== id);
+      } else {
+        wishlist.push(id);
+      }
+      localStorage.setItem('aura_wishlist', JSON.stringify(wishlist));
+      updateWishlistUI();
+      renderProducts();
+    }
+
+    function updateWishlistUI() {
+      const badge = document.getElementById('wishlist-badge');
+      badge.innerText = wishlist.length;
+
+      const container = document.getElementById('wishlist-items');
+      const wishlistedProducts = products.filter(p => wishlist.includes(p.id));
+
+      if (wishlistedProducts.length === 0) {
+        container.innerHTML = `
+          <div class="py-12 text-center text-gray-400 space-y-2">
+            <span class="text-3xl block">🤍</span>
+            <p class="text-xs">Your wishlist is currently empty.</p>
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = wishlistedProducts.map(p => `
+        <div class="p-3 rounded-xl border flex gap-3 items-center" style="background-color: var(--bg-card); border-color: var(--border-card);">
+          <img src="${p.image}" alt="${p.title}" class="w-16 h-16 rounded-lg object-cover shrink-0">
+          <div class="flex-1 min-w-0">
+            <h4 class="font-bold text-xs truncate">${p.title}</h4>
+            <div class="font-mono text-xs text-amber-400 font-bold mt-0.5">${p.price.toLocaleString()} EGP</div>
+            <button onclick="addToCart(${p.id}); toggleWishlistItem(${p.id});" class="mt-2 px-3 py-1 rounded-lg bg-amber-500 text-black text-[10px] font-black uppercase shadow">
+              Move to Bag 🛍️
+            </button>
+          </div>
+          <button onclick="toggleWishlistItem(${p.id})" class="text-gray-500 hover:text-red-400 p-1 text-xs">✕</button>
+        </div>
+      `).join('');
+    }
+
+    function openWishlist() {
+      playChime(750, 0.04);
+      const drawer = document.getElementById('wishlist-drawer');
+      const backdrop = document.getElementById('wishlist-backdrop');
+      backdrop.classList.remove('hidden');
+      setTimeout(() => backdrop.classList.remove('opacity-0'), 10);
+      drawer.classList.add('open');
+    }
+
+    function closeWishlist() {
+      const drawer = document.getElementById('wishlist-drawer');
+      const backdrop = document.getElementById('wishlist-backdrop');
+      drawer.classList.remove('open');
+      backdrop.classList.add('opacity-0');
+      setTimeout(() => backdrop.classList.add('hidden'), 300);
+    }
+
+    function addAllWishlistToCart() {
+      playChime(1300, 0.08);
+      wishlist.forEach(id => {
+        const prod = products.find(p => p.id === id);
+        const existing = cart.find(i => i.id === id);
+        if (existing) existing.quantity += 1;
+        else cart.push({ ...prod, quantity: 1 });
+      });
+      wishlist = [];
+      localStorage.setItem('aura_wishlist', JSON.stringify(wishlist));
+      saveCart();
+      updateWishlistUI();
+      updateCartUI();
+      renderProducts();
+      closeWishlist();
+      openCart();
+    }
+
+    // Cart Operations with Smooth Increment / Decrement / Delete
     function addToCart(productId) {
       playChime(1250, 0.08);
       const product = products.find(p => p.id === productId);
@@ -767,8 +913,10 @@
       badge.innerText = count;
 
       const subtotal = cart.reduce((sum, i) => sum + (i.price * i.quantity), 0);
-      const freeShippingGoal = 1500;
-      const shipping = subtotal >= freeShippingGoal || subtotal === 0 ? 0 : 120;
+      
+      // Free Shipping Threshold strictly > 150 EGP (as requested)
+      const freeShippingGoal = 150;
+      const shipping = subtotal >= freeShippingGoal || subtotal === 0 ? 0 : 50;
       const discount = subtotal * promoDiscount;
       const total = Math.max(0, subtotal - discount + shipping);
 
@@ -778,7 +926,7 @@
       const statusIcon = document.getElementById('shipping-status');
       if (subtotal >= freeShippingGoal) {
         bar.style.width = '100%';
-        progressText.innerText = 'Unlocked! Free VIP Express Delivery across Egypt';
+        progressText.innerText = 'Unlocked! Free VIP Express Delivery (> 150 EGP)';
         statusIcon.innerText = '🎉';
       } else {
         const pct = Math.min(100, Math.round((subtotal / freeShippingGoal) * 100));
@@ -793,7 +941,7 @@
 
       if (promoDiscount > 0) {
         document.getElementById('discount-row').classList.remove('hidden');
-        document.getElementById('cart-discount').innerText = `-${discount.toLocaleString()} EGP`;
+        document.getElementById('cart-discount').innerText = `-${discount.toLocaleString()} EGP (${Math.round(promoDiscount * 100)}% Off)`;
       } else {
         document.getElementById('discount-row').classList.add('hidden');
       }
@@ -810,18 +958,18 @@
       }
 
       cartItemsContainer.innerHTML = cart.map(i => `
-        <div class="p-3 rounded-xl border flex gap-3 items-center" style="background-color: var(--bg-card); border-color: var(--border-card);">
+        <div class="p-3 rounded-xl border flex gap-3 items-center transition-all" style="background-color: var(--bg-card); border-color: var(--border-card);">
           <img src="${i.image}" alt="${i.title}" class="w-16 h-16 rounded-lg object-cover shrink-0">
           <div class="flex-1 min-w-0">
             <h4 class="font-bold text-xs truncate">${i.title}</h4>
             <div class="font-mono text-xs text-amber-400 font-bold mt-0.5">${(i.price * i.quantity).toLocaleString()} EGP</div>
             <div class="flex items-center gap-2 mt-2">
-              <button onclick="updateQuantity(${i.id}, -1)" class="w-6 h-6 rounded bg-black/40 border border-gray-700 flex items-center justify-center text-xs font-bold">-</button>
+              <button onclick="updateQuantity(${i.id}, -1)" class="w-6 h-6 rounded bg-black/40 border border-gray-700 flex items-center justify-center text-xs font-bold hover:bg-black/80 transition">-</button>
               <span class="font-mono text-xs font-bold">${i.quantity}</span>
-              <button onclick="updateQuantity(${i.id}, 1)" class="w-6 h-6 rounded bg-black/40 border border-gray-700 flex items-center justify-center text-xs font-bold">+</button>
+              <button onclick="updateQuantity(${i.id}, 1)" class="w-6 h-6 rounded bg-black/40 border border-gray-700 flex items-center justify-center text-xs font-bold hover:bg-black/80 transition">+</button>
             </div>
           </div>
-          <button onclick="removeFromCart(${i.id})" class="text-gray-500 hover:text-red-400 p-1 text-xs">✕</button>
+          <button onclick="removeFromCart(${i.id})" title="Remove item" class="text-gray-500 hover:text-red-400 p-1.5 text-xs transition">✕</button>
         </div>
       `).join('');
     }
@@ -843,18 +991,22 @@
       setTimeout(() => backdrop.classList.add('hidden'), 300);
     }
 
+    // Secret Promo Code Verification (NO codes revealed on site!)
     function applyPromo() {
       playChime(950, 0.05);
       const code = document.getElementById('promo-input').value.trim().toUpperCase();
       const msg = document.getElementById('promo-msg');
-      if (code === 'SHARK10' || code === 'CAIROVIP') {
-        promoDiscount = 0.10;
+      
+      if (SECRET_PROMO_CODES[code]) {
+        promoDiscount = SECRET_PROMO_CODES[code];
+        promoCodeApplied = code;
         msg.className = 'text-[11px] font-bold text-emerald-400';
-        msg.innerText = '✓ Promo applied: 10% Luxury Atelier Discount';
+        msg.innerText = `✓ Promo activated: ${Math.round(promoDiscount * 100)}% Private VIP Discount Applied!`;
       } else {
         promoDiscount = 0;
+        promoCodeApplied = '';
         msg.className = 'text-[11px] font-bold text-red-400';
-        msg.innerText = '✕ Invalid promo code. Try SHARK10';
+        msg.innerText = '✕ Invalid promo code.';
       }
       msg.classList.remove('hidden');
       updateCartUI();
@@ -874,8 +1026,11 @@
           <button onclick="closeQuickView()" class="p-1 text-gray-400 hover:text-white">✕</button>
         </div>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6 pt-4">
-          <div class="rounded-2xl overflow-hidden bg-black/40 h-72">
+          <div class="rounded-2xl overflow-hidden bg-black/40 h-72 relative">
             <img src="${product.image}" alt="${product.title}" class="w-full h-full object-cover">
+            <button onclick="open3DViewer(${product.id}); closeQuickView();" class="absolute bottom-3 right-3 px-3 py-1.5 rounded-xl bg-black/80 border border-amber-500/50 text-amber-300 text-xs font-black shadow flex items-center gap-1.5 hover:bg-black">
+              <span>💎</span> <span>3D AR Studio</span>
+            </button>
           </div>
           <div class="flex flex-col justify-between space-y-3 text-xs">
             <div>
@@ -890,8 +1045,8 @@
                 <span class="text-emerald-400 font-bold">${product.stock} Units Left in Cairo</span>
               </div>
               <div class="flex justify-between text-[11px]">
-                <span class="text-gray-400">Shipping:</span>
-                <span class="font-bold">24-48 Hours VIP Express Courier</span>
+                <span class="text-gray-400">Payment:</span>
+                <span class="font-bold text-amber-400">Cash on Delivery upon inspection</span>
               </div>
               <button onclick="addToCart(${product.id}); closeQuickView();" class="w-full py-3 rounded-xl bg-gradient-to-r from-amber-500 to-yellow-500 text-black font-black uppercase tracking-wider shadow">
                 Acquire Piece ➔
@@ -916,10 +1071,145 @@
       }, 250);
     }
 
-    // Checkout Modal
+    // 3D Interactive WebGL AR Studio (Three.js Engine)
+    let threeScene, threeCamera, threeRenderer, threeMesh;
+    let isDragging = false;
+    let previousMousePosition = { x: 0, y: 0 };
+
+    function init3DStudio() {
+      const container = document.getElementById('three-canvas-container');
+      const width = container.clientWidth || 500;
+      const height = container.clientHeight || 300;
+
+      threeScene = new THREE.Scene();
+      threeCamera = new THREE.PerspectiveCamera(45, width / height, 0.1, 1000);
+      threeCamera.position.z = 4.5;
+
+      threeRenderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+      threeRenderer.setSize(width, height);
+      threeRenderer.setPixelRatio(window.devicePixelRatio);
+      container.appendChild(threeRenderer.domElement);
+
+      // Lighting
+      const ambientLight = new THREE.AmbientLight(0xffffff, 1.2);
+      threeScene.add(ambientLight);
+
+      const pointLight1 = new THREE.PointLight(0xd4af37, 2, 50);
+      pointLight1.position.set(5, 5, 5);
+      threeScene.add(pointLight1);
+
+      const pointLight2 = new THREE.PointLight(0xffffff, 1.5, 50);
+      pointLight2.position.set(-5, -5, 5);
+      threeScene.add(pointLight2);
+
+      // Gold Chrono Model (Geometric Luxury Torus + Core)
+      const group = new THREE.Group();
+
+      const torusGeo = new THREE.TorusGeometry(1.2, 0.28, 32, 100);
+      const goldMat = new THREE.MeshStandardMaterial({
+        color: 0xd4af37,
+        metalness: 0.95,
+        roughness: 0.15
+      });
+      const torus = new THREE.Mesh(torusGeo, goldMat);
+      group.add(torus);
+
+      const dialGeo = new THREE.CylinderGeometry(1.05, 1.05, 0.15, 64);
+      const dialMat = new THREE.MeshStandardMaterial({
+        color: 0x111116,
+        metalness: 0.8,
+        roughness: 0.2
+      });
+      const dial = new THREE.Mesh(dialGeo, dialMat);
+      dial.rotation.x = Math.PI / 2;
+      group.add(dial);
+
+      const needleGeo = new THREE.BoxGeometry(0.04, 0.7, 0.04);
+      const needleMat = new THREE.MeshBasicMaterial({ color: 0xf59e0b });
+      const needle = new THREE.Mesh(needleGeo, needleMat);
+      needle.position.set(0, 0.2, 0.1);
+      group.add(needle);
+
+      threeMesh = group;
+      threeScene.add(threeMesh);
+
+      // Drag to rotate controls
+      const dom = threeRenderer.domElement;
+      dom.addEventListener('mousedown', (e) => { isDragging = true; previousMousePosition = { x: e.clientX, y: e.clientY }; });
+      dom.addEventListener('mousemove', (e) => {
+        if (!isDragging) return;
+        const deltaX = e.clientX - previousMousePosition.x;
+        const deltaY = e.clientY - previousMousePosition.y;
+        threeMesh.rotation.y += deltaX * 0.01;
+        threeMesh.rotation.x += deltaY * 0.01;
+        previousMousePosition = { x: e.clientX, y: e.clientY };
+      });
+      window.addEventListener('mouseup', () => { isDragging = false; });
+
+      // Touch controls
+      dom.addEventListener('touchstart', (e) => {
+        if (e.touches.length === 1) {
+          isDragging = true;
+          previousMousePosition = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+        }
+      });
+      dom.addEventListener('touchmove', (e) => {
+        if (!isDragging || e.touches.length !== 1) return;
+        const deltaX = e.touches[0].clientX - previousMousePosition.x;
+        const deltaY = e.touches[0].clientY - previousMousePosition.y;
+        threeMesh.rotation.y += deltaX * 0.01;
+        threeMesh.rotation.x += deltaY * 0.01;
+        previousMousePosition = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+      });
+      dom.addEventListener('touchend', () => { isDragging = false; });
+
+      // Animation Loop
+      function animate() {
+        requestAnimationFrame(animate);
+        if (!isDragging && threeMesh) {
+          threeMesh.rotation.y += 0.008;
+        }
+        threeRenderer.render(threeScene, threeCamera);
+      }
+      animate();
+    }
+
+    function open3DViewer(productId) {
+      playChime(1100, 0.08);
+      current3DProductId = productId;
+      const product = products.find(p => p.id === productId) || products[0];
+      document.getElementById('three-item-title').innerText = `${product.title} • ${product.price.toLocaleString()} EGP`;
+
+      const modal = document.getElementById('three-modal');
+      const backdrop = document.getElementById('three-modal-backdrop');
+      backdrop.classList.remove('hidden');
+      modal.classList.remove('hidden');
+      setTimeout(() => backdrop.classList.remove('opacity-0'), 10);
+
+      if (!threeRenderer) {
+        init3DStudio();
+      }
+    }
+
+    function close3DViewer() {
+      const modal = document.getElementById('three-modal');
+      const backdrop = document.getElementById('three-modal-backdrop');
+      backdrop.classList.add('opacity-0');
+      setTimeout(() => {
+        backdrop.classList.add('hidden');
+        modal.classList.add('hidden');
+      }, 250);
+    }
+
+    function addCurrent3DToCart() {
+      addToCart(current3DProductId);
+      close3DViewer();
+    }
+
+    // Checkout Modal (STRICTLY Cash on Delivery)
     function openCheckoutModal() {
       if (cart.length === 0) {
-        alert("Your bag is empty! Please add a piece to checkout.");
+        alert("Your shopping bag is empty! Please add a piece.");
         return;
       }
       closeCart();
@@ -953,8 +1243,9 @@
 
       document.getElementById('confirmed-tracking').innerText = tracking;
       
-      // Setup WhatsApp confirmation link
-      const text = encodeURIComponent(`*New Aura & Shark Order: ${tracking}*\nName: ${name}\nPhone: ${phone}\nArea: ${area}\nAddress: ${addr}\nTotal: ${total}`);
+      // Setup WhatsApp order confirmation
+      const discountNote = promoCodeApplied ? `\nPromo Code: ${promoCodeApplied}` : '';
+      const text = encodeURIComponent(`*New Aura & Shark Order: ${tracking}*\nCustomer: ${name}\nPhone: ${phone}\nArea: ${area}\nAddress: ${addr}\nPayment: Cash on Delivery (الدفع عند الاستلام)${discountNote}\nTotal Due on Delivery: ${total}`);
       document.getElementById('whatsapp-order-link').href = `https://wa.me/201023349901?text=${text}`;
 
       closeCheckoutModal();
@@ -979,84 +1270,6 @@
       }, 250);
     }
 
-    // Onboarding Guided Tour
-    const storeSteps = [
-      {
-        icon: "⚜️",
-        title: "Welcome to Aura & Shark Atelier",
-        desc: "Discover high-craftsmanship Egyptian chronographs, full-grain Italian leather duffles, and rare botanical oud essences."
-      },
-      {
-        icon: "🔍",
-        title: "Vault Filters & Live Search",
-        desc: "Filter seamlessly across Timepieces, Leather, and Fragrances, or use real-time search with instant sorting by price and rating."
-      },
-      {
-        icon: "🛍️",
-        title: "Slide-Over Shopping Bag",
-        desc: "Add pieces to your bag, track the 1,500 EGP Free VIP Shipping meter, apply discount codes like SHARK10, and review order totals."
-      },
-      {
-        icon: "💳",
-        title: "Omnichannel Egyptian Checkout",
-        desc: "Enjoy seamless checkout with Cash on Delivery, InstaPay, Vodafone Cash, or Credit Card with direct WhatsApp dispatch."
-      }
-    ];
-    let storeTourStep = 0;
-
-    function startStoreTour() {
-      playChime(950, 0.05);
-      storeTourStep = 0;
-      const modal = document.getElementById('tour-modal');
-      const backdrop = document.getElementById('tour-backdrop');
-      backdrop.classList.remove('hidden');
-      modal.classList.remove('hidden');
-      setTimeout(() => backdrop.classList.remove('opacity-0'), 10);
-      renderStoreTour();
-    }
-
-    function renderStoreTour() {
-      const step = storeSteps[storeTourStep];
-      document.getElementById('tour-icon').innerText = step.icon;
-      document.getElementById('tour-counter').innerText = `STEP ${storeTourStep + 1} OF ${storeSteps.length}`;
-      document.getElementById('tour-title').innerText = step.title;
-      document.getElementById('tour-desc').innerText = step.desc;
-      document.getElementById('tour-prev').disabled = storeTourStep === 0;
-      document.getElementById('tour-next').innerText = storeTourStep === storeSteps.length - 1 ? "Finish Tour ✓" : "Next ➔";
-      document.getElementById('tour-dots').innerHTML = storeSteps.map((_, i) => `
-        <span class="w-2 h-2 rounded-full ${i === storeTourStep ? 'bg-amber-400 w-4' : 'bg-gray-600'} transition-all"></span>
-      `).join('');
-    }
-
-    function nextStoreTour() {
-      playChime(1050, 0.04);
-      if (storeTourStep < storeSteps.length - 1) {
-        storeTourStep++;
-        renderStoreTour();
-      } else {
-        endStoreTour();
-      }
-    }
-
-    function prevStoreTour() {
-      playChime(850, 0.04);
-      if (storeTourStep > 0) {
-        storeTourStep--;
-        renderStoreTour();
-      }
-    }
-
-    function endStoreTour() {
-      playChime(800, 0.04);
-      const modal = document.getElementById('tour-modal');
-      const backdrop = document.getElementById('tour-backdrop');
-      backdrop.classList.add('opacity-0');
-      setTimeout(() => {
-        backdrop.classList.add('hidden');
-        modal.classList.add('hidden');
-      }, 250);
-    }
-
     // Initialization
     window.addEventListener('DOMContentLoaded', () => {
       // Load saved theme
@@ -1065,13 +1278,16 @@
         document.body.classList.add('theme-light');
         document.getElementById('theme-btn').innerText = '☀️';
       }
-      // Load saved cart
+      // Load saved cart & wishlist
       try {
-        const saved = localStorage.getItem('aura_cart');
-        if (saved) cart = JSON.parse(saved);
+        const savedCart = localStorage.getItem('aura_cart');
+        if (savedCart) cart = JSON.parse(savedCart);
+        const savedWishlist = localStorage.getItem('aura_wishlist');
+        if (savedWishlist) wishlist = JSON.parse(savedWishlist);
       } catch (e) {}
       renderProducts();
       updateCartUI();
+      updateWishlistUI();
     });
   </script>
 </body>
